@@ -1,0 +1,41 @@
+<footer>
+  <div class="footer-left">
+    © 2026 <span>Matheesan</span> · built with intention
+  </div>
+  <div class="footer-links">
+    <a href="https://github.com/Matheesan2113" target="_blank" rel="noopener noreferrer">github</a>
+    <a href="mailto:hello@matheesan.ca">email</a>
+  </div>
+</footer>
+
+<style is:global>
+  footer {
+    padding: 4rem 3rem;
+    background: var(--bg);
+    border-top: 1px solid var(--navy);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .footer-left {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    color: var(--text3);
+  }
+
+  .footer-left span { color: var(--accent); }
+
+  .footer-links { display: flex; gap: 2rem; }
+
+  .footer-links a {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    color: var(--text3);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .footer-links a:hover { color: var(--accent); }
+</style>

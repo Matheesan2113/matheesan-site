@@ -1,0 +1,248 @@
+<section id="hero">
+  <canvas id="wave-canvas"></canvas>
+
+  <!-- Dragon silhouette — pure SVG, no external assets -->
+  <svg class="dragon-bg" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M20,220 C60,180 80,120 140,100 C180,86 200,110 240,90 C280,70 300,40 340,30 C360,24 380,28 390,20" stroke="white" stroke-width="3" stroke-linecap="round" fill="none"/>
+    <path d="M140,100 C130,80 120,60 100,50 C90,45 80,50 75,60" stroke="white" stroke-width="2" stroke-linecap="round" fill="none"/>
+    <path d="M240,90 C250,70 260,50 270,40" stroke="white" stroke-width="2" stroke-linecap="round" fill="none"/>
+    <path d="M240,90 C255,100 265,115 260,130" stroke="white" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+    <circle cx="95" cy="44" r="4" fill="white" opacity="0.6"/>
+    <path d="M20,220 C10,240 8,260 15,270 C22,280 40,275 50,260" stroke="white" stroke-width="2" stroke-linecap="round" fill="none"/>
+    <path d="M20,220 C30,235 28,255 20,265" stroke="white" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+  </svg>
+
+  <div class="moon-container">
+    <div class="moon-halo"></div>
+    <div class="moon"></div>
+  </div>
+
+  <div class="hero-content">
+    <p class="hero-pronunciation">ma · th · e · sen</p>
+    <h1 class="hero-name">Mathe<em>esan</em></h1>
+    <p class="hero-tagline">
+      Engineer by training. Builder by instinct.<br />
+      Tamil-Canadian. Curious about everything.
+    </p>
+    <div class="hero-tags">
+      <span class="tag">senior software engineer</span>
+      <span class="tag">AI advocate</span>
+      <span class="tag">homelab operator</span>
+      <span class="tag">markham → everywhere</span>
+    </div>
+    <div class="hero-cta">
+      <a href="#about" class="btn-primary">about me</a>
+      <a href="#homelab" class="btn-ghost">homelab</a>
+      <a href="#portal" class="btn-ghost">portal</a>
+    </div>
+  </div>
+
+  <div class="scroll-hint" aria-hidden="true">
+    <span>scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<style is:global>
+  #hero {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  #wave-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.5;
+  }
+
+  .moon-container {
+    position: absolute;
+    top: 7%;
+    right: 10%;
+  }
+
+  .moon {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 36% 36%, #e8f0ff 0%, #a8c4e8 30%, #6090c0 60%, #1a2a4a 100%);
+    box-shadow:
+      0 0 40px 12px rgba(127, 168, 212, 0.15),
+      0 0 80px 30px rgba(74, 120, 180, 0.08);
+    animation: moonFloat 8s ease-in-out infinite;
+  }
+
+  .moon-halo {
+    position: absolute;
+    inset: -20px;
+    border-radius: 50%;
+    border: 1px solid rgba(127, 168, 212, 0.12);
+    animation: moonFloat 8s ease-in-out infinite reverse;
+  }
+
+  @keyframes moonFloat {
+    0%, 100% { transform: translateY(0px); }
+    50%       { transform: translateY(-12px); }
+  }
+
+  .dragon-bg {
+    position: absolute;
+    left: -2%;
+    top: 18%;
+    opacity: 0.04;
+    pointer-events: none;
+    width: 380px;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 2rem;
+    max-width: 800px;
+    animation: heroIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  @keyframes heroIn {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-pronunciation {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.25em;
+    color: var(--accent);
+    margin-bottom: 1.4rem;
+    opacity: 0.85;
+  }
+
+  .hero-name {
+    font-family: var(--serif);
+    font-size: clamp(4rem, 9vw, 7.5rem);
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--text1);
+    margin-bottom: 0.4rem;
+  }
+
+  .hero-name em {
+    font-style: italic;
+    color: var(--moon2);
+  }
+
+  .hero-tagline {
+    font-family: var(--serif);
+    font-size: clamp(1rem, 2.2vw, 1.35rem);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--text2);
+    line-height: 1.7;
+    margin-bottom: 2.5rem;
+    max-width: 560px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-tags {
+    display: flex;
+    gap: 0.6rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 2.8rem;
+  }
+
+  .tag {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    color: var(--text3);
+    border: 1px solid var(--navy);
+    padding: 0.3rem 0.9rem;
+    border-radius: 1px;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 0.35;
+  }
+
+  .scroll-hint span {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    color: var(--text2);
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 48px;
+    background: linear-gradient(to bottom, var(--accent), transparent);
+    animation: scrollPulse 2.2s ease-in-out infinite;
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.3; }
+    50%       { opacity: 1; }
+  }
+</style>
+
+<script>
+  const canvas = document.getElementById('wave-canvas') as HTMLCanvasElement;
+  const ctx = canvas.getContext('2d')!;
+  let t = 0;
+
+  const waves = [
+    { a: 42, f: 0.007, s: 0.009, y: 0.52, c: 'rgba(27,58,92,0.55)',    w: 1.5 },
+    { a: 30, f: 0.011, s: 0.014, y: 0.60, c: 'rgba(74,158,187,0.28)',   w: 1   },
+    { a: 55, f: 0.005, s: 0.007, y: 0.70, c: 'rgba(27,58,92,0.38)',     w: 2   },
+    { a: 20, f: 0.016, s: 0.020, y: 0.42, c: 'rgba(127,168,212,0.15)',  w: 0.8 },
+    { a: 35, f: 0.009, s: 0.011, y: 0.80, c: 'rgba(30,77,122,0.25)',    w: 1.2 },
+  ];
+
+  function resize() {
+    canvas.width  = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    waves.forEach(w => {
+      ctx.beginPath();
+      ctx.strokeStyle = w.c;
+      ctx.lineWidth   = w.w;
+      for (let x = 0; x <= canvas.width; x += 2) {
+        const y = canvas.height * w.y + Math.sin(x * w.f + t * w.s * 60) * w.a;
+        x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+    });
+    t += 0.016;
+    requestAnimationFrame(draw);
+  }
+
+  resize();
+  window.addEventListener('resize', resize);
+  draw();
+</script>

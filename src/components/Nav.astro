@@ -1,0 +1,26 @@
+<nav>
+  <a href="#hero" class="nav-logo">M.</a>
+  <ul class="nav-links">
+    <li><a href="#about">about</a></li>
+    <li><a href="#career">career</a></li>
+    <li><a href="#homelab">homelab</a></li>
+    <li><a href="#life">life</a></li>
+    <li><a href="#portal">portal</a></li>
+  </ul>
+</nav>
+
+<script>
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= (s as HTMLElement).offsetTop - 200) current = s.id;
+    });
+    navLinks.forEach(a => {
+      (a as HTMLElement).style.color =
+        a.getAttribute('href') === '#' + current ? 'var(--text1)' : '';
+    });
+  });
+</script>
