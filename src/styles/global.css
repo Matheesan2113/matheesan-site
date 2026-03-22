@@ -1,6 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* global styles */
 
 /* ─── Design tokens ─────────────────────────────────────────── */
 :root {
