@@ -1,0 +1,95 @@
+<section id="portal">
+  <div class="container">
+    <p class="section-label">05 — portal</p>
+    <h2 class="section-title fade-up">Family &amp; friends <em>access</em></h2>
+    <p class="portal-intro fade-up">
+      I run Jellyfin, Immich, and other services for people I actually know.
+      If you're here because I gave you access — the portal is below.
+      One login, everything in one place.
+    </p>
+    <a href="https://homarr.matheesan.ca" class="portal-card fade-up" target="_blank" rel="noopener noreferrer">
+      <div class="portal-card-left">
+        <div class="portal-card-label">authenticate once</div>
+        <div class="portal-card-title">Open the portal</div>
+        <div class="portal-card-desc">homarr.matheesan.ca — Jellyfin, Immich, and more</div>
+      </div>
+      <div class="portal-arrow" aria-hidden="true">→</div>
+    </a>
+    <p class="portal-note">Secured via Authentik SSO — you'll need credentials from Matheesan directly.</p>
+  </div>
+</section>
+
+<style is:global>
+  #portal { background: var(--bg2); }
+
+  .portal-intro {
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--text2);
+    max-width: 560px;
+    margin-bottom: 3rem;
+  }
+
+  .portal-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2rem 2.5rem;
+    border: 1px solid var(--navy);
+    background: var(--bg3);
+    transition: all 0.3s;
+    text-decoration: none;
+    border-radius: 2px;
+  }
+
+  .portal-card:hover { border-color: var(--accent); background: var(--bg); }
+
+  .portal-card-label {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.18em;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+  }
+
+  .portal-card-title {
+    font-family: var(--serif);
+    font-size: 1.5rem;
+    font-weight: 300;
+    color: var(--text1);
+    margin-bottom: 0.3rem;
+  }
+
+  .portal-card-desc { font-size: 0.85rem; color: var(--text2); }
+
+  .portal-arrow {
+    font-family: var(--mono);
+    font-size: 1.2rem;
+    color: var(--text3);
+    transition: all 0.3s;
+    flex-shrink: 0;
+  }
+
+  .portal-card:hover .portal-arrow { color: var(--accent); transform: translateX(6px); }
+
+  .portal-note {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    color: var(--text3);
+    margin-top: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .portal-note::before {
+    content: '';
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    background: var(--wave1);
+    border-radius: 50%;
+  }
+</style>

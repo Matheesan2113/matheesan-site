@@ -1,0 +1,188 @@
+<section id="career">
+  <div class="container">
+    <p class="section-label">02 — career</p>
+    <h2 class="section-title fade-up">What I <em>build</em></h2>
+
+    <div class="career-grid">
+      <div class="career-card fade-up">
+        <div class="career-card-label">currently</div>
+        <div class="career-card-title">Senior Software Engineer</div>
+        <div class="career-card-sub">Replicant — AI voice agents</div>
+        <p class="career-card-body">
+          Replicant builds AI agents that handle customer conversations at scale. I'm both an engineer
+          and an internal advocate for AI adoption — helping teams understand, trust, and leverage
+          the technology we build. When you're inside an AI company, you get a very different
+          view of what these systems can and can't do.
+        </p>
+        <div class="skill-pills">
+          <span class="pill">AI agents</span>
+          <span class="pill">LLMs</span>
+          <span class="pill">Python</span>
+          <span class="pill">MLOps</span>
+          <span class="pill">AI adoption</span>
+        </div>
+      </div>
+
+      <div class="career-card fade-up">
+        <div class="career-card-label">domain</div>
+        <div class="career-card-title">AI &amp; Emerging Tech</div>
+        <div class="career-card-sub">Where software meets intelligence</div>
+        <p class="career-card-body">
+          Got into ML during my final year at Ryerson/TMU — built a system to consume Twitter data,
+          build graphs, and surface community structures. At CGI I dove into MLOps and emerging tech.
+          The thread since then has been consistent: how do you take AI from a demo to production?
+        </p>
+        <div class="skill-pills">
+          <span class="pill">machine learning</span>
+          <span class="pill">graph analysis</span>
+          <span class="pill">DevOps</span>
+          <span class="pill">infrastructure</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="career-timeline fade-up">
+      <div class="timeline-item">
+        <div class="timeline-date">2022 → now</div>
+        <div>
+          <div class="timeline-role">Senior Software Engineer</div>
+          <div class="timeline-co">Replicant</div>
+          <div class="timeline-desc">AI voice agent platform. Engineering + internal AI advocacy and adoption leadership.</div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">2019 → 2021</div>
+        <div>
+          <div class="timeline-role">Software Engineer — Emerging Tech</div>
+          <div class="timeline-co">CGI</div>
+          <div class="timeline-desc">Focused on AI/ML and emerging technology. Exposed to MLOps, enterprise AI integration.</div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">2018</div>
+        <div>
+          <div class="timeline-role">Software Engineering Intern</div>
+          <div class="timeline-co">Avaya</div>
+          <div class="timeline-desc">Professional Engineering Year internship. Enterprise communications infrastructure.</div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">2015 → 2019</div>
+        <div>
+          <div class="timeline-role">Computer Engineering</div>
+          <div class="timeline-co">Ryerson University (now TMU)</div>
+          <div class="timeline-desc">Final year ML project: Twitter data → graph communities. Foundation for everything after.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style is:global>
+  #career { background: var(--bg); }
+
+  .career-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+  }
+
+  .career-card {
+    background: var(--bg2);
+    padding: 2.5rem;
+    border: 1px solid transparent;
+    transition: border-color 0.3s, background 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .career-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3px;
+    height: 0;
+    background: var(--accent);
+    transition: height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .career-card:hover::before  { height: 100%; }
+  .career-card:hover          { border-color: var(--wave1); background: var(--bg3); }
+
+  .career-card-label {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    color: var(--text3);
+    margin-bottom: 0.75rem;
+  }
+
+  .career-card-title {
+    font-family: var(--serif);
+    font-size: 1.5rem;
+    font-weight: 300;
+    color: var(--text1);
+    margin-bottom: 0.4rem;
+  }
+
+  .career-card-sub {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--accent);
+    margin-bottom: 1.2rem;
+  }
+
+  .career-card-body {
+    font-size: 0.9rem;
+    line-height: 1.75;
+    color: var(--text2);
+  }
+
+  .skill-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+  }
+
+  .pill {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+    color: var(--text3);
+    border: 1px solid var(--navy);
+    padding: 0.25rem 0.7rem;
+    border-radius: 1px;
+    transition: all 0.2s;
+  }
+
+  .pill:hover { color: var(--accent); border-color: var(--wave1); }
+
+  .career-timeline { margin-top: 4rem; }
+
+  .timeline-item {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 2rem;
+    padding: 2rem 0;
+    border-bottom: 1px solid var(--navy);
+  }
+
+  .timeline-date {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    color: var(--text3);
+    letter-spacing: 0.1em;
+    padding-top: 0.2rem;
+  }
+
+  .timeline-role  { font-size: 1rem; font-weight: 400; color: var(--text1); margin-bottom: 0.2rem; }
+  .timeline-co    { font-family: var(--mono); font-size: 0.72rem; color: var(--accent); margin-bottom: 0.5rem; }
+  .timeline-desc  { font-size: 0.88rem; line-height: 1.7; color: var(--text2); }
+
+  @media (max-width: 900px) {
+    .career-grid  { grid-template-columns: 1fr; }
+    .timeline-item { grid-template-columns: 1fr; gap: 0.5rem; }
+  }
+</style>

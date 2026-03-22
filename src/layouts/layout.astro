@@ -1,10 +1,17 @@
 ---
+import '../styles/global.css';
+
 interface Props {
   title: string;
   description?: string;
 }
-const { title, description = "Matheesan — Senior Software Engineer, AI advocate, builder." } = Astro.props;
+
+const {
+  title,
+  description = 'Matheesan — Senior Software Engineer, AI advocate, homelab builder. Tamil-Canadian based in Markham.',
+} = Astro.props;
 ---
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -14,8 +21,10 @@ const { title, description = "Matheesan — Senior Software Engineer, AI advocat
     <title>{title}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="/src/styles/global.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <slot />

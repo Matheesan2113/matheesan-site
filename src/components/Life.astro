@@ -1,0 +1,123 @@
+<section id="life">
+  <div class="container">
+    <p class="section-label">04 — life</p>
+    <h2 class="section-title fade-up">Beyond the <em>keyboard</em></h2>
+
+    <div class="life-grid">
+      <div>
+        <div class="interest-block fade-up">
+          <div class="interest-label">travel</div>
+          <div class="interest-title">2–4 trips a year, always</div>
+          <p class="interest-body">
+            Japan twice, Sri Lanka twice, France, Switzerland, England, Singapore,
+            Malaysia, Colombia, Mexico six times. Vancouver and Montreal regularly.
+            I try to eat at a Michelin-starred restaurant on most trips — food is
+            how I understand a place.
+          </p>
+          <div class="travel-list">
+            <span class="travel-tag highlight">Japan ×2</span>
+            <span class="travel-tag highlight">Sri Lanka ×2</span>
+            <span class="travel-tag highlight">Mexico ×6</span>
+            <span class="travel-tag">France</span>
+            <span class="travel-tag">Switzerland</span>
+            <span class="travel-tag">England</span>
+            <span class="travel-tag">Singapore</span>
+            <span class="travel-tag">Malaysia</span>
+            <span class="travel-tag">Colombia</span>
+            <span class="travel-tag">Vancouver</span>
+            <span class="travel-tag">Montreal</span>
+          </div>
+        </div>
+
+        <div class="interest-block fade-up">
+          <div class="interest-label">music</div>
+          <div class="interest-title">DJing &amp; discovering</div>
+          <p class="interest-body">
+            Music is always there — ambient, in the background, on a flight, during
+            a build session. I've started DJing; I'm a novice but the process of
+            discovering new genres and understanding how tracks fit together pulls at
+            the same part of my brain as engineering.
+          </p>
+        </div>
+      </div>
+
+      <div>
+        <div class="interest-block fade-up">
+          <div class="interest-label">food</div>
+          <div class="interest-title">Asian cuisine, Michelin stars, everything</div>
+          <p class="interest-body">
+            Growing up in Markham meant exposure to every Asian cuisine imaginable
+            from a young age. Tamil home cooking, Japanese ramen, Chinese dim sum,
+            Korean BBQ — all normal. I'll splurge on a great meal. Some experiences
+            are worth the price.
+          </p>
+        </div>
+
+        <div class="interest-block fade-up">
+          <div class="interest-label">games &amp; more</div>
+          <div class="interest-title">Board games, video games, sports</div>
+          <p class="interest-body">
+            I played badminton, soccer, Tae Kwon Do, and swam growing up. Still try
+            to stay sharp. Board games with good people, video games when the mood
+            hits, and thinking about investing and what the next business idea might
+            be — these are the things that fill the gaps.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style is:global>
+  #life { background: var(--bg); }
+
+  .life-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .interest-block { margin-bottom: 3rem; }
+
+  .interest-label {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    margin-bottom: 0.8rem;
+  }
+
+  .interest-title {
+    font-family: var(--serif);
+    font-size: 1.6rem;
+    font-weight: 300;
+    color: var(--text1);
+    margin-bottom: 0.8rem;
+  }
+
+  .interest-body { font-size: 0.9rem; line-height: 1.8; color: var(--text2); }
+
+  .travel-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+
+  .travel-tag {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    color: var(--text2);
+    border: 1px solid var(--navy);
+    padding: 0.3rem 0.75rem;
+    transition: all 0.2s;
+  }
+
+  .travel-tag:hover                { color: var(--moon); border-color: var(--wave1); }
+  .travel-tag.highlight            { color: var(--gold); border-color: rgba(201, 169, 110, 0.3); }
+
+  @media (max-width: 900px) {
+    .life-grid { grid-template-columns: 1fr; }
+  }
+</style>
