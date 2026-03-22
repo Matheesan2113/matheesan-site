@@ -1,0 +1,961 @@
+---
+// src/pages/index.astro — matheesan.ca complete site
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Matheesan — Senior Software Engineer, AI advocate, homelab builder. Tamil-Canadian based in Markham." />
+  <title>Matheesan — Engineer, Builder, Explorer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #06090f;
+      --bg2:       #0b1120;
+      --bg3:       #0f1a2e;
+      --navy:      #152238;
+      --wave1:     #1b3a5c;
+      --wave2:     #1e4d7a;
+      --accent:    #4a9ebb;
+      --accent2:   #6ab4d0;
+      --moon:      #c8d8f0;
+      --moon2:     #7fa8d4;
+      --gold:      #c9a96e;
+      --text1:     #dce6f5;
+      --text2:     #7a90b3;
+      --text3:     #3d5070;
+      --serif:     'Cormorant Garamond', Georgia, serif;
+      --mono:      'Space Mono', monospace;
+      --sans:      'DM Sans', system-ui, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text1);
+      font-family: var(--sans);
+      font-weight: 300;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* Custom cursor */
+    #cursor {
+      position: fixed; width: 8px; height: 8px;
+      background: var(--accent); border-radius: 50%;
+      pointer-events: none; z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.1s, width 0.3s, height 0.3s, opacity 0.3s;
+      mix-blend-mode: screen;
+    }
+    #cursor-ring {
+      position: fixed; width: 32px; height: 32px;
+      border: 1px solid rgba(74,158,187,0.4); border-radius: 50%;
+      pointer-events: none; z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: transform 0.15s ease-out, width 0.3s, height 0.3s;
+    }
+    body:has(a:hover) #cursor, body:has(button:hover) #cursor { width: 16px; height: 16px; }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 3px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--wave1); border-radius: 2px; }
+
+    /* Nav */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 1.5rem 3rem;
+      display: flex; align-items: center; justify-content: space-between;
+      background: linear-gradient(to bottom, rgba(6,9,15,0.9) 0%, transparent 100%);
+      backdrop-filter: blur(2px);
+    }
+    .nav-logo {
+      font-family: var(--mono); font-size: 0.75rem;
+      letter-spacing: 0.2em; color: var(--accent);
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      font-family: var(--mono); font-size: 0.7rem;
+      letter-spacing: 0.15em; color: var(--text2);
+      text-decoration: none; transition: color 0.3s;
+    }
+    .nav-links a:hover { color: var(--text1); }
+
+    /* ═══════════════ HERO ═══════════════ */
+    #hero {
+      position: relative; height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+    #wave-canvas {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%; opacity: 0.5;
+    }
+    .moon-container {
+      position: absolute; top: 7%; right: 10%;
+    }
+    .moon {
+      width: 110px; height: 110px; border-radius: 50%;
+      background: radial-gradient(circle at 36% 36%, #e8f0ff 0%, #a8c4e8 30%, #6090c0 60%, #1a2a4a 100%);
+      box-shadow: 0 0 40px 12px rgba(127,168,212,0.15), 0 0 80px 30px rgba(74,120,180,0.08);
+      animation: moonFloat 8s ease-in-out infinite;
+    }
+    .moon-halo {
+      position: absolute; inset: -20px;
+      border-radius: 50%;
+      border: 1px solid rgba(127,168,212,0.12);
+      animation: moonFloat 8s ease-in-out infinite reverse;
+    }
+    @keyframes moonFloat {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-12px); }
+    }
+
+    /* Dragon silhouette — subtle SVG top-left */
+    .dragon-bg {
+      position: absolute; left: -2%; top: 18%;
+      opacity: 0.04; pointer-events: none;
+      width: 380px;
+    }
+
+    .hero-content {
+      position: relative; z-index: 2;
+      text-align: center; padding: 2rem;
+      max-width: 800px;
+      animation: heroIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+    @keyframes heroIn {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-pronunciation {
+      font-family: var(--mono); font-size: 0.72rem;
+      letter-spacing: 0.25em; color: var(--accent);
+      margin-bottom: 1.4rem; opacity: 0.85;
+    }
+    .hero-name {
+      font-family: var(--serif); font-size: clamp(4rem, 9vw, 7.5rem);
+      font-weight: 300; line-height: 1; letter-spacing: -0.02em;
+      color: var(--text1); margin-bottom: 0.4rem;
+    }
+    .hero-name em {
+      font-style: italic; color: var(--moon2);
+    }
+    .hero-tagline {
+      font-family: var(--serif); font-size: clamp(1rem, 2.2vw, 1.35rem);
+      font-weight: 300; font-style: italic;
+      color: var(--text2); line-height: 1.7; margin-bottom: 2.5rem;
+      max-width: 560px; margin-left: auto; margin-right: auto;
+    }
+    .hero-tags {
+      display: flex; gap: 0.6rem; justify-content: center;
+      flex-wrap: wrap; margin-bottom: 2.8rem;
+    }
+    .tag {
+      font-family: var(--mono); font-size: 0.65rem;
+      letter-spacing: 0.12em; color: var(--text3);
+      border: 1px solid var(--navy); padding: 0.3rem 0.9rem;
+      border-radius: 1px;
+    }
+    .hero-cta {
+      display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+    }
+    .btn-primary {
+      padding: 0.75rem 2rem;
+      border: 1px solid var(--accent); color: var(--accent);
+      font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.1em;
+      text-decoration: none; transition: all 0.3s; border-radius: 1px;
+      background: transparent;
+    }
+    .btn-primary:hover { background: var(--accent); color: var(--bg); }
+    .btn-ghost {
+      padding: 0.75rem 2rem;
+      border: 1px solid var(--navy); color: var(--text2);
+      font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.1em;
+      text-decoration: none; transition: all 0.3s; border-radius: 1px;
+    }
+    .btn-ghost:hover { border-color: var(--text3); color: var(--text1); }
+
+    .scroll-hint {
+      position: absolute; bottom: 2.5rem; left: 50%;
+      transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+      opacity: 0.35;
+    }
+    .scroll-hint span {
+      font-family: var(--mono); font-size: 0.62rem;
+      letter-spacing: 0.2em; color: var(--text2);
+    }
+    .scroll-line {
+      width: 1px; height: 48px;
+      background: linear-gradient(to bottom, var(--accent), transparent);
+      animation: scrollPulse 2.2s ease-in-out infinite;
+    }
+    @keyframes scrollPulse { 0%,100%{opacity:0.3;} 50%{opacity:1;} }
+
+    /* ═══════════════ SECTIONS COMMON ═══════════════ */
+    section { padding: 7rem 0; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 3rem; }
+    .section-label {
+      font-family: var(--mono); font-size: 0.68rem;
+      letter-spacing: 0.25em; color: var(--accent);
+      margin-bottom: 1rem; opacity: 0.7;
+    }
+    .section-title {
+      font-family: var(--serif); font-size: clamp(2.2rem, 5vw, 3.8rem);
+      font-weight: 300; line-height: 1.1; color: var(--text1);
+      margin-bottom: 3rem;
+    }
+    .section-title em { font-style: italic; color: var(--moon2); }
+
+    /* Divider */
+    .wave-divider {
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--wave1) 20%, var(--wave1) 80%, transparent);
+      opacity: 0.4;
+    }
+
+    /* ═══════════════ ABOUT ═══════════════ */
+    #about { background: var(--bg2); }
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1.4fr; gap: 6rem; align-items: start;
+    }
+    .about-left { position: sticky; top: 6rem; }
+    .about-symbol {
+      font-family: var(--serif); font-size: 7rem; line-height: 1;
+      color: var(--wave1); margin-bottom: 2rem; font-style: italic;
+    }
+    .about-identities { display: flex; flex-direction: column; gap: 0.6rem; }
+    .identity {
+      display: flex; align-items: center; gap: 0.75rem;
+      font-family: var(--mono); font-size: 0.68rem;
+      letter-spacing: 0.1em; color: var(--text2);
+    }
+    .identity-dot {
+      width: 5px; height: 5px; border-radius: 50%; background: var(--accent); flex-shrink: 0;
+    }
+    .about-right {}
+    .about-bio {
+      font-family: var(--serif); font-size: 1.25rem;
+      font-weight: 300; line-height: 1.9; color: var(--text1);
+      margin-bottom: 2rem;
+    }
+    .about-bio strong { font-weight: 400; color: var(--moon); }
+    .about-detail {
+      font-size: 0.95rem; line-height: 1.8; color: var(--text2); margin-bottom: 1.4rem;
+    }
+    .symbol-row {
+      display: flex; gap: 2rem; margin-top: 2.5rem; padding-top: 2rem;
+      border-top: 1px solid var(--navy);
+    }
+    .symbol-item { text-align: center; }
+    .symbol-item .sym {
+      font-family: var(--serif); font-size: 2rem;
+      color: var(--gold); display: block; margin-bottom: 0.4rem;
+    }
+    .symbol-item .sym-label {
+      font-family: var(--mono); font-size: 0.6rem;
+      letter-spacing: 0.15em; color: var(--text3);
+    }
+
+    /* ═══════════════ CAREER ═══════════════ */
+    #career { background: var(--bg); }
+    .career-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+    .career-card {
+      background: var(--bg2); padding: 2.5rem;
+      border: 1px solid transparent;
+      transition: border-color 0.3s, background 0.3s;
+      position: relative; overflow: hidden;
+    }
+    .career-card::before {
+      content: ''; position: absolute; top: 0; left: 0;
+      width: 3px; height: 0; background: var(--accent);
+      transition: height 0.4s cubic-bezier(0.16,1,0.3,1);
+    }
+    .career-card:hover::before { height: 100%; }
+    .career-card:hover { border-color: var(--wave1); background: var(--bg3); }
+    .career-card-label {
+      font-family: var(--mono); font-size: 0.62rem;
+      letter-spacing: 0.2em; color: var(--text3); margin-bottom: 0.75rem;
+    }
+    .career-card-title {
+      font-family: var(--serif); font-size: 1.5rem;
+      font-weight: 300; color: var(--text1); margin-bottom: 0.4rem;
+    }
+    .career-card-sub {
+      font-family: var(--mono); font-size: 0.72rem;
+      color: var(--accent); margin-bottom: 1.2rem;
+    }
+    .career-card-body {
+      font-size: 0.9rem; line-height: 1.75; color: var(--text2);
+    }
+    .skill-pills { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.5rem; }
+    .pill {
+      font-family: var(--mono); font-size: 0.62rem;
+      letter-spacing: 0.08em; color: var(--text3);
+      border: 1px solid var(--navy); padding: 0.25rem 0.7rem;
+      border-radius: 1px; transition: all 0.2s;
+    }
+    .pill:hover { color: var(--accent); border-color: var(--wave1); }
+    .career-timeline { margin-top: 4rem; }
+    .timeline-item {
+      display: grid; grid-template-columns: 140px 1fr;
+      gap: 2rem; padding: 2rem 0;
+      border-bottom: 1px solid var(--navy);
+    }
+    .timeline-date {
+      font-family: var(--mono); font-size: 0.68rem;
+      color: var(--text3); letter-spacing: 0.1em; padding-top: 0.2rem;
+    }
+    .timeline-role { font-size: 1rem; font-weight: 400; color: var(--text1); margin-bottom: 0.2rem; }
+    .timeline-co { font-family: var(--mono); font-size: 0.72rem; color: var(--accent); margin-bottom: 0.5rem; }
+    .timeline-desc { font-size: 0.88rem; line-height: 1.7; color: var(--text2); }
+
+    /* ═══════════════ HOMELAB ═══════════════ */
+    #homelab { background: var(--bg2); }
+    .homelab-intro {
+      font-family: var(--serif); font-size: 1.15rem;
+      line-height: 1.85; color: var(--text2);
+      max-width: 680px; margin-bottom: 4rem;
+    }
+    .homelab-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-bottom: 3rem; }
+    .hl-card {
+      background: var(--bg3); border: 1px solid var(--navy);
+      padding: 1.8rem; border-radius: 2px;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .hl-card:hover { border-color: var(--wave1); transform: translateY(-3px); }
+    .hl-card-icon {
+      font-family: var(--mono); font-size: 1.1rem;
+      color: var(--accent); margin-bottom: 1rem; opacity: 0.8;
+    }
+    .hl-card-title {
+      font-size: 0.92rem; font-weight: 500;
+      color: var(--text1); margin-bottom: 0.5rem;
+    }
+    .hl-card-body { font-size: 0.82rem; line-height: 1.65; color: var(--text2); }
+    .hl-card-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1rem; }
+    .hl-tag {
+      font-family: var(--mono); font-size: 0.58rem;
+      color: var(--text3); border: 1px solid var(--navy);
+      padding: 0.15rem 0.5rem;
+    }
+    .spec-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 0;
+      border: 1px solid var(--navy); margin-top: 3rem;
+    }
+    .spec-row {
+      display: grid; grid-template-columns: 1fr 1fr;
+      border-bottom: 1px solid var(--navy);
+    }
+    .spec-row:last-child { border-bottom: none; }
+    .spec-key {
+      font-family: var(--mono); font-size: 0.65rem;
+      letter-spacing: 0.1em; color: var(--text3);
+      padding: 0.9rem 1.2rem; border-right: 1px solid var(--navy);
+      background: var(--bg3);
+    }
+    .spec-val {
+      font-size: 0.82rem; color: var(--text2);
+      padding: 0.9rem 1.2rem;
+    }
+
+    /* ═══════════════ LIFE ═══════════════ */
+    #life { background: var(--bg); }
+    .life-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+    .interest-block { margin-bottom: 3rem; }
+    .interest-label {
+      font-family: var(--mono); font-size: 0.65rem;
+      letter-spacing: 0.2em; color: var(--gold); margin-bottom: 0.8rem;
+    }
+    .interest-title {
+      font-family: var(--serif); font-size: 1.6rem;
+      font-weight: 300; color: var(--text1); margin-bottom: 0.8rem;
+    }
+    .interest-body { font-size: 0.9rem; line-height: 1.8; color: var(--text2); }
+    .travel-list {
+      display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem;
+    }
+    .travel-tag {
+      font-family: var(--mono); font-size: 0.62rem;
+      color: var(--text2); border: 1px solid var(--navy);
+      padding: 0.3rem 0.75rem; transition: all 0.2s;
+    }
+    .travel-tag:hover { color: var(--moon); border-color: var(--wave1); }
+    .travel-tag.highlight { color: var(--gold); border-color: rgba(201,169,110,0.3); }
+
+    /* ═══════════════ PORTAL ═══════════════ */
+    #portal { background: var(--bg2); }
+    .portal-intro {
+      font-family: var(--serif); font-size: 1.1rem;
+      line-height: 1.8; color: var(--text2); max-width: 560px; margin-bottom: 3rem;
+    }
+    .portal-card {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 2rem 2.5rem;
+      border: 1px solid var(--navy); background: var(--bg3);
+      transition: all 0.3s; text-decoration: none;
+      border-radius: 2px;
+    }
+    .portal-card:hover { border-color: var(--accent); background: var(--bg); }
+    .portal-card-left {}
+    .portal-card-label {
+      font-family: var(--mono); font-size: 0.62rem;
+      letter-spacing: 0.18em; color: var(--accent); margin-bottom: 0.5rem;
+    }
+    .portal-card-title {
+      font-family: var(--serif); font-size: 1.5rem;
+      font-weight: 300; color: var(--text1); margin-bottom: 0.3rem;
+    }
+    .portal-card-desc { font-size: 0.85rem; color: var(--text2); }
+    .portal-arrow {
+      font-family: var(--mono); font-size: 1.2rem;
+      color: var(--text3); transition: all 0.3s; flex-shrink: 0;
+    }
+    .portal-card:hover .portal-arrow { color: var(--accent); transform: translateX(6px); }
+    .portal-note {
+      font-family: var(--mono); font-size: 0.68rem;
+      letter-spacing: 0.08em; color: var(--text3);
+      margin-top: 1.5rem; display: flex; align-items: center; gap: 0.5rem;
+    }
+    .portal-note::before {
+      content: ''; display: inline-block;
+      width: 5px; height: 5px; background: var(--wave1); border-radius: 50%;
+    }
+
+    /* ═══════════════ FOOTER ═══════════════ */
+    footer {
+      padding: 4rem 3rem; background: var(--bg);
+      border-top: 1px solid var(--navy);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .footer-left { font-family: var(--mono); font-size: 0.68rem; color: var(--text3); }
+    .footer-left span { color: var(--accent); }
+    .footer-links { display: flex; gap: 2rem; }
+    .footer-links a {
+      font-family: var(--mono); font-size: 0.68rem;
+      letter-spacing: 0.1em; color: var(--text3);
+      text-decoration: none; transition: color 0.3s;
+    }
+    .footer-links a:hover { color: var(--accent); }
+
+    /* ═══════════════ FADE IN ON SCROLL ═══════════════ */
+    .fade-up {
+      opacity: 0; transform: translateY(20px);
+      transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .fade-up:nth-child(2) { transition-delay: 0.1s; }
+    .fade-up:nth-child(3) { transition-delay: 0.2s; }
+    .fade-up:nth-child(4) { transition-delay: 0.3s; }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .about-grid, .career-grid, .life-grid { grid-template-columns: 1fr; }
+      .homelab-grid { grid-template-columns: repeat(2, 1fr); }
+      .about-left { position: static; }
+      nav { padding: 1.2rem 1.5rem; }
+      .nav-links { display: none; }
+      .container { padding: 0 1.5rem; }
+      .timeline-item { grid-template-columns: 1fr; gap: 0.5rem; }
+      .spec-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      .homelab-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Cursor -->
+  <div id="cursor"></div>
+  <div id="cursor-ring"></div>
+
+  <!-- Nav -->
+  <nav>
+    <a href="#hero" class="nav-logo">M.</a>
+    <ul class="nav-links">
+      <li><a href="#about">about</a></li>
+      <li><a href="#career">career</a></li>
+      <li><a href="#homelab">homelab</a></li>
+      <li><a href="#life">life</a></li>
+      <li><a href="#portal">portal</a></li>
+    </ul>
+  </nav>
+
+  <!-- ═══ HERO ═══ -->
+  <section id="hero">
+    <canvas id="wave-canvas"></canvas>
+
+    <!-- Dragon silhouette (pure SVG, no external assets) -->
+    <svg class="dragon-bg" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M20,220 C60,180 80,120 140,100 C180,86 200,110 240,90 C280,70 300,40 340,30 C360,24 380,28 390,20" stroke="white" stroke-width="3" stroke-linecap="round" fill="none"/>
+      <path d="M140,100 C130,80 120,60 100,50 C90,45 80,50 75,60" stroke="white" stroke-width="2" stroke-linecap="round" fill="none"/>
+      <path d="M240,90 C250,70 260,50 270,40" stroke="white" stroke-width="2" stroke-linecap="round" fill="none"/>
+      <path d="M240,90 C255,100 265,115 260,130" stroke="white" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+      <circle cx="95" cy="44" r="4" fill="white" opacity="0.6"/>
+      <path d="M20,220 C10,240 8,260 15,270 C22,280 40,275 50,260" stroke="white" stroke-width="2" stroke-linecap="round" fill="none"/>
+      <path d="M20,220 C30,235 28,255 20,265" stroke="white" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+    </svg>
+
+    <div class="moon-container">
+      <div class="moon-halo"></div>
+      <div class="moon"></div>
+    </div>
+
+    <div class="hero-content">
+      <p class="hero-pronunciation">ma · th · e · sen</p>
+      <h1 class="hero-name">Mathe<em>esan</em></h1>
+      <p class="hero-tagline">
+        Engineer by training. Builder by instinct.<br/>
+        Tamil-Canadian. Curious about everything.
+      </p>
+      <div class="hero-tags">
+        <span class="tag">senior software engineer</span>
+        <span class="tag">AI advocate</span>
+        <span class="tag">homelab operator</span>
+        <span class="tag">markham → everywhere</span>
+      </div>
+      <div class="hero-cta">
+        <a href="#about" class="btn-primary">about me</a>
+        <a href="#homelab" class="btn-ghost">homelab</a>
+        <a href="#portal" class="btn-ghost">portal</a>
+      </div>
+    </div>
+
+    <div class="scroll-hint">
+      <span>scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <div class="wave-divider"></div>
+
+  <!-- ═══ ABOUT ═══ -->
+  <section id="about">
+    <div class="container">
+      <p class="section-label">01 — about</p>
+      <div class="about-grid">
+        <div class="about-left fade-up">
+          <div class="about-symbol">M.</div>
+          <div class="about-identities">
+            <div class="identity"><span class="identity-dot"></span>Tamil-Canadian</div>
+            <div class="identity"><span class="identity-dot"></span>Born Toronto, raised Markham</div>
+            <div class="identity"><span class="identity-dot"></span>Tamil · English · French</div>
+            <div class="identity"><span class="identity-dot"></span>Anime & Japanese culture</div>
+            <div class="identity"><span class="identity-dot"></span>Lifeguard & aquatics leader</div>
+            <div class="identity"><span class="identity-dot"></span>Competitor at heart</div>
+          </div>
+          <div class="symbol-row">
+            <div class="symbol-item">
+              <span class="sym">月</span>
+              <span class="sym-label">mathee<br/>= moon</span>
+            </div>
+            <div class="symbol-item">
+              <span class="sym">龍</span>
+              <span class="sym-label">year of<br/>the dragon</span>
+            </div>
+            <div class="symbol-item">
+              <span class="sym">波</span>
+              <span class="sym-label">varuna<br/>waves</span>
+            </div>
+          </div>
+        </div>
+        <div class="about-right">
+          <h2 class="section-title fade-up">Who I <em>am</em></h2>
+          <p class="about-bio fade-up">
+            I grew up in <strong>Markham</strong> — one of Canada's most multicultural cities —
+            the son of Tamil parents from Sri Lanka. My first language was Tamil. I picked up
+            English, then French through school. I grew up surrounded by Japanese anime, Chinese
+            New Year, and every cuisine you can imagine. That breadth shaped how I think.
+          </p>
+          <p class="about-detail fade-up">
+            My name, <em>Matheesan</em>, means moon in Tamil — <em>mathee</em> (மதி). I've always felt a
+            pull toward water: I became a lifeguard at 16, led aquatics programs, and won awards
+            through the Life Saving Society. My son was born in the year of the dragon, and named
+            after Varuna — the Hindu lord of storms and waves. The symbols chose us as much as we chose them.
+          </p>
+          <p class="about-detail fade-up">
+            Growing up, I competed — Tamil speaking competitions, badminton, soccer, Tae Kwon Do, swimming.
+            I received a Ministry of Citizenship volunteer award at 17. Competition sharpened me.
+            Engineering became the next arena: complex problems, no obvious answers, no ceiling on how
+            good you can get.
+          </p>
+          <p class="about-detail fade-up">
+            Off the keyboard: I DJ (novice, but passionate), collect experiences over things, eat at
+            Michelin-starred restaurants when I travel, and try to take 2–4 trips a year.
+            Music is always there — discovering new genres, finding sounds I didn't know I needed.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="wave-divider"></div>
+
+  <!-- ═══ CAREER ═══ -->
+  <section id="career">
+    <div class="container">
+      <p class="section-label">02 — career</p>
+      <h2 class="section-title fade-up">What I <em>build</em></h2>
+
+      <div class="career-grid">
+        <div class="career-card fade-up">
+          <div class="career-card-label">currently</div>
+          <div class="career-card-title">Senior Software Engineer</div>
+          <div class="career-card-sub">Replicant — AI voice agents</div>
+          <p class="career-card-body">
+            Replicant builds AI agents that handle customer conversations at scale. I'm both an engineer
+            and an internal advocate for AI adoption — helping teams understand, trust, and leverage
+            the technology we build. When you're inside an AI company, you get a very different
+            view of what these systems can and can't do.
+          </p>
+          <div class="skill-pills">
+            <span class="pill">AI agents</span>
+            <span class="pill">LLMs</span>
+            <span class="pill">Python</span>
+            <span class="pill">MLOps</span>
+            <span class="pill">AI adoption</span>
+          </div>
+        </div>
+        <div class="career-card fade-up">
+          <div class="career-card-label">domain</div>
+          <div class="career-card-title">AI & Emerging Tech</div>
+          <div class="career-card-sub">Where software meets intelligence</div>
+          <p class="career-card-body">
+            Got into ML during my final year at Ryerson/TMU — built a system to consume Twitter data,
+            build graphs, and surface community structures. At CGI I dove into MLOps and emerging tech.
+            The thread since then has been consistent: how do you take AI from a demo to production?
+          </p>
+          <div class="skill-pills">
+            <span class="pill">machine learning</span>
+            <span class="pill">graph analysis</span>
+            <span class="pill">DevOps</span>
+            <span class="pill">infrastructure</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="career-timeline fade-up">
+        <div class="timeline-item">
+          <div class="timeline-date">2022 → now</div>
+          <div>
+            <div class="timeline-role">Senior Software Engineer</div>
+            <div class="timeline-co">Replicant</div>
+            <div class="timeline-desc">AI voice agent platform. Engineering + internal AI advocacy and adoption leadership.</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">2019 → 2021</div>
+          <div>
+            <div class="timeline-role">Software Engineer — Emerging Tech</div>
+            <div class="timeline-co">CGI</div>
+            <div class="timeline-desc">Focused on AI/ML and emerging technology. Exposed to MLOps, enterprise AI integration.</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">2018</div>
+          <div>
+            <div class="timeline-role">Software Engineering Intern</div>
+            <div class="timeline-co">Avaya</div>
+            <div class="timeline-desc">Professional Engineering Year internship. Enterprise communications infrastructure.</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">2015 → 2019</div>
+          <div>
+            <div class="timeline-role">Computer Engineering</div>
+            <div class="timeline-co">Ryerson University (now TMU)</div>
+            <div class="timeline-desc">Final year ML project: Twitter data → graph communities. Foundation for everything after.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="wave-divider"></div>
+
+  <!-- ═══ HOMELAB ═══ -->
+  <section id="homelab">
+    <div class="container">
+      <p class="section-label">03 — homelab</p>
+      <h2 class="section-title fade-up">What I run <em>at home</em></h2>
+      <p class="homelab-intro fade-up">
+        My homelab is a production-grade infrastructure running on Proxmox, a 22TB NAS,
+        GPU passthrough, full VLAN segmentation, and a dozen self-hosted services — all
+        managed behind wildcard SSL on <code style="font-family:var(--mono);font-size:0.85em;color:var(--accent)">*.matheesan.ca</code>.
+        It's part curiosity, part skill-building, part just loving that it works.
+      </p>
+
+      <div class="homelab-grid">
+        <div class="hl-card fade-up">
+          <div class="hl-card-icon">[px]</div>
+          <div class="hl-card-title">Proxmox Hypervisor</div>
+          <p class="hl-card-body">AMD Ryzen 5 2600X, 62GB RAM. Dual network: 1Gbps + 2.5Gbps direct link to NAS. Multiple VMs with VLAN isolation.</p>
+          <div class="hl-card-tags">
+            <span class="hl-tag">Proxmox</span>
+            <span class="hl-tag">KVM</span>
+            <span class="hl-tag">VLAN</span>
+            <span class="hl-tag">ZFS</span>
+          </div>
+        </div>
+        <div class="hl-card fade-up">
+          <div class="hl-card-icon">[gpu]</div>
+          <div class="hl-card-title">GPU Media Server</div>
+          <p class="hl-card-body">RTX A2000 12GB via PCIe passthrough. Powers Jellyfin hardware transcoding, Frigate NVR with YOLOv9m object detection, and Immich ML face recognition.</p>
+          <div class="hl-card-tags">
+            <span class="hl-tag">RTX A2000</span>
+            <span class="hl-tag">CUDA</span>
+            <span class="hl-tag">Jellyfin</span>
+            <span class="hl-tag">Frigate</span>
+          </div>
+        </div>
+        <div class="hl-card fade-up">
+          <div class="hl-card-icon">[nas]</div>
+          <div class="hl-card-title">22TB NAS</div>
+          <p class="hl-card-body">TerraMaster + OpenMediaVault. Multiple logical volumes for media, personal files, VM backups, and ISOs. 2.5Gbps direct link with jumbo frames.</p>
+          <div class="hl-card-tags">
+            <span class="hl-tag">OMV</span>
+            <span class="hl-tag">NFS</span>
+            <span class="hl-tag">22TB</span>
+            <span class="hl-tag">2.5Gbps</span>
+          </div>
+        </div>
+        <div class="hl-card fade-up">
+          <div class="hl-card-icon">[net]</div>
+          <div class="hl-card-title">Network Stack</div>
+          <p class="hl-card-body">5 VLANs, GL.iNet Flint 3 router, TP-Link managed switches, Tailscale VPN, AdGuard split DNS, NordVPN gateway for media stack.</p>
+          <div class="hl-card-tags">
+            <span class="hl-tag">VLAN</span>
+            <span class="hl-tag">Tailscale</span>
+            <span class="hl-tag">AdGuard</span>
+            <span class="hl-tag">WireGuard</span>
+          </div>
+        </div>
+        <div class="hl-card fade-up">
+          <div class="hl-card-icon">[cam]</div>
+          <div class="hl-card-title">5-Camera Security</div>
+          <p class="hl-card-body">Reolink cameras on isolated VLAN 10. Frigate NVR with GPU-accelerated detection, license plate recognition on driveway, face recognition, 4TB storage.</p>
+          <div class="hl-card-tags">
+            <span class="hl-tag">Frigate</span>
+            <span class="hl-tag">YOLOv9m</span>
+            <span class="hl-tag">LPR</span>
+            <span class="hl-tag">Reolink</span>
+          </div>
+        </div>
+        <div class="hl-card fade-up">
+          <div class="hl-card-icon">[ha]</div>
+          <div class="hl-card-title">Smart Home</div>
+          <p class="hl-card-body">Home Assistant + MQTT broker + Frigate integration. Ecobee, Google Home, Kasa switches, Chromecast. All services HTTPS via Nginx Proxy Manager.</p>
+          <div class="hl-card-tags">
+            <span class="hl-tag">Home Assistant</span>
+            <span class="hl-tag">MQTT</span>
+            <span class="hl-tag">NPM</span>
+            <span class="hl-tag">SSL</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="spec-grid fade-up">
+        <div class="spec-row">
+          <span class="spec-key">domain</span>
+          <span class="spec-val">*.matheesan.ca — wildcard SSL via Let's Encrypt + Route 53</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-key">remote access</span>
+          <span class="spec-val">Tailscale VPN with subnet routing + split DNS</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-key">secrets</span>
+          <span class="spec-val">Vaultwarden self-hosted + Bitwarden CLI automation</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-key">media stack</span>
+          <span class="spec-val">Sonarr · Radarr · Prowlarr · Bazarr · Jellyseerr · Plex · Jellyfin</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-key">photos</span>
+          <span class="spec-val">Immich — GPU-accelerated ML, face & object recognition</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-key">auth</span>
+          <span class="spec-val">Authentik SSO → Homarr dashboard for family & friends</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="wave-divider"></div>
+
+  <!-- ═══ LIFE ═══ -->
+  <section id="life">
+    <div class="container">
+      <p class="section-label">04 — life</p>
+      <h2 class="section-title fade-up">Beyond the <em>keyboard</em></h2>
+      <div class="life-grid">
+        <div>
+          <div class="interest-block fade-up">
+            <div class="interest-label">travel</div>
+            <div class="interest-title">2–4 trips a year, always</div>
+            <p class="interest-body">
+              Japan twice, Sri Lanka twice, France, Switzerland, England, Singapore,
+              Malaysia, Colombia, Mexico six times. Vancouver and Montreal regularly.
+              I try to eat at a Michelin-starred restaurant on most trips — food is
+              how I understand a place.
+            </p>
+            <div class="travel-list">
+              <span class="travel-tag highlight">Japan ×2</span>
+              <span class="travel-tag highlight">Sri Lanka ×2</span>
+              <span class="travel-tag highlight">Mexico ×6</span>
+              <span class="travel-tag">France</span>
+              <span class="travel-tag">Switzerland</span>
+              <span class="travel-tag">England</span>
+              <span class="travel-tag">Singapore</span>
+              <span class="travel-tag">Malaysia</span>
+              <span class="travel-tag">Colombia</span>
+              <span class="travel-tag">Vancouver</span>
+              <span class="travel-tag">Montreal</span>
+            </div>
+          </div>
+          <div class="interest-block fade-up">
+            <div class="interest-label">music</div>
+            <div class="interest-title">DJing & discovering</div>
+            <p class="interest-body">
+              Music is always there — ambient, in the background, on a flight, during
+              a build session. I've started DJing; I'm a novice but the process of
+              discovering new genres and understanding how tracks fit together pulls at
+              the same part of my brain as engineering.
+            </p>
+          </div>
+        </div>
+        <div>
+          <div class="interest-block fade-up">
+            <div class="interest-label">food</div>
+            <div class="interest-title">Asian cuisine, Michelin stars, everything</div>
+            <p class="interest-body">
+              Growing up in Markham meant exposure to every Asian cuisine imaginable
+              from a young age. Tamil home cooking, Japanese ramen, Chinese dim sum,
+              Korean BBQ — all normal. I'll splurge on a great meal. Some experiences
+              are worth the price.
+            </p>
+          </div>
+          <div class="interest-block fade-up">
+            <div class="interest-label">games & more</div>
+            <div class="interest-title">Board games, video games, sports</div>
+            <p class="interest-body">
+              I played badminton, soccer, Tae Kwon Do, and swam growing up. Still try
+              to stay sharp. Board games with good people, video games when the mood
+              hits, and thinking about investing and what the next business idea might
+              be — these are the things that fill the gaps.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="wave-divider"></div>
+
+  <!-- ═══ PORTAL ═══ -->
+  <section id="portal">
+    <div class="container">
+      <p class="section-label">05 — portal</p>
+      <h2 class="section-title fade-up">Family & friends <em>access</em></h2>
+      <p class="portal-intro fade-up">
+        I run Jellyfin, Immich, and other services for people I actually know.
+        If you're here because I gave you access — the portal is below.
+        One login, everything in one place.
+      </p>
+      <a href="https://homarr.matheesan.ca" class="portal-card fade-up" target="_blank" rel="noopener">
+        <div class="portal-card-left">
+          <div class="portal-card-label">authenticate once</div>
+          <div class="portal-card-title">Open the portal</div>
+          <div class="portal-card-desc">homarr.matheesan.ca — Jellyfin, Immich, and more</div>
+        </div>
+        <div class="portal-arrow">→</div>
+      </a>
+      <p class="portal-note">Secured via Authentik SSO — you'll need credentials from Matheesan directly.</p>
+    </div>
+  </section>
+
+  <div class="wave-divider"></div>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer>
+    <div class="footer-left">
+      © 2026 <span>Matheesan</span> · built with intention
+    </div>
+    <div class="footer-links">
+      <a href="https://github.com/Matheesan2113" target="_blank" rel="noopener">github</a>
+      <a href="mailto:hello@matheesan.ca">email</a>
+    </div>
+  </footer>
+
+  <script>
+    // Custom cursor
+    const cursor = document.getElementById('cursor');
+    const ring = document.getElementById('cursor-ring');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+    function animCursor() {
+      cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
+      rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12;
+      ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+      requestAnimationFrame(animCursor);
+    }
+    animCursor();
+
+    // Wave canvas
+    const canvas = document.getElementById('wave-canvas');
+    const ctx = canvas.getContext('2d');
+    let t = 0;
+    function resize() { canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight; }
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const waves = [
+        { a: 42, f: 0.007, s: 0.009, y: 0.52, c: 'rgba(27,58,92,0.55)', w: 1.5 },
+        { a: 30, f: 0.011, s: 0.014, y: 0.60, c: 'rgba(74,158,187,0.28)', w: 1   },
+        { a: 55, f: 0.005, s: 0.007, y: 0.70, c: 'rgba(27,58,92,0.38)', w: 2   },
+        { a: 20, f: 0.016, s: 0.020, y: 0.42, c: 'rgba(127,168,212,0.15)', w: 0.8 },
+        { a: 35, f: 0.009, s: 0.011, y: 0.80, c: 'rgba(30,77,122,0.25)', w: 1.2 },
+      ];
+      waves.forEach(w => {
+        ctx.beginPath(); ctx.strokeStyle = w.c; ctx.lineWidth = w.w;
+        for (let x = 0; x <= canvas.width; x += 2) {
+          const y = canvas.height * w.y + Math.sin(x * w.f + t * w.s * 60) * w.a;
+          x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+      });
+      t += 0.016;
+      requestAnimationFrame(draw);
+    }
+    resize(); window.addEventListener('resize', resize); draw();
+
+    // Fade-in on scroll
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+    // Active nav link
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(s => { if (window.scrollY >= s.offsetTop - 200) current = s.id; });
+      navLinks.forEach(a => {
+        a.style.color = a.getAttribute('href') === '#' + current ? 'var(--text1)' : '';
+      });
+    });
+  </script>
+</body>
+</html>
