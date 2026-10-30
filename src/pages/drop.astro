@@ -1,0 +1,515 @@
+---
+import Layout from '../layouts/layout.astro';
+import drop from '../data/drop.json';
+---
+
+<Layout title="Drop — Matheesan" description="Private drop box." noindex>
+  <main id="drop" data-endpoint={drop.endpoint}>
+    <section>
+      <div class="container">
+        <p class="section-label"><a href="/">matheesan.ca</a> / drop</p>
+        <h2 class="section-title">Drop <em>box</em></h2>
+
+        <form id="unlock" class="drop-panel" autocomplete="off">
+          <label class="drop-label" for="passphrase">passphrase</label>
+          <div class="drop-row">
+            <input id="passphrase" type="password" class="drop-input" autocomplete="current-password" required />
+            <button type="submit" class="drop-btn">Unlock</button>
+          </div>
+          <label class="drop-check">
+            <input id="remember" type="checkbox" /> remember on this device
+          </label>
+          <p id="unlock-msg" class="drop-msg" role="status"></p>
+        </form>
+
+        <div id="unlocked" hidden>
+          <div class="drop-grid">
+            <div class="drop-panel">
+              <div class="drop-label">files</div>
+              <label id="dropzone" class="dropzone">
+                <input id="file-input" type="file" multiple hidden />
+                <span class="dropzone-title">Drop files here</span>
+                <span class="dropzone-sub">or click to choose · up to 250 MB each</span>
+              </label>
+              <ul id="uploads" class="drop-uploads"></ul>
+            </div>
+
+            <form id="note-form" class="drop-panel">
+              <label class="drop-label" for="note">note</label>
+              <textarea id="note" class="drop-input drop-note" rows="7" placeholder="Links, snippets, reminders…"></textarea>
+              <div class="drop-row drop-row-end">
+                <span id="note-msg" class="drop-msg" role="status"></span>
+                <button type="submit" class="drop-btn">Send note</button>
+              </div>
+            </form>
+          </div>
+
+          <div class="drop-panel">
+            <div class="drop-row drop-row-between">
+              <div class="drop-label">inbox · kept 30 days</div>
+              <div class="drop-row">
+                <button id="refresh" type="button" class="drop-link">refresh</button>
+                <button id="lock" type="button" class="drop-link">lock</button>
+              </div>
+            </div>
+            <ul id="inbox" class="drop-inbox"></ul>
+            <p id="inbox-msg" class="drop-msg" role="status"></p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<style is:global>
+  body:has(#drop) { cursor: auto; }
+
+  #drop section { padding-top: 5rem; min-height: 100vh; }
+  #drop .section-label a { color: inherit; text-decoration: none; }
+  #drop .section-label a:hover { color: var(--accent2); }
+
+  .drop-panel {
+    border: 1px solid var(--navy);
+    background: var(--bg2);
+    border-radius: 2px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  #unlock { max-width: 480px; }
+
+  .drop-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .drop-grid .drop-panel { margin-bottom: 0; }
+
+  .drop-label {
+    display: block;
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.18em;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+  }
+
+  .drop-row { display: flex; gap: 0.75rem; align-items: center; }
+  .drop-row-end { justify-content: flex-end; margin-top: 0.75rem; }
+  .drop-row-between { justify-content: space-between; margin-bottom: 0.5rem; }
+  .drop-row-between .drop-label { margin-bottom: 0; }
+
+  .drop-input {
+    flex: 1;
+    width: 100%;
+    min-width: 0;
+    background: var(--bg);
+    border: 1px solid var(--navy);
+    border-radius: 2px;
+    color: var(--text1);
+    font-family: var(--sans);
+    font-size: 0.95rem;
+    padding: 0.65rem 0.8rem;
+  }
+
+  .drop-input:focus { outline: none; border-color: var(--accent); }
+  .drop-note { resize: vertical; font-family: var(--mono); font-size: 0.8rem; line-height: 1.6; }
+
+  .drop-btn {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    color: var(--text1);
+    background: var(--bg3);
+    border: 1px solid var(--wave1);
+    border-radius: 2px;
+    padding: 0.65rem 1.1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+
+  .drop-btn:hover { border-color: var(--accent); color: var(--accent2); }
+  .drop-btn:disabled { opacity: 0.5; cursor: default; }
+
+  .drop-link {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    color: var(--text2);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.25rem;
+    text-decoration: none;
+  }
+
+  .drop-link:hover { color: var(--accent2); }
+  .drop-link.danger:hover { color: #d98080; }
+
+  .drop-check {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    margin-top: 0.85rem;
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    color: var(--text2);
+  }
+
+  .drop-msg { font-family: var(--mono); font-size: 0.68rem; color: var(--text2); margin-top: 0.75rem; min-height: 1em; }
+  .drop-row .drop-msg { margin-top: 0; flex: 1; }
+  .drop-msg.error { color: #d98080; }
+
+  .dropzone {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    min-height: 168px;
+    border: 1px dashed var(--wave2);
+    border-radius: 2px;
+    background: var(--bg);
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+    padding: 1rem;
+  }
+
+  .dropzone:hover, .dropzone.over { border-color: var(--accent); background: var(--bg3); }
+  .dropzone-title { font-family: var(--serif); font-size: 1.4rem; color: var(--text1); }
+  .dropzone-sub { font-size: 0.8rem; color: var(--text2); }
+
+  .drop-uploads, .drop-inbox { list-style: none; }
+
+  .drop-uploads li {
+    font-size: 0.8rem;
+    color: var(--text2);
+    margin-top: 0.75rem;
+  }
+
+  .drop-uploads progress {
+    display: block;
+    width: 100%;
+    height: 3px;
+    margin-top: 0.35rem;
+    appearance: none;
+    border: none;
+    background: var(--navy);
+    accent-color: var(--accent);
+  }
+
+  .drop-uploads progress::-webkit-progress-bar { background: var(--navy); }
+  .drop-uploads progress::-webkit-progress-value { background: var(--accent); }
+
+  .drop-inbox li {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0.25rem 1rem;
+    padding: 0.85rem 0;
+    border-top: 1px solid var(--navy);
+  }
+
+  .drop-item-name { color: var(--text1); font-size: 0.9rem; overflow-wrap: anywhere; }
+  .drop-item-meta { grid-column: 1; font-family: var(--mono); font-size: 0.62rem; color: var(--text3); }
+  .drop-item-actions { grid-column: 2; grid-row: 1 / span 2; display: flex; gap: 0.5rem; align-items: center; }
+
+  .drop-item-note {
+    grid-column: 1 / -1;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    line-height: 1.6;
+    color: var(--text2);
+    background: var(--bg);
+    border: 1px solid var(--navy);
+    padding: 0.75rem;
+    margin-top: 0.5rem;
+  }
+
+  @media (max-width: 600px) {
+    #drop .container { padding: 0 1rem; }
+    .drop-inbox li { grid-template-columns: 1fr; }
+    .drop-item-actions { grid-column: 1; grid-row: auto; }
+  }
+</style>
+
+<script>
+  type Item = { key: string; name: string; size: number; modified: string; url: string };
+
+  const root = document.getElementById('drop')!;
+  const endpoint = root.dataset.endpoint ?? '';
+  const STORE = 'drop-passphrase';
+  const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
+
+  const unlockForm = $<HTMLFormElement>('unlock');
+  const passInput = $<HTMLInputElement>('passphrase');
+  const remember = $<HTMLInputElement>('remember');
+  const unlocked = $<HTMLDivElement>('unlocked');
+  const fileInput = $<HTMLInputElement>('file-input');
+  const dropzone = $<HTMLLabelElement>('dropzone');
+  const uploads = $<HTMLUListElement>('uploads');
+  const inbox = $<HTMLUListElement>('inbox');
+
+  let passphrase = '';
+
+  // Storage can throw (private windows, blocked site data); the page works without it.
+  const store = {
+    get: (s: Storage) => { try { return s.getItem(STORE) ?? ''; } catch { return ''; } },
+    set: (s: Storage, v: string) => { try { s.setItem(STORE, v); } catch {} },
+    clear: () => { for (const s of [localStorage, sessionStorage]) { try { s.removeItem(STORE); } catch {} } },
+  };
+
+  function say(id: string, text: string, error = false) {
+    const el = $(id);
+    el.textContent = text;
+    el.classList.toggle('error', error);
+  }
+
+  class AuthError extends Error {}
+
+  async function api<T>(path: string, body: object = {}): Promise<T> {
+    const res = await fetch(endpoint + path, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json', 'x-drop-key': passphrase },
+      body: JSON.stringify(body),
+    });
+    const data = await res.json().catch(() => ({}));
+    if (res.status === 401) throw new AuthError(data.error ?? 'Wrong passphrase');
+    if (!res.ok) throw new Error(data.error ?? `Request failed (${res.status})`);
+    return data as T;
+  }
+
+  function lock(message = '') {
+    passphrase = '';
+    store.clear();
+    unlocked.hidden = true;
+    unlockForm.hidden = false;
+    inbox.replaceChildren();
+    say('unlock-msg', message, Boolean(message));
+  }
+
+  async function unlock(candidate: string, rememberIt: boolean) {
+    passphrase = candidate;
+    say('unlock-msg', 'checking…');
+    try {
+      await refresh();
+    } catch (err) {
+      if (err instanceof AuthError) return lock(err.message);
+      say('unlock-msg', (err as Error).message, true);
+      return;
+    }
+    store.set(sessionStorage, candidate);
+    if (rememberIt) store.set(localStorage, candidate);
+    unlockForm.hidden = true;
+    unlocked.hidden = false;
+    passInput.value = '';
+  }
+
+  const fmtSize = (n: number) =>
+    n < 1024 ? `${n} B` : n < 1048576 ? `${(n / 1024).toFixed(1)} KB` : `${(n / 1048576).toFixed(1)} MB`;
+  const fmtTime = (iso: string) =>
+    new Date(iso).toLocaleString(undefined, { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' });
+
+  function button(label: string, onClick: () => void, extra = '') {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = `drop-link ${extra}`.trim();
+    b.textContent = label;
+    b.addEventListener('click', onClick);
+    return b;
+  }
+
+  function renderItem(item: Item) {
+    const li = document.createElement('li');
+    const isNote = item.key.endsWith('/note.txt');
+
+    const name = document.createElement('div');
+    name.className = 'drop-item-name';
+    name.textContent = isNote ? 'Note' : item.name;
+
+    const meta = document.createElement('div');
+    meta.className = 'drop-item-meta';
+    meta.textContent = `${fmtTime(item.modified)} · ${fmtSize(item.size)}`;
+
+    const actions = document.createElement('div');
+    actions.className = 'drop-item-actions';
+
+    if (isNote) {
+      actions.append(
+        button('view', async () => {
+          const open = li.querySelector('.drop-item-note');
+          if (open) return open.remove();
+          const pre = document.createElement('div');
+          pre.className = 'drop-item-note';
+          pre.textContent = 'loading…';
+          li.append(pre);
+          try {
+            pre.textContent = (await api<{ text: string }>('/read', { key: item.key })).text;
+          } catch (err) {
+            pre.textContent = (err as Error).message;
+          }
+        }),
+        button('copy', async () => {
+          try {
+            const { text } = await api<{ text: string }>('/read', { key: item.key });
+            await navigator.clipboard.writeText(text);
+            say('inbox-msg', 'Note copied');
+          } catch (err) {
+            say('inbox-msg', (err as Error).message, true);
+          }
+        }),
+      );
+    } else {
+      const a = document.createElement('a');
+      a.className = 'drop-link';
+      a.href = item.url;
+      a.textContent = 'download';
+      actions.append(a);
+    }
+
+    actions.append(
+      button('delete', async () => {
+        if (!confirm(`Delete ${isNote ? 'this note' : item.name}?`)) return;
+        try {
+          await api('/delete', { key: item.key });
+          li.remove();
+        } catch (err) {
+          say('inbox-msg', (err as Error).message, true);
+        }
+      }, 'danger'),
+    );
+
+    li.append(name, actions, meta);
+    return li;
+  }
+
+  async function refresh() {
+    const { items } = await api<{ items: Item[] }>('/list');
+    inbox.replaceChildren(...items.map(renderItem));
+    say('inbox-msg', items.length ? '' : 'Nothing here yet.');
+  }
+
+  async function safeRefresh() {
+    try {
+      await refresh();
+    } catch (err) {
+      if (err instanceof AuthError) return lock(err.message);
+      say('inbox-msg', (err as Error).message, true);
+    }
+  }
+
+  function uploadFile(file: File) {
+    const li = document.createElement('li');
+    const label = document.createElement('span');
+    const bar = document.createElement('progress');
+    label.textContent = `${file.name} · ${fmtSize(file.size)}`;
+    bar.max = 100;
+    bar.value = 0;
+    li.append(label, bar);
+    uploads.prepend(li);
+
+    return api<{ url: string; fields: Record<string, string> }>('/upload', {
+      name: file.name,
+      size: file.size,
+      type: file.type,
+    })
+      .then(
+        ({ url, fields }) =>
+          new Promise<void>((resolve, reject) => {
+            const form = new FormData();
+            for (const [k, v] of Object.entries(fields)) form.append(k, v);
+            form.append('file', file); // must be the last field for S3
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', url);
+            xhr.upload.onprogress = (e) => { if (e.lengthComputable) bar.value = (e.loaded / e.total) * 100; };
+            xhr.onload = () => (xhr.status < 300 ? resolve() : reject(new Error(`Upload failed (${xhr.status})`)));
+            xhr.onerror = () => reject(new Error('Upload failed (network)'));
+            xhr.send(form);
+          }),
+      )
+      .then(() => {
+        bar.remove();
+        label.textContent = `✓ ${file.name}`;
+      })
+      .catch((err) => {
+        if (err instanceof AuthError) return lock(err.message);
+        bar.remove();
+        label.textContent = `✕ ${file.name} — ${err.message}`;
+        li.classList.add('drop-msg', 'error');
+      });
+  }
+
+  async function uploadAll(files: FileList | File[]) {
+    const list = Array.from(files);
+    if (!list.length) return;
+    await Promise.all(list.map(uploadFile));
+    await safeRefresh();
+  }
+
+  unlockForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const value = passInput.value.trim();
+    if (value) unlock(value, remember.checked);
+  });
+
+  $('lock').addEventListener('click', () => lock());
+  $('refresh').addEventListener('click', safeRefresh);
+
+  fileInput.addEventListener('change', () => {
+    if (fileInput.files) uploadAll(fileInput.files);
+    fileInput.value = '';
+  });
+
+  for (const type of ['dragenter', 'dragover']) {
+    dropzone.addEventListener(type, (e) => {
+      e.preventDefault();
+      dropzone.classList.add('over');
+    });
+  }
+  for (const type of ['dragleave', 'drop']) {
+    dropzone.addEventListener(type, () => dropzone.classList.remove('over'));
+  }
+  dropzone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    if (e.dataTransfer?.files) uploadAll(e.dataTransfer.files);
+  });
+
+  // Pasting a file or image anywhere on the page uploads it.
+  document.addEventListener('paste', (e) => {
+    if (unlocked.hidden || (e.target as HTMLElement).closest('textarea, input')) return;
+    const files = Array.from(e.clipboardData?.files ?? []);
+    if (files.length) uploadAll(files);
+  });
+
+  $<HTMLFormElement>('note-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const note = $<HTMLTextAreaElement>('note');
+    if (!note.value.trim()) return;
+    say('note-msg', 'sending…');
+    try {
+      await api('/note', { text: note.value });
+      note.value = '';
+      say('note-msg', 'Sent');
+      await safeRefresh();
+    } catch (err) {
+      if (err instanceof AuthError) return lock(err.message);
+      say('note-msg', (err as Error).message, true);
+    }
+  });
+
+  if (!endpoint) {
+    say('unlock-msg', 'Drop box is not configured yet.', true);
+    unlockForm.querySelector('button')!.disabled = true;
+  } else {
+    const saved = store.get(sessionStorage) || store.get(localStorage);
+    if (saved) {
+      remember.checked = Boolean(store.get(localStorage));
+      unlock(saved, remember.checked);
+    }
+  }
+</script>
