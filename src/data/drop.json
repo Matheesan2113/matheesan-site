@@ -1,3 +1,10 @@
 {
-  "endpoint": "https://vipfzy4pmpm6ouy6cdqodrc4cm0anffx.lambda-url.ca-central-1.on.aws"
+  "endpoint": "https://vipfzy4pmpm6ouy6cdqodrc4cm0anffx.lambda-url.ca-central-1.on.aws",
+  "oidc": {
+    "issuer": "https://auth.matheesan.ca/application/o/matheesan-drop/",
+    "clientId": "matheesan-drop",
+    "authorize": "https://auth.matheesan.ca/application/o/authorize/",
+    "token": "https://auth.matheesan.ca/application/o/token/",
+    "endSession": "https://auth.matheesan.ca/application/o/matheesan-drop/end-session/"
+  }
 }

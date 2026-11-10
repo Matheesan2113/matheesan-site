@@ -2,8 +2,11 @@
 // Idempotent: re-run after changing lambda/index.mjs to push new code.
 //
 // Needs AWS_ACCESS_KEY_ID / AWS_SECRET_ACCESS_KEY (see deploy-user-policy.json) and optionally
-// AWS_REGION (default ca-central-1). DROP_PASSPHRASE sets or rotates the passphrase; leave it unset
-// on later deploys to keep the current one. Never prints secrets.
+// AWS_REGION (default ca-central-1). Owner login is Authentik OIDC:
+//   DROP_ALLOWED_USERS   required, comma-separated Authentik usernames allowed into the inbox
+//   DROP_OIDC_ISSUER     default https://auth.matheesan.ca/application/o/matheesan-drop/
+//   DROP_OIDC_CLIENT_ID  default matheesan-drop
+// Never prints secrets (the function's environment no longer holds any).
 import { STSClient, GetCallerIdentityCommand } from '@aws-sdk/client-sts';
 import {
 	S3Client,
@@ -30,7 +33,6 @@ import {
 } from '@aws-sdk/client-lambda';
 import { build } from 'esbuild';
 import AdmZip from 'adm-zip';
-import { randomBytes, scryptSync } from 'node:crypto';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -42,6 +44,10 @@ const ROLE = 'matheesan-drop-lambda';
 const ORIGINS = ['https://matheesan.ca', 'https://www.matheesan.ca', 'http://localhost:4321'];
 const RETENTION_DAYS = 30;
 const RESERVED_CONCURRENCY = 5;
+const OIDC_ISSUER = process.env.DROP_OIDC_ISSUER || 'https://auth.matheesan.ca/application/o/matheesan-drop/';
+const OIDC_CLIENT_ID = process.env.DROP_OIDC_CLIENT_ID || 'matheesan-drop';
+const ALLOWED_USERS = (process.env.DROP_ALLOWED_USERS ?? '').split(',').map((u) => u.trim()).filter(Boolean).join(',');
+const RETIRED_ENV = ['KEY_SALT', 'KEY_HASH']; // the old shared passphrase
 
 const sts = new STSClient({ region });
 const s3 = new S3Client({ region });
@@ -73,6 +79,8 @@ async function ensureBucket(bucket) {
 			LifecycleConfiguration: {
 				Rules: [
 					{ ID: 'expire-drops', Status: 'Enabled', Filter: { Prefix: 'drops/' }, Expiration: { Days: RETENTION_DAYS } },
+						// Upload links last at most 7 days; their records are cleaned up after 30.
+						{ ID: 'expire-links', Status: 'Enabled', Filter: { Prefix: 'links/' }, Expiration: { Days: RETENTION_DAYS } },
 					{ ID: 'abort-incomplete', Status: 'Enabled', Filter: { Prefix: '' }, AbortIncompleteMultipartUpload: { DaysAfterInitiation: 1 } },
 				],
 			},
@@ -105,12 +113,18 @@ async function ensureRole(bucket) {
 	await iam.send(
 		new AttachRolePolicyCommand({ RoleName: ROLE, PolicyArn: 'arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole' }),
 	);
-	// Only the drops/ prefix of this one bucket.
+	// Only drops/ (files and notes) and links/ (upload-link records, never deleted by the function) of this one bucket.
 	const access = {
 		Version: '2012-10-17',
 		Statement: [
 			{ Effect: 'Allow', Action: ['s3:PutObject', 's3:GetObject', 's3:DeleteObject'], Resource: `arn:aws:s3:::${bucket}/drops/*` },
-			{ Effect: 'Allow', Action: 's3:ListBucket', Resource: `arn:aws:s3:::${bucket}`, Condition: { StringLike: { 's3:prefix': 'drops/*' } } },
+			{ Effect: 'Allow', Action: ['s3:PutObject', 's3:GetObject'], Resource: `arn:aws:s3:::${bucket}/links/*` },
+			{
+				Effect: 'Allow',
+				Action: 's3:ListBucket',
+				Resource: `arn:aws:s3:::${bucket}`,
+				Condition: { StringLike: { 's3:prefix': ['drops/*', 'links/*'] } },
+			},
 		],
 	};
 	await iam.send(new PutRolePolicyCommand({ RoleName: ROLE, PolicyName: 'drops-bucket', PolicyDocument: JSON.stringify(access) }));
@@ -135,16 +149,26 @@ async function bundle() {
 	return zip.toBuffer();
 }
 
-function passphraseEnv() {
-	const passphrase = process.env.DROP_PASSPHRASE?.trim();
-	if (!passphrase) return null;
-	if (passphrase.length < 16) throw new Error('DROP_PASSPHRASE must be at least 16 characters');
-	const salt = randomBytes(16);
-	return { KEY_SALT: salt.toString('hex'), KEY_HASH: scryptSync(passphrase, salt, 32).toString('hex') };
+// Checks the Authentik provider exists before pointing the function at it, and returns the endpoints the page needs.
+async function discoverOidc() {
+	if (!ALLOWED_USERS) throw new Error('DROP_ALLOWED_USERS is required (Authentik usernames allowed into the inbox)');
+	if (!OIDC_ISSUER.endsWith('/')) throw new Error('DROP_OIDC_ISSUER must end with /');
+	const res = await fetch(`${OIDC_ISSUER}.well-known/openid-configuration`, { signal: AbortSignal.timeout(10000) });
+	if (!res.ok) throw new Error(`OIDC discovery for ${OIDC_ISSUER} returned ${res.status}`);
+	const conf = await res.json();
+	if (conf.issuer !== OIDC_ISSUER) throw new Error(`OIDC issuer mismatch: ${conf.issuer}`);
+	console.log(`oidc ${OIDC_ISSUER}: ok, client ${OIDC_CLIENT_ID}, ${ALLOWED_USERS.split(',').length} allowed user(s)`);
+	return {
+		issuer: OIDC_ISSUER,
+		clientId: OIDC_CLIENT_ID,
+		authorize: conf.authorization_endpoint,
+		token: conf.token_endpoint,
+		endSession: conf.end_session_endpoint ?? null,
+	};
 }
 
 async function ensureFunction(roleArn, bucket, code) {
-	const keyEnv = passphraseEnv();
+	const authEnv = { OIDC_ISSUER, OIDC_CLIENT_ID, ALLOWED_USERS };
 	let existing;
 	try {
 		existing = await lambda.send(new GetFunctionCommand({ FunctionName: FUNCTION }));
@@ -153,7 +177,6 @@ async function ensureFunction(roleArn, bucket, code) {
 	}
 
 	if (!existing) {
-		if (!keyEnv) throw new Error('First deploy needs DROP_PASSPHRASE');
 		const params = {
 			FunctionName: FUNCTION,
 			Runtime: 'nodejs22.x',
@@ -163,7 +186,7 @@ async function ensureFunction(roleArn, bucket, code) {
 			Code: { ZipFile: code },
 			MemorySize: 256,
 			Timeout: 15,
-			Environment: { Variables: { BUCKET: bucket, ...keyEnv } },
+			Environment: { Variables: { BUCKET: bucket, ...authEnv } },
 		};
 		// A brand-new IAM role takes a few seconds before Lambda can assume it.
 		for (let attempt = 1; ; attempt++) {
@@ -180,13 +203,15 @@ async function ensureFunction(roleArn, bucket, code) {
 	} else {
 		await lambda.send(new UpdateFunctionCodeCommand({ FunctionName: FUNCTION, ZipFile: code }));
 		await waitUntilFunctionUpdatedV2({ client: lambda, maxWaitTime: 120 }, { FunctionName: FUNCTION });
-		const vars = { ...existing.Configuration.Environment?.Variables, BUCKET: bucket, ...(keyEnv ?? {}) };
+		const vars = { ...existing.Configuration.Environment?.Variables, BUCKET: bucket, ...authEnv };
+		const retired = RETIRED_ENV.filter((k) => k in vars);
+		for (const k of retired) delete vars[k];
 		await lambda.send(new UpdateFunctionConfigurationCommand({ FunctionName: FUNCTION, Environment: { Variables: vars } }));
 		await waitUntilFunctionUpdatedV2({ client: lambda, maxWaitTime: 120 }, { FunctionName: FUNCTION });
-		console.log(`function ${FUNCTION}: code updated${keyEnv ? ', passphrase rotated' : ''}`);
+		console.log(`function ${FUNCTION}: code updated${retired.length ? ', old passphrase removed' : ''}`);
 	}
 
-	// Caps cost and how many passphrase guesses can run at once.
+	// Caps cost and how many token / link guesses can run at once.
 	try {
 		await lambda.send(new PutFunctionConcurrencyCommand({ FunctionName: FUNCTION, ReservedConcurrentExecutions: RESERVED_CONCURRENCY }));
 		console.log(`function ${FUNCTION}: reserved concurrency ${RESERVED_CONCURRENCY}`);
@@ -196,7 +221,7 @@ async function ensureFunction(roleArn, bucket, code) {
 }
 
 async function ensureUrl() {
-	const cors = { AllowOrigins: ORIGINS, AllowMethods: ['POST'], AllowHeaders: ['content-type', 'x-drop-key'], MaxAge: 3600 };
+	const cors = { AllowOrigins: ORIGINS, AllowMethods: ['POST'], AllowHeaders: ['content-type', 'authorization', 'x-drop-link'], MaxAge: 3600 };
 	let url;
 	try {
 		await lambda.send(new GetFunctionUrlConfigCommand({ FunctionName: FUNCTION }));
@@ -205,7 +230,7 @@ async function ensureUrl() {
 		if (!isNotFound(err)) throw err;
 		url = (await lambda.send(new CreateFunctionUrlConfigCommand({ FunctionName: FUNCTION, AuthType: 'NONE', Cors: cors }))).FunctionUrl;
 	}
-	// Public function URLs need both permissions; the passphrase check happens inside the handler.
+	// Public function URLs need both permissions; the login / upload-link check happens inside the handler.
 	const grants = [
 		{ StatementId: 'url-invoke-url', Action: 'lambda:InvokeFunctionUrl', FunctionUrlAuthType: 'NONE' },
 		{ StatementId: 'url-invoke-function', Action: 'lambda:InvokeFunction', InvokedViaFunctionUrl: true },
@@ -224,13 +249,14 @@ async function ensureUrl() {
 const account = (await sts.send(new GetCallerIdentityCommand({}))).Account;
 const bucket = `matheesan-drop-${account}`;
 console.log(`account ${account}, region ${region}`);
+const oidc = await discoverOidc();
 await ensureBucket(bucket);
 const roleArn = await ensureRole(bucket);
 await ensureFunction(roleArn, bucket, await bundle());
 const endpoint = (await ensureUrl()).replace(/\/$/, '');
 
-// The page reads the endpoint at build time; it is not a secret.
+// The page reads these at build time; none is a secret (the OIDC client is public and uses PKCE).
 const dataDir = join(here, '..', 'src', 'data');
 mkdirSync(dataDir, { recursive: true });
-writeFileSync(join(dataDir, 'drop.json'), JSON.stringify({ endpoint }, null, 2) + '\n');
+writeFileSync(join(dataDir, 'drop.json'), JSON.stringify({ endpoint, oidc }, null, 2) + '\n');
 console.log('wrote src/data/drop.json');

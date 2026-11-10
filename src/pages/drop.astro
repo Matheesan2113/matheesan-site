@@ -1,26 +1,24 @@
 ---
 import Layout from '../layouts/layout.astro';
+import '../styles/drop.css';
 import drop from '../data/drop.json';
+
+const config = JSON.stringify({ endpoint: drop.endpoint ?? '', ...(drop.oidc ?? {}) });
 ---
 
 <Layout title="Drop — Matheesan" description="Private drop box." noindex>
-  <main id="drop" data-endpoint={drop.endpoint}>
+  <main id="drop" data-config={config}>
     <section>
       <div class="container">
         <p class="section-label"><a href="/">matheesan.ca</a> / drop</p>
         <h2 class="section-title">Drop <em>box</em></h2>
 
-        <form id="unlock" class="drop-panel" autocomplete="off">
-          <label class="drop-label" for="passphrase">passphrase</label>
-          <div class="drop-row">
-            <input id="passphrase" type="password" class="drop-input" autocomplete="current-password" required />
-            <button type="submit" class="drop-btn">Unlock</button>
-          </div>
-          <label class="drop-check">
-            <input id="remember" type="checkbox" /> remember on this device
-          </label>
-          <p id="unlock-msg" class="drop-msg" role="status"></p>
-        </form>
+        <div id="signin" class="drop-panel">
+          <div class="drop-label">private</div>
+          <p class="drop-lead">Sign in with your homelab account to open the inbox.</p>
+          <button id="signin-btn" type="button" class="drop-btn">Sign in with Authentik</button>
+          <p id="signin-msg" class="drop-msg" role="status"></p>
+        </div>
 
         <div id="unlocked" hidden>
           <div class="drop-grid">
@@ -46,14 +44,50 @@ import drop from '../data/drop.json';
 
           <div class="drop-panel">
             <div class="drop-row drop-row-between">
-              <div class="drop-label">inbox · kept 30 days</div>
+              <div class="drop-label">inbox · kept 30 days · copied to Nextcloud</div>
               <div class="drop-row">
                 <button id="refresh" type="button" class="drop-link">refresh</button>
-                <button id="lock" type="button" class="drop-link">lock</button>
+                <button id="signout" type="button" class="drop-link">sign out</button>
               </div>
             </div>
             <ul id="inbox" class="drop-inbox"></ul>
             <p id="inbox-msg" class="drop-msg" role="status"></p>
+          </div>
+
+          <div class="drop-panel">
+            <div class="drop-label">upload links · for people without an account</div>
+            <form id="link-form" class="drop-links-form">
+              <div class="drop-field">
+                <label class="drop-label" for="link-label">who is it for</label>
+                <input id="link-label" class="drop-input" maxlength="60" placeholder="e.g. Mom, tax docs" required />
+              </div>
+              <div class="drop-field">
+                <label class="drop-label" for="link-hours">expires in</label>
+                <select id="link-hours" class="drop-input">
+                  <option value="1">1 hour</option>
+                  <option value="24" selected>1 day</option>
+                  <option value="72">3 days</option>
+                  <option value="168">7 days</option>
+                </select>
+              </div>
+              <div class="drop-field">
+                <label class="drop-label" for="link-files">max files</label>
+                <select id="link-files" class="drop-input">
+                  <option>1</option>
+                  <option>5</option>
+                  <option selected>10</option>
+                  <option>25</option>
+                  <option>50</option>
+                </select>
+              </div>
+              <button type="submit" class="drop-btn">Create link</button>
+            </form>
+            <div id="link-new" class="drop-url" hidden>
+              <input id="link-url" class="drop-input" readonly aria-label="new upload link" />
+              <button id="link-copy" type="button" class="drop-btn">Copy</button>
+            </div>
+            <p id="link-msg" class="drop-msg" role="status"></p>
+            <ul id="links" class="drop-inbox"></ul>
           </div>
         </div>
       </div>
@@ -61,207 +95,44 @@ import drop from '../data/drop.json';
   </main>
 </Layout>
 
-<style is:global>
-  body:has(#drop) { cursor: auto; }
-
-  #drop section { padding-top: 5rem; min-height: 100vh; }
-  #drop .section-label a { color: inherit; text-decoration: none; }
-  #drop .section-label a:hover { color: var(--accent2); }
-
-  .drop-panel {
-    border: 1px solid var(--navy);
-    background: var(--bg2);
-    border-radius: 2px;
-    padding: 1.5rem;
-    margin-bottom: 1.5rem;
-  }
-
-  #unlock { max-width: 480px; }
-
-  .drop-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1.5rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .drop-grid .drop-panel { margin-bottom: 0; }
-
-  .drop-label {
-    display: block;
-    font-family: var(--mono);
-    font-size: 0.62rem;
-    letter-spacing: 0.18em;
-    color: var(--accent);
-    margin-bottom: 0.75rem;
-  }
-
-  .drop-row { display: flex; gap: 0.75rem; align-items: center; }
-  .drop-row-end { justify-content: flex-end; margin-top: 0.75rem; }
-  .drop-row-between { justify-content: space-between; margin-bottom: 0.5rem; }
-  .drop-row-between .drop-label { margin-bottom: 0; }
-
-  .drop-input {
-    flex: 1;
-    width: 100%;
-    min-width: 0;
-    background: var(--bg);
-    border: 1px solid var(--navy);
-    border-radius: 2px;
-    color: var(--text1);
-    font-family: var(--sans);
-    font-size: 0.95rem;
-    padding: 0.65rem 0.8rem;
-  }
-
-  .drop-input:focus { outline: none; border-color: var(--accent); }
-  .drop-note { resize: vertical; font-family: var(--mono); font-size: 0.8rem; line-height: 1.6; }
-
-  .drop-btn {
-    font-family: var(--mono);
-    font-size: 0.7rem;
-    letter-spacing: 0.1em;
-    color: var(--text1);
-    background: var(--bg3);
-    border: 1px solid var(--wave1);
-    border-radius: 2px;
-    padding: 0.65rem 1.1rem;
-    cursor: pointer;
-    transition: all 0.2s;
-    white-space: nowrap;
-  }
-
-  .drop-btn:hover { border-color: var(--accent); color: var(--accent2); }
-  .drop-btn:disabled { opacity: 0.5; cursor: default; }
-
-  .drop-link {
-    font-family: var(--mono);
-    font-size: 0.65rem;
-    letter-spacing: 0.1em;
-    color: var(--text2);
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0.25rem;
-    text-decoration: none;
-  }
-
-  .drop-link:hover { color: var(--accent2); }
-  .drop-link.danger:hover { color: #d98080; }
-
-  .drop-check {
-    display: flex;
-    gap: 0.5rem;
-    align-items: center;
-    margin-top: 0.85rem;
-    font-family: var(--mono);
-    font-size: 0.65rem;
-    color: var(--text2);
-  }
-
-  .drop-msg { font-family: var(--mono); font-size: 0.68rem; color: var(--text2); margin-top: 0.75rem; min-height: 1em; }
-  .drop-row .drop-msg { margin-top: 0; flex: 1; }
-  .drop-msg.error { color: #d98080; }
-
-  .dropzone {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 0.4rem;
-    min-height: 168px;
-    border: 1px dashed var(--wave2);
-    border-radius: 2px;
-    background: var(--bg);
-    cursor: pointer;
-    transition: all 0.2s;
-    text-align: center;
-    padding: 1rem;
-  }
-
-  .dropzone:hover, .dropzone.over { border-color: var(--accent); background: var(--bg3); }
-  .dropzone-title { font-family: var(--serif); font-size: 1.4rem; color: var(--text1); }
-  .dropzone-sub { font-size: 0.8rem; color: var(--text2); }
-
-  .drop-uploads, .drop-inbox { list-style: none; }
-
-  .drop-uploads li {
-    font-size: 0.8rem;
-    color: var(--text2);
-    margin-top: 0.75rem;
-  }
-
-  .drop-uploads progress {
-    display: block;
-    width: 100%;
-    height: 3px;
-    margin-top: 0.35rem;
-    appearance: none;
-    border: none;
-    background: var(--navy);
-    accent-color: var(--accent);
-  }
-
-  .drop-uploads progress::-webkit-progress-bar { background: var(--navy); }
-  .drop-uploads progress::-webkit-progress-value { background: var(--accent); }
-
-  .drop-inbox li {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 0.25rem 1rem;
-    padding: 0.85rem 0;
-    border-top: 1px solid var(--navy);
-  }
-
-  .drop-item-name { color: var(--text1); font-size: 0.9rem; overflow-wrap: anywhere; }
-  .drop-item-meta { grid-column: 1; font-family: var(--mono); font-size: 0.62rem; color: var(--text3); }
-  .drop-item-actions { grid-column: 2; grid-row: 1 / span 2; display: flex; gap: 0.5rem; align-items: center; }
-
-  .drop-item-note {
-    grid-column: 1 / -1;
-    white-space: pre-wrap;
-    overflow-wrap: anywhere;
-    font-family: var(--mono);
-    font-size: 0.75rem;
-    line-height: 1.6;
-    color: var(--text2);
-    background: var(--bg);
-    border: 1px solid var(--navy);
-    padding: 0.75rem;
-    margin-top: 0.5rem;
-  }
-
-  @media (max-width: 600px) {
-    #drop .container { padding: 0 1rem; }
-    .drop-inbox li { grid-template-columns: 1fr; }
-    .drop-item-actions { grid-column: 1; grid-row: auto; }
-  }
-</style>
-
 <script>
-  type Item = { key: string; name: string; size: number; modified: string; url: string };
+  type Item = { key: string; name: string; from: string | null; size: number; modified: string; url: string };
+  type Link = {
+    id: string;
+    label: string;
+    from: string;
+    created: string;
+    expires: string;
+    maxFiles: number;
+    used: number;
+    remaining: number;
+    state: 'active' | 'expired' | 'revoked' | 'used up';
+  };
+  type Config = { endpoint: string; issuer?: string; clientId?: string; authorize?: string; token?: string; endSession?: string | null };
 
   const root = document.getElementById('drop')!;
-  const endpoint = root.dataset.endpoint ?? '';
-  const STORE = 'drop-passphrase';
+  const cfg: Config = JSON.parse(root.dataset.config ?? '{}');
+  const REDIRECT = `${location.origin}/drop/`;
+  const TOKEN_KEY = 'drop-session';
+  const PKCE_KEY = 'drop-pkce';
   const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
 
-  const unlockForm = $<HTMLFormElement>('unlock');
-  const passInput = $<HTMLInputElement>('passphrase');
-  const remember = $<HTMLInputElement>('remember');
+  const signinPanel = $<HTMLDivElement>('signin');
   const unlocked = $<HTMLDivElement>('unlocked');
   const fileInput = $<HTMLInputElement>('file-input');
   const dropzone = $<HTMLLabelElement>('dropzone');
   const uploads = $<HTMLUListElement>('uploads');
   const inbox = $<HTMLUListElement>('inbox');
+  const linksList = $<HTMLUListElement>('links');
 
-  let passphrase = '';
+  let accessToken = '';
 
-  // Storage can throw (private windows, blocked site data); the page works without it.
-  const store = {
-    get: (s: Storage) => { try { return s.getItem(STORE) ?? ''; } catch { return ''; } },
-    set: (s: Storage, v: string) => { try { s.setItem(STORE, v); } catch {} },
-    clear: () => { for (const s of [localStorage, sessionStorage]) { try { s.removeItem(STORE); } catch {} } },
+  // sessionStorage only: the token dies with the tab. Authentik's own session makes signing in again one click.
+  // Storage can throw (private windows, blocked site data); the page then just signs in every time.
+  const session = {
+    get<T>(key: string): T | null { try { return JSON.parse(sessionStorage.getItem(key) ?? 'null'); } catch { return null; } },
+    set(key: string, value: unknown) { try { sessionStorage.setItem(key, JSON.stringify(value)); } catch {} },
+    clear(key: string) { try { sessionStorage.removeItem(key); } catch {} },
   };
 
   function say(id: string, text: string, error = false) {
@@ -273,42 +144,99 @@ import drop from '../data/drop.json';
   class AuthError extends Error {}
 
   async function api<T>(path: string, body: object = {}): Promise<T> {
-    const res = await fetch(endpoint + path, {
+    const res = await fetch(cfg.endpoint + path, {
       method: 'POST',
-      headers: { 'content-type': 'application/json', 'x-drop-key': passphrase },
+      headers: { 'content-type': 'application/json', authorization: `Bearer ${accessToken}` },
       body: JSON.stringify(body),
     });
     const data = await res.json().catch(() => ({}));
-    if (res.status === 401) throw new AuthError(data.error ?? 'Wrong passphrase');
+    if (res.status === 401) throw new AuthError(data.error ?? 'Please sign in again');
     if (!res.ok) throw new Error(data.error ?? `Request failed (${res.status})`);
     return data as T;
   }
 
-  function lock(message = '') {
-    passphrase = '';
-    store.clear();
-    unlocked.hidden = true;
-    unlockForm.hidden = false;
-    inbox.replaceChildren();
-    say('unlock-msg', message, Boolean(message));
+  // ---------- sign-in (OIDC authorization code + PKCE, public client) ----------
+
+  const b64url = (bytes: ArrayBuffer | Uint8Array) =>
+    btoa(String.fromCharCode(...new Uint8Array(bytes))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+  const random = (n: number) => b64url(crypto.getRandomValues(new Uint8Array(n)));
+
+  async function signIn() {
+    const verifier = random(48);
+    const state = random(16);
+    const challenge = b64url(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(verifier)));
+    session.set(PKCE_KEY, { state, verifier });
+    const params = new URLSearchParams({
+      response_type: 'code',
+      client_id: cfg.clientId!,
+      redirect_uri: REDIRECT,
+      scope: 'openid profile',
+      state,
+      code_challenge: challenge,
+      code_challenge_method: 'S256',
+    });
+    location.assign(`${cfg.authorize}?${params}`);
   }
 
-  async function unlock(candidate: string, rememberIt: boolean) {
-    passphrase = candidate;
-    say('unlock-msg', 'checking…');
+  async function finishSignIn(params: URLSearchParams) {
+    history.replaceState(null, '', location.pathname); // drop ?code=&state= from the address bar and history
+    const saved = session.get<{ state: string; verifier: string }>(PKCE_KEY);
+    session.clear(PKCE_KEY);
+    if (params.get('error')) throw new Error(params.get('error_description') || params.get('error')!);
+    if (!saved || saved.state !== params.get('state')) throw new Error('Sign-in did not match this tab. Try again.');
+    const res = await fetch(cfg.token!, {
+      method: 'POST',
+      headers: { 'content-type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({
+        grant_type: 'authorization_code',
+        code: params.get('code') ?? '',
+        redirect_uri: REDIRECT,
+        client_id: cfg.clientId!,
+        code_verifier: saved.verifier,
+      }),
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok || !data.access_token) throw new Error(data.error_description || data.error || `Sign-in failed (${res.status})`);
+    session.set(TOKEN_KEY, { token: data.access_token, expires: Date.now() + (data.expires_in ?? 3600) * 1000 });
+  }
+
+  function showSignIn(message = '', error = false) {
+    accessToken = '';
+    session.clear(TOKEN_KEY);
+    unlocked.hidden = true;
+    signinPanel.hidden = false;
+    inbox.replaceChildren();
+    linksList.replaceChildren();
+    say('signin-msg', message, error);
+  }
+
+  const onAuthError = (err: unknown) => {
+    if (err instanceof AuthError) {
+      showSignIn('Your session ended. Sign in again.', true);
+      return true;
+    }
+    return false;
+  };
+
+  async function open() {
+    say('signin-msg', 'opening…');
     try {
-      await refresh();
+      await Promise.all([refresh(), refreshLinks()]);
     } catch (err) {
-      if (err instanceof AuthError) return lock(err.message);
-      say('unlock-msg', (err as Error).message, true);
+      if (!onAuthError(err)) say('signin-msg', (err as Error).message, true);
       return;
     }
-    store.set(sessionStorage, candidate);
-    if (rememberIt) store.set(localStorage, candidate);
-    unlockForm.hidden = true;
+    signinPanel.hidden = true;
     unlocked.hidden = false;
-    passInput.value = '';
   }
+
+  function signOut() {
+    showSignIn('Signed out.');
+    // Also end the Authentik session, so a shared or work computer is fully logged out.
+    if (cfg.endSession) location.assign(cfg.endSession);
+  }
+
+  // ---------- inbox ----------
 
   const fmtSize = (n: number) =>
     n < 1024 ? `${n} B` : n < 1048576 ? `${(n / 1024).toFixed(1)} KB` : `${(n / 1048576).toFixed(1)} MB`;
@@ -335,6 +263,12 @@ import drop from '../data/drop.json';
     const meta = document.createElement('div');
     meta.className = 'drop-item-meta';
     meta.textContent = `${fmtTime(item.modified)} · ${fmtSize(item.size)}`;
+    if (item.from) {
+      const from = document.createElement('span');
+      from.className = 'drop-from';
+      from.textContent = ` · from ${item.from}`;
+      meta.append(from);
+    }
 
     const actions = document.createElement('div');
     actions.className = 'drop-item-actions';
@@ -342,8 +276,8 @@ import drop from '../data/drop.json';
     if (isNote) {
       actions.append(
         button('view', async () => {
-          const open = li.querySelector('.drop-item-note');
-          if (open) return open.remove();
+          const opened = li.querySelector('.drop-item-note');
+          if (opened) return opened.remove();
           const pre = document.createElement('div');
           pre.className = 'drop-item-note';
           pre.textContent = 'loading…';
@@ -351,7 +285,7 @@ import drop from '../data/drop.json';
           try {
             pre.textContent = (await api<{ text: string }>('/read', { key: item.key })).text;
           } catch (err) {
-            pre.textContent = (err as Error).message;
+            if (!onAuthError(err)) pre.textContent = (err as Error).message;
           }
         }),
         button('copy', async () => {
@@ -360,7 +294,7 @@ import drop from '../data/drop.json';
             await navigator.clipboard.writeText(text);
             say('inbox-msg', 'Note copied');
           } catch (err) {
-            say('inbox-msg', (err as Error).message, true);
+            if (!onAuthError(err)) say('inbox-msg', (err as Error).message, true);
           }
         }),
       );
@@ -374,12 +308,12 @@ import drop from '../data/drop.json';
 
     actions.append(
       button('delete', async () => {
-        if (!confirm(`Delete ${isNote ? 'this note' : item.name}?`)) return;
+        if (!confirm(`Delete ${isNote ? 'this note' : item.name}? A copy already pulled into Nextcloud stays there.`)) return;
         try {
           await api('/delete', { key: item.key });
           li.remove();
         } catch (err) {
-          say('inbox-msg', (err as Error).message, true);
+          if (!onAuthError(err)) say('inbox-msg', (err as Error).message, true);
         }
       }, 'danger'),
     );
@@ -398,8 +332,7 @@ import drop from '../data/drop.json';
     try {
       await refresh();
     } catch (err) {
-      if (err instanceof AuthError) return lock(err.message);
-      say('inbox-msg', (err as Error).message, true);
+      if (!onAuthError(err)) say('inbox-msg', (err as Error).message, true);
     }
   }
 
@@ -413,35 +346,32 @@ import drop from '../data/drop.json';
     li.append(label, bar);
     uploads.prepend(li);
 
-    return api<{ url: string; fields: Record<string, string> }>('/upload', {
-      name: file.name,
-      size: file.size,
-      type: file.type,
-    })
-      .then(
-        ({ url, fields }) =>
-          new Promise<void>((resolve, reject) => {
-            const form = new FormData();
-            for (const [k, v] of Object.entries(fields)) form.append(k, v);
-            form.append('file', file); // must be the last field for S3
-            const xhr = new XMLHttpRequest();
-            xhr.open('POST', url);
-            xhr.upload.onprogress = (e) => { if (e.lengthComputable) bar.value = (e.loaded / e.total) * 100; };
-            xhr.onload = () => (xhr.status < 300 ? resolve() : reject(new Error(`Upload failed (${xhr.status})`)));
-            xhr.onerror = () => reject(new Error('Upload failed (network)'));
-            xhr.send(form);
-          }),
-      )
+    return api<{ url: string; fields: Record<string, string> }>('/upload', { name: file.name, size: file.size, type: file.type })
+      .then(({ url, fields }) => postToS3(url, fields, file, bar))
       .then(() => {
         bar.remove();
         label.textContent = `✓ ${file.name}`;
       })
       .catch((err) => {
-        if (err instanceof AuthError) return lock(err.message);
+        if (onAuthError(err)) return;
         bar.remove();
         label.textContent = `✕ ${file.name} — ${err.message}`;
         li.classList.add('drop-msg', 'error');
       });
+  }
+
+  function postToS3(url: string, fields: Record<string, string>, file: File, bar: HTMLProgressElement) {
+    return new Promise<void>((resolve, reject) => {
+      const form = new FormData();
+      for (const [k, v] of Object.entries(fields)) form.append(k, v);
+      form.append('file', file); // must be the last field for S3
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', url);
+      xhr.upload.onprogress = (e) => { if (e.lengthComputable) bar.value = (e.loaded / e.total) * 100; };
+      xhr.onload = () => (xhr.status < 300 ? resolve() : reject(new Error(`Upload failed (${xhr.status})`)));
+      xhr.onerror = () => reject(new Error('Upload failed (network)'));
+      xhr.send(form);
+    });
   }
 
   async function uploadAll(files: FileList | File[]) {
@@ -451,14 +381,89 @@ import drop from '../data/drop.json';
     await safeRefresh();
   }
 
-  unlockForm.addEventListener('submit', (e) => {
+  // ---------- upload links ----------
+
+  function renderLink(link: Link) {
+    const li = document.createElement('li');
+    const name = document.createElement('div');
+    name.className = 'drop-item-name';
+    name.textContent = link.label;
+    const badge = document.createElement('span');
+    badge.className = `drop-badge ${link.state === 'active' ? 'active' : ''}`;
+    badge.textContent = link.state;
+    name.append(badge);
+
+    const meta = document.createElement('div');
+    meta.className = 'drop-item-meta';
+    const when = link.state === 'active' ? `expires ${fmtTime(link.expires)}` : `created ${fmtTime(link.created)}`;
+    meta.textContent = `${link.used} of ${link.maxFiles} files · ${when}`;
+
+    const actions = document.createElement('div');
+    actions.className = 'drop-item-actions';
+    if (link.state === 'active') {
+      actions.append(
+        button('revoke', async () => {
+          if (!confirm(`Revoke the link for ${link.label}? It stops working right away.`)) return;
+          try {
+            await api('/links/revoke', { id: link.id });
+            await refreshLinks();
+          } catch (err) {
+            if (!onAuthError(err)) say('link-msg', (err as Error).message, true);
+          }
+        }, 'danger'),
+      );
+    }
+    li.append(name, actions, meta);
+    return li;
+  }
+
+  async function refreshLinks() {
+    const { links } = await api<{ links: Link[] }>('/links');
+    linksList.replaceChildren(...links.map(renderLink));
+  }
+
+  $<HTMLFormElement>('link-form').addEventListener('submit', async (e) => {
     e.preventDefault();
-    const value = passInput.value.trim();
-    if (value) unlock(value, remember.checked);
+    const label = $<HTMLInputElement>('link-label');
+    say('link-msg', 'creating…');
+    try {
+      const { token } = await api<{ token: string }>('/links/create', {
+        label: label.value,
+        hours: Number($<HTMLSelectElement>('link-hours').value),
+        maxFiles: Number($<HTMLSelectElement>('link-files').value),
+      });
+      // The token lives in the #fragment, which browsers never send to a server.
+      $<HTMLInputElement>('link-url').value = `${location.origin}/drop/send/#${token}`;
+      $('link-new').hidden = false;
+      label.value = '';
+      say('link-msg', 'Copy it now: the link is shown only once.');
+      await refreshLinks();
+    } catch (err) {
+      if (!onAuthError(err)) say('link-msg', (err as Error).message, true);
+    }
   });
 
-  $('lock').addEventListener('click', () => lock());
-  $('refresh').addEventListener('click', safeRefresh);
+  $('link-copy').addEventListener('click', async () => {
+    const input = $<HTMLInputElement>('link-url');
+    try {
+      await navigator.clipboard.writeText(input.value);
+      say('link-msg', 'Link copied.');
+    } catch {
+      input.select();
+      say('link-msg', 'Press Ctrl+C to copy.');
+    }
+  });
+
+  // ---------- wiring ----------
+
+  $('signin-btn').addEventListener('click', () => {
+    signIn().catch((err) => say('signin-msg', (err as Error).message, true));
+  });
+  $('signout').addEventListener('click', signOut);
+  $('refresh').addEventListener('click', () => {
+    safeRefresh();
+    refreshLinks().catch(onAuthError);
+  });
 
   fileInput.addEventListener('change', () => {
     if (fileInput.files) uploadAll(fileInput.files);
@@ -497,19 +502,33 @@ import drop from '../data/drop.json';
       say('note-msg', 'Sent');
       await safeRefresh();
     } catch (err) {
-      if (err instanceof AuthError) return lock(err.message);
-      say('note-msg', (err as Error).message, true);
+      if (!onAuthError(err)) say('note-msg', (err as Error).message, true);
     }
   });
 
-  if (!endpoint) {
-    say('unlock-msg', 'Drop box is not configured yet.', true);
-    unlockForm.querySelector('button')!.disabled = true;
-  } else {
-    const saved = store.get(sessionStorage) || store.get(localStorage);
-    if (saved) {
-      remember.checked = Boolean(store.get(localStorage));
-      unlock(saved, remember.checked);
+  async function start() {
+    if (!cfg.endpoint || !cfg.authorize || !cfg.token || !cfg.clientId) {
+      say('signin-msg', 'Drop box is not configured yet.', true);
+      $<HTMLButtonElement>('signin-btn').disabled = true;
+      return;
+    }
+    const params = new URLSearchParams(location.search);
+    if (params.has('code') || params.has('error')) {
+      say('signin-msg', 'signing in…');
+      try {
+        await finishSignIn(params);
+      } catch (err) {
+        return say('signin-msg', (err as Error).message, true);
+      }
+    }
+    const saved = session.get<{ token: string; expires: number }>(TOKEN_KEY);
+    if (saved && saved.expires > Date.now() + 30_000) {
+      accessToken = saved.token;
+      await open();
+    } else {
+      session.clear(TOKEN_KEY);
     }
   }
+
+  start();
 </script>

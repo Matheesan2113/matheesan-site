@@ -1,0 +1,172 @@
+---
+import Layout from '../../layouts/layout.astro';
+import '../../styles/drop.css';
+import drop from '../../data/drop.json';
+---
+
+<Layout title="Send files — Matheesan" description="Send files privately." noindex>
+  <main id="drop" data-endpoint={drop.endpoint}>
+    <section>
+      <div class="container">
+        <p class="section-label"><a href="/">matheesan.ca</a> / send</p>
+        <h2 class="section-title">Send <em>files</em></h2>
+
+        <div id="guest-intro" class="drop-panel">
+          <div class="drop-label" id="guest-label">upload link</div>
+          <p id="guest-lead" class="drop-lead">Checking your link…</p>
+          <p id="guest-msg" class="drop-msg" role="status"></p>
+        </div>
+
+        <div id="guest-upload" class="drop-panel" hidden>
+          <div class="drop-label">files</div>
+          <label id="dropzone" class="dropzone">
+            <input id="file-input" type="file" multiple hidden />
+            <span class="dropzone-title">Drop files here</span>
+            <span class="dropzone-sub" id="dropzone-sub">or click to choose</span>
+          </label>
+          <ul id="uploads" class="drop-uploads"></ul>
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<script>
+  type Info = { label: string; expires: string; remaining: number; maxFileBytes: number };
+
+  const root = document.getElementById('drop')!;
+  const endpoint = root.dataset.endpoint ?? '';
+  const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
+  // The token is in the #fragment, so it never reaches GitHub Pages or any log.
+  const token = decodeURIComponent(location.hash.slice(1));
+
+  const panel = $<HTMLDivElement>('guest-upload');
+  const fileInput = $<HTMLInputElement>('file-input');
+  const dropzone = $<HTMLLabelElement>('dropzone');
+  const uploads = $<HTMLUListElement>('uploads');
+  let remaining = 0;
+  let maxFileBytes = 0;
+
+  class LinkError extends Error {}
+
+  async function api<T>(path: string, body: object = {}): Promise<T> {
+    const res = await fetch(endpoint + path, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json', 'x-drop-link': token },
+      body: JSON.stringify(body),
+    });
+    const data = await res.json().catch(() => ({}));
+    if (res.status === 401 || res.status === 410) throw new LinkError(data.error ?? 'This upload link is not valid');
+    if (!res.ok) throw new Error(data.error ?? `Request failed (${res.status})`);
+    return data as T;
+  }
+
+  const fmtSize = (n: number) =>
+    n < 1024 ? `${n} B` : n < 1048576 ? `${(n / 1024).toFixed(1)} KB` : `${(n / 1048576).toFixed(1)} MB`;
+  const fmtTime = (iso: string) =>
+    new Date(iso).toLocaleString(undefined, { weekday: 'short', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' });
+
+  function dead(message: string) {
+    panel.hidden = true;
+    $('guest-lead').textContent = message;
+    $('guest-msg').textContent = 'Ask Matheesan for a new link if you still need to send something.';
+  }
+
+  function showRemaining() {
+    $('dropzone-sub').textContent = `or click to choose · ${remaining} file${remaining === 1 ? '' : 's'} left · up to ${Math.round(maxFileBytes / 1048576)} MB each`;
+    if (remaining <= 0) {
+      dropzone.hidden = true;
+      $('guest-msg').textContent = 'That was the last file this link allows. Thanks!';
+    }
+  }
+
+  function postToS3(url: string, fields: Record<string, string>, file: File, bar: HTMLProgressElement) {
+    return new Promise<void>((resolve, reject) => {
+      const form = new FormData();
+      for (const [k, v] of Object.entries(fields)) form.append(k, v);
+      form.append('file', file); // must be the last field for S3
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', url);
+      xhr.upload.onprogress = (e) => { if (e.lengthComputable) bar.value = (e.loaded / e.total) * 100; };
+      xhr.onload = () => (xhr.status < 300 ? resolve() : reject(new Error(`Upload failed (${xhr.status})`)));
+      xhr.onerror = () => reject(new Error('Upload failed (network)'));
+      xhr.send(form);
+    });
+  }
+
+  async function uploadFile(file: File) {
+    const li = document.createElement('li');
+    const label = document.createElement('span');
+    const bar = document.createElement('progress');
+    label.textContent = `${file.name} · ${fmtSize(file.size)}`;
+    bar.max = 100;
+    bar.value = 0;
+    li.append(label, bar);
+    uploads.prepend(li);
+    try {
+      if (file.size > maxFileBytes) throw new Error(`larger than ${Math.round(maxFileBytes / 1048576)} MB`);
+      const up = await api<{ url: string; fields: Record<string, string>; remaining: number }>('/guest/upload', {
+        name: file.name,
+        size: file.size,
+        type: file.type,
+      });
+      remaining = up.remaining;
+      await postToS3(up.url, up.fields, file, bar);
+      bar.remove();
+      label.textContent = `✓ ${file.name} — sent`;
+    } catch (err) {
+      bar.remove();
+      label.textContent = `✕ ${file.name} — ${(err as Error).message}`;
+      li.classList.add('drop-msg', 'error');
+      if (err instanceof LinkError) remaining = 0;
+    }
+    showRemaining();
+  }
+
+  // One at a time, so the link's file count is spent in order and a used-up link stops cleanly.
+  async function uploadAll(files: FileList | File[]) {
+    for (const file of Array.from(files)) {
+      if (remaining <= 0) break;
+      await uploadFile(file);
+    }
+  }
+
+  fileInput.addEventListener('change', () => {
+    if (fileInput.files) uploadAll(fileInput.files);
+    fileInput.value = '';
+  });
+  for (const type of ['dragenter', 'dragover']) {
+    dropzone.addEventListener(type, (e) => {
+      e.preventDefault();
+      dropzone.classList.add('over');
+    });
+  }
+  for (const type of ['dragleave', 'drop']) {
+    dropzone.addEventListener(type, () => dropzone.classList.remove('over'));
+  }
+  dropzone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    if (e.dataTransfer?.files) uploadAll(e.dataTransfer.files);
+  });
+
+  async function start() {
+    if (!endpoint || !token) return dead('This page needs the full upload link you were sent.');
+    try {
+      const info = await api<Info>('/guest/info');
+      remaining = info.remaining;
+      maxFileBytes = info.maxFileBytes;
+      $('guest-label').textContent = `upload link · ${info.label}`;
+      $('guest-lead').textContent =
+        `Files you send here go privately to Matheesan. You won't be able to see or change them after sending. ` +
+        `This link works until ${fmtTime(info.expires)}.`;
+      panel.hidden = false;
+      showRemaining();
+    } catch (err) {
+      if (err instanceof LinkError) return dead(err.message + '.');
+      $('guest-lead').textContent = 'Something went wrong checking this link.';
+      $('guest-msg').textContent = (err as Error).message;
+    }
+  }
+
+  start();
+</script>
