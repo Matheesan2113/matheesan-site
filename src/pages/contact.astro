@@ -1,0 +1,179 @@
+---
+import Layout from '../layouts/layout.astro';
+import contact from '../data/contact.json';
+const ready = Boolean(contact.endpoint && contact.siteKey);
+---
+
+<Layout title="Contact — Matheesan" description="Send Matheesan a message.">
+  <main id="contact" data-endpoint={contact.endpoint}>
+    <section>
+      <div class="container">
+        <p class="section-label"><a href="/">matheesan.ca</a> / contact</p>
+        <h2 class="section-title">Say <em>hello</em></h2>
+
+        {ready ? (
+          <form id="contact-form" class="contact-panel" novalidate>
+            <div class="contact-grid">
+              <div>
+                <label class="contact-label" for="c-name">name</label>
+                <input id="c-name" name="name" class="contact-input" maxlength="100" autocomplete="name" required />
+              </div>
+              <div>
+                <label class="contact-label" for="c-email">email</label>
+                <input id="c-email" name="email" type="email" class="contact-input" maxlength="254" autocomplete="email" required />
+              </div>
+            </div>
+
+            <label class="contact-label" for="c-message">message</label>
+            <textarea id="c-message" name="message" class="contact-input contact-message" rows="7" minlength="10" maxlength="5000" required></textarea>
+
+            {/* Honeypot: hidden from people, tempting to bots. */}
+            <div class="contact-hp" aria-hidden="true">
+              <label for="c-website">website</label>
+              <input id="c-website" name="website" tabindex="-1" autocomplete="off" />
+            </div>
+
+            <div class="contact-row">
+              <div class="cf-turnstile" data-sitekey={contact.siteKey} data-action="contact" data-theme="dark"></div>
+              <button type="submit" class="contact-btn">Send</button>
+            </div>
+            <p id="contact-msg" class="contact-msg" role="status"></p>
+          </form>
+        ) : (
+          <p class="contact-msg">The contact form is not available yet.</p>
+        )}
+        <p class="contact-note">I read everything and reply from my own address. Your email is only used to answer you.</p>
+      </div>
+    </section>
+  </main>
+  {ready && <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>}
+</Layout>
+
+<style is:global>
+  body:has(#contact) { cursor: auto; }
+  #contact section { padding-top: 5rem; min-height: 100vh; }
+  #contact .section-label a { color: inherit; text-decoration: none; }
+  #contact .section-label a:hover { color: var(--accent2); }
+
+  .contact-panel {
+    max-width: 720px;
+    border: 1px solid var(--navy);
+    background: var(--bg2);
+    border-radius: 2px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .contact-label {
+    display: block;
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.18em;
+    color: var(--accent);
+    margin-bottom: 0.6rem;
+  }
+
+  .contact-input {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    background: var(--bg);
+    border: 1px solid var(--navy);
+    border-radius: 2px;
+    color: var(--text1);
+    font-family: var(--sans);
+    font-size: 0.95rem;
+    padding: 0.65rem 0.8rem;
+  }
+
+  .contact-input:focus { outline: none; border-color: var(--accent); }
+  .contact-message { resize: vertical; line-height: 1.6; }
+
+  .contact-hp { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+
+  .contact-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 1rem;
+  }
+
+  .contact-btn {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    color: var(--text1);
+    background: var(--bg3);
+    border: 1px solid var(--wave1);
+    border-radius: 2px;
+    padding: 0.65rem 1.4rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .contact-btn:hover { border-color: var(--accent); color: var(--accent2); }
+  .contact-btn:disabled { opacity: 0.5; cursor: default; }
+
+  .contact-msg { font-family: var(--mono); font-size: 0.72rem; color: var(--text2); min-height: 1.2em; margin-top: 0.75rem; }
+  .contact-msg.ok { color: var(--accent2); }
+  .contact-msg.err { color: #e07a7a; }
+  .contact-note { font-size: 0.8rem; color: var(--text3); max-width: 720px; }
+</style>
+
+<script>
+  declare const turnstile: { reset: () => void } | undefined;
+
+  const form = document.getElementById('contact-form') as HTMLFormElement | null;
+  const endpoint = document.getElementById('contact')?.dataset.endpoint;
+  const msg = document.getElementById('contact-msg')!;
+  const say = (text: string, kind = '') => {
+    msg.textContent = text;
+    msg.className = `contact-msg ${kind}`;
+  };
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!form.reportValidity()) return;
+    const data = new FormData(form);
+    const token = String(data.get('cf-turnstile-response') ?? '');
+    if (!token) return say('Please complete the anti-spam check first.', 'err');
+
+    const button = form.querySelector('button')!;
+    button.disabled = true;
+    say('Sending…');
+    try {
+      const res = await fetch(endpoint!, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({
+          name: data.get('name'),
+          email: data.get('email'),
+          message: data.get('message'),
+          website: data.get('website'),
+          token,
+        }),
+      });
+      const body = await res.json().catch(() => ({}));
+      if (res.ok) {
+        form.reset();
+        say('Thanks, your message is on its way. I will reply by email.', 'ok');
+      } else {
+        say(body.error ?? 'Something went wrong. Please try again.', 'err');
+      }
+    } catch {
+      say('Could not reach the server. Please try again in a moment.', 'err');
+    } finally {
+      button.disabled = false;
+      if (typeof turnstile !== 'undefined') turnstile.reset();
+    }
+  });
+</script>
