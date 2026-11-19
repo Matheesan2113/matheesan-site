@@ -1,25 +1,44 @@
-<div id="cursor"></div>
-<div id="cursor-ring"></div>
+<div id="cursor" aria-hidden="true"></div>
+<div id="cursor-ring" aria-hidden="true"></div>
 
 <script>
-  const cursor = document.getElementById('cursor')!;
-  const ring = document.getElementById('cursor-ring')!;
-  let mx = 0, my = 0, rx = 0, ry = 0;
+  const finePointer = window.matchMedia('(pointer: fine)');
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
-  document.addEventListener('mousemove', e => {
-    mx = e.clientX;
-    my = e.clientY;
-  });
+  if (finePointer.matches && !reducedMotion.matches) {
+    const cursor = document.getElementById('cursor')!;
+    const ring = document.getElementById('cursor-ring')!;
+    document.body.dataset.customCursor = 'true';
 
-  function animateCursor() {
-    cursor.style.left = mx + 'px';
-    cursor.style.top  = my + 'px';
-    rx += (mx - rx) * 0.12;
-    ry += (my - ry) * 0.12;
-    ring.style.left = rx + 'px';
-    ring.style.top  = ry + 'px';
-    requestAnimationFrame(animateCursor);
+    let mx = -100, my = -100, rx = -100, ry = -100;
+    let visible = false;
+
+    document.addEventListener('mousemove', (e) => {
+      mx = e.clientX;
+      my = e.clientY;
+      if (!visible) {
+        visible = true;
+        cursor.style.opacity = '1';
+        ring.style.opacity = '1';
+      }
+    });
+
+    document.addEventListener('mouseleave', () => {
+      visible = false;
+      cursor.style.opacity = '0';
+      ring.style.opacity = '0';
+    });
+
+    const animate = () => {
+      cursor.style.left = `${mx}px`;
+      cursor.style.top = `${my}px`;
+      rx += (mx - rx) * 0.14;
+      ry += (my - ry) * 0.14;
+      ring.style.left = `${rx}px`;
+      ring.style.top = `${ry}px`;
+      requestAnimationFrame(animate);
+    };
+
+    animate();
   }
-
-  animateCursor();
 </script>

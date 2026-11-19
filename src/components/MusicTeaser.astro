@@ -1,0 +1,97 @@
+---
+import DeckVisual from './DeckVisual.astro';
+---
+
+<section id="sound">
+  <div class="container">
+    <div class="sound-grid">
+      <div class="sound-copy fade-up">
+        <p class="section-label">sound</p>
+        <h2 class="section-title">The other kind of <em>mixing</em>.</h2>
+        <p class="section-deck">
+          I DJ. House, disco, ambient, Tamil, hip-hop — whatever the room needs. The same part of my
+          brain that likes a clean API likes a clean transition: read the room, set up the next move,
+          don’t over-explain the drop.
+        </p>
+
+        <div class="crate-strip" aria-label="The crate">
+          <span class="mono">the crate</span>
+          <span>house</span><span>disco</span><span>ambient</span><span>Tamil</span><span>hip-hop</span>
+        </div>
+
+        <a href="/music/" class="section-link mono">step into the booth <span aria-hidden="true">→</span></a>
+      </div>
+
+      <div class="sound-visual fade-up">
+        <DeckVisual />
+        <p class="sound-note mono">no autoplay · the room decides</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  #sound { background: var(--bg2); }
+
+  .sound-grid {
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .sound-copy .section-title { max-width: 12ch; }
+
+  .sound-copy .section-deck { max-width: 52ch; margin-bottom: 1.6rem; }
+
+  .crate-strip {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem;
+    margin-bottom: 1.8rem;
+  }
+
+  .crate-strip .mono {
+    color: var(--accent);
+    font-size: 0.52rem;
+    letter-spacing: 0.12em;
+    margin-right: 0.4rem;
+    text-transform: uppercase;
+  }
+
+  .crate-strip span:not(.mono) {
+    font-family: var(--mono);
+    font-size: 0.52rem;
+    color: var(--text2);
+    border: 1px solid var(--line);
+    padding: 0.22rem 0.45rem;
+  }
+
+  .sound-visual { justify-self: end; width: 100%; display: flex; flex-direction: column; align-items: flex-end; }
+
+  .sound-note {
+    margin-top: 0.65rem;
+    font-size: 0.5rem;
+    letter-spacing: 0.08em;
+    color: var(--text3);
+  }
+
+  .section-link {
+    display: inline-block;
+    font-size: 0.6rem;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid var(--wave2);
+    padding-bottom: 0.15rem;
+  }
+
+  .section-link:hover { color: var(--accent2); border-bottom-color: var(--accent2); }
+
+  @media (max-width: 900px) {
+    .sound-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .sound-visual { justify-self: start; align-items: flex-start; }
+    .sound-copy .section-title { max-width: none; }
+  }
+</style>

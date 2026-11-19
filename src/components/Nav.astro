@@ -1,26 +1,363 @@
-<nav>
-  <a href="#hero" class="nav-logo">M.</a>
-  <ul class="nav-links">
-    <li><a href="#about">about</a></li>
-    <li><a href="#career">career</a></li>
-    <li><a href="#homelab">homelab</a></li>
-    <li><a href="#life">life</a></li>
-    <li><a href="#portal">portal</a></li>
-  </ul>
+<nav id="site-nav" aria-label="Primary">
+  <a href="/" class="nav-logo" aria-label="Matheesan — home">
+    <span class="logo-mark">M.</span>
+    <span class="logo-path">/ matheesan.ca</span>
+    <span class="nav-eq" aria-hidden="true"><i></i><i></i><i></i></span>
+  </a>
+
+  <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu">
+    <span class="nav-toggle-label">menu</span>
+    <span class="nav-toggle-icon" aria-hidden="true"><i></i><i></i></span>
+  </button>
+
+  <div class="nav-right" id="nav-menu">
+    <ul class="nav-links">
+      <li><a href="/music/" data-nav="music">music</a></li>
+      <li><a href="/games/" data-nav="games">games</a></li>
+      <li><a href="/lab/" data-nav="lab">lab</a></li>
+      <li><a href="/notes/" data-nav="notes">notes</a></li>
+      <li><a href="/about/" data-nav="about">about</a></li>
+    </ul>
+    <a href="/career/" class="nav-secondary" data-nav="career">career</a>
+    <a href="/resume/" class="nav-secondary" data-nav="resume">résumé</a>
+    <button class="nav-kbd" type="button" data-command-open aria-label="Open command palette">
+      <kbd>ctrl</kbd><kbd>K</kbd>
+    </button>
+    <a href="/contact/" class="nav-cta">contact <span aria-hidden="true">↗</span></a>
+  </div>
+
+  <div class="scroll-progress" aria-hidden="true"><span></span></div>
 </nav>
 
-<script>
-  const sections = document.querySelectorAll('section[id]');
-  const navLinks = document.querySelectorAll('.nav-links a');
+<style>
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 1.15rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    background: linear-gradient(to bottom, rgba(5, 8, 14, 0.94) 0%, rgba(5, 8, 14, 0.72) 65%, transparent 100%);
+    transition: background 0.3s, border-color 0.3s, padding 0.3s;
+    border-bottom: 1px solid transparent;
+  }
 
-  window.addEventListener('scroll', () => {
-    let current = '';
-    sections.forEach(s => {
-      if (window.scrollY >= (s as HTMLElement).offsetTop - 200) current = s.id;
-    });
-    navLinks.forEach(a => {
-      (a as HTMLElement).style.color =
-        a.getAttribute('href') === '#' + current ? 'var(--text1)' : '';
-    });
+  nav.scrolled {
+    padding: 0.8rem 2rem;
+    background: rgba(5, 8, 14, 0.92);
+    backdrop-filter: blur(10px);
+    border-bottom-color: var(--line);
+  }
+
+  .nav-logo {
+    position: relative;
+    z-index: 3;
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.55rem;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .logo-mark {
+    font-family: var(--mono);
+    font-size: 0.82rem;
+    letter-spacing: 0.16em;
+    color: var(--accent);
+  }
+
+  .logo-path {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    color: var(--text3);
+  }
+
+  .nav-eq {
+    display: inline-flex;
+    align-items: flex-end;
+    gap: 2px;
+    height: 11px;
+    margin-left: 0.15rem;
+  }
+
+  .nav-eq i {
+    display: block;
+    width: 2px;
+    background: var(--accent);
+    transform-origin: bottom;
+    animation: navEq 1.1s ease-in-out infinite alternate;
+  }
+
+  .nav-eq i:nth-child(1) { height: 5px; animation-delay: 0s; }
+  .nav-eq i:nth-child(2) { height: 10px; animation-delay: 0.2s; }
+  .nav-eq i:nth-child(3) { height: 7px; animation-delay: 0.4s; }
+
+  @keyframes navEq {
+    from { transform: scaleY(0.35); opacity: 0.5; }
+    to { transform: scaleY(1); opacity: 1; }
+  }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 1.35rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: var(--mono);
+    font-size: 0.64rem;
+    letter-spacing: 0.1em;
+    color: var(--text2);
+    text-decoration: none;
+    transition: color 0.2s;
+    position: relative;
+    padding-bottom: 0.15rem;
+  }
+
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 1px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.2s;
+  }
+
+  .nav-links a:hover,
+  .nav-links a.active { color: var(--text1); }
+  .nav-links a.active::after { transform: scaleX(1); }
+
+  .nav-secondary {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.08em;
+    color: var(--text3);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+    white-space: nowrap;
+  }
+
+  .nav-secondary:hover,
+  .nav-secondary.active { color: var(--accent2); border-bottom-color: var(--wave2); }
+
+  .nav-kbd {
+    display: inline-flex;
+    gap: 0.2rem;
+    align-items: center;
+    background: none;
+    border: 1px solid var(--line);
+    color: var(--text3);
+    padding: 0.3rem 0.45rem;
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  .nav-kbd:hover { border-color: var(--accent); color: var(--accent2); }
+
+  .nav-kbd kbd {
+    font-family: var(--mono);
+    font-size: 0.55rem;
+    line-height: 1;
+  }
+
+  .nav-cta {
+    font-family: var(--mono);
+    font-size: 0.64rem;
+    letter-spacing: 0.08em;
+    color: var(--bg);
+    background: var(--accent);
+    padding: 0.5rem 0.8rem;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s;
+    white-space: nowrap;
+  }
+
+  .nav-cta:hover { background: var(--accent2); }
+
+  .nav-toggle {
+    display: none;
+    position: relative;
+    z-index: 3;
+    background: none;
+    border: 1px solid var(--line);
+    color: var(--text2);
+    padding: 0.45rem 0.6rem;
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .nav-toggle-icon {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 3px;
+    width: 12px;
+  }
+
+  .nav-toggle-icon i {
+    display: block;
+    height: 1px;
+    background: currentColor;
+    transition: transform 0.2s, opacity 0.2s;
+  }
+
+  nav[data-open='true'] .nav-toggle-icon i:first-child { transform: translateY(4px) rotate(45deg); }
+  nav[data-open='true'] .nav-toggle-icon i:last-child  { transform: translateY(-4px) rotate(-45deg); }
+
+  .scroll-progress {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    height: 1px;
+    background: transparent;
+  }
+
+  .scroll-progress span {
+    display: block;
+    height: 100%;
+    width: 0;
+    background: linear-gradient(to right, var(--accent), var(--gold));
+    transition: width 0.1s linear;
+  }
+
+  @media (max-width: 1000px) {
+    .nav-links { gap: 1rem; }
+    .nav-right { gap: 0.75rem; }
+  }
+
+  @media (max-width: 860px) {
+    nav { padding: 0.9rem 1.2rem; }
+    nav.scrolled {
+      padding: 0.7rem 1.2rem;
+      background: rgba(5, 8, 14, 0.96);
+      backdrop-filter: none;
+    }
+    .nav-toggle { display: inline-flex; }
+    .logo-path { display: none; }
+
+    .nav-right {
+      position: fixed;
+      inset: 0;
+      top: 0;
+      z-index: 2;
+      padding: 5.5rem 1.4rem 2rem;
+      background: rgba(5, 8, 14, 0.98);
+      backdrop-filter: blur(14px);
+      flex-direction: column;
+      align-items: stretch;
+      gap: 1.2rem;
+      transform: translateY(-100%);
+      visibility: hidden;
+      opacity: 0;
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s, visibility 0.25s;
+      overflow-y: auto;
+    }
+
+    nav[data-open='true'] .nav-right {
+      transform: translateY(0);
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .nav-links {
+      flex-direction: column;
+      gap: 0;
+      margin-top: 1rem;
+    }
+
+    .nav-links li { border-bottom: 1px solid var(--line); }
+
+    .nav-links a {
+      display: block;
+      padding: 1rem 0;
+      font-size: 0.85rem;
+    }
+
+    .nav-links a::after { display: none; }
+    .nav-links a.active { color: var(--accent2); }
+
+    .nav-secondary {
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--line);
+      font-size: 0.8rem;
+      color: var(--text2);
+    }
+
+    .nav-kbd { align-self: flex-start; padding: 0.5rem 0.7rem; }
+    .nav-cta { align-self: flex-start; padding: 0.7rem 1rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .nav-eq i { animation: none; }
+  }
+</style>
+
+<script>
+  const nav = document.getElementById('site-nav')!;
+  const toggle = nav.querySelector<HTMLButtonElement>('.nav-toggle')!;
+  const progress = nav.querySelector<HTMLElement>('.scroll-progress span')!;
+
+  const setOpen = (open: boolean) => {
+    nav.dataset.open = String(open);
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.querySelector('.nav-toggle-label')!.textContent = open ? 'close' : 'menu';
+    document.body.style.overflow = open ? 'hidden' : '';
+  };
+
+  toggle.addEventListener('click', () => setOpen(nav.dataset.open !== 'true'));
+  nav.querySelectorAll<HTMLAnchorElement>('.nav-right a').forEach((a) =>
+    a.addEventListener('click', () => setOpen(false)),
+  );
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setOpen(false); });
+
+  const section = location.pathname.split('/').filter(Boolean)[0] ?? '';
+  const activeSection = section === 'tooling' ? 'career' : section;
+  nav.querySelectorAll<HTMLElement>('[data-nav]').forEach((el) => {
+    const isActive = el.dataset.nav === activeSection;
+    el.classList.toggle('active', isActive);
+    if (isActive) el.setAttribute('aria-current', 'page');
+    else el.removeAttribute('aria-current');
   });
+
+  let ticking = false;
+  const onScroll = () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => {
+      nav.classList.toggle('scrolled', window.scrollY > 24);
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      progress.style.width = `${max > 0 ? (window.scrollY / max) * 100 : 0}%`;
+      ticking = false;
+    });
+  };
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  document.querySelectorAll('[data-command-open]').forEach((el) =>
+    el.addEventListener('click', () => {
+      setOpen(false);
+      document.dispatchEvent(new CustomEvent('command-palette:open'));
+    }),
+  );
 </script>

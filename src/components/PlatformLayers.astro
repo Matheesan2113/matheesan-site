@@ -1,0 +1,120 @@
+---
+import { platformLayers } from '../data/profile';
+---
+
+<section id="platform">
+  <div class="container">
+    <p class="section-label">platform</p>
+    <h2 class="section-title">Under the <em>agents</em>.</h2>
+    <p class="section-deck">
+      The layer that doesn’t demo: model routing, knowledge bases, RAG and evals. It is the part that
+      makes an agent safe to change after launch — and the part I reach for first.
+    </p>
+
+    <div class="layer-grid">
+      {platformLayers.map((layer, index) => (
+        <article class="layer">
+          <div class="layer-top">
+            <span class="layer-num mono">{String(index + 1).padStart(2, '0')}</span>
+            <h3>{layer.title}</h3>
+          </div>
+          <p class="layer-body">{layer.body}</p>
+          <div class="layer-tags">
+            {layer.tags.map((tag) => <span>{tag}</span>)}
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <p class="layer-foot mono">
+      <span>the model is a dependency</span>
+      <span>the system is the product</span>
+    </p>
+  </div>
+</section>
+
+<style>
+  #platform { background: var(--bg2); }
+
+  .layer-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+  }
+
+  .layer {
+    background: var(--bg2);
+    padding: 1.4rem 1.3rem;
+    display: flex;
+    flex-direction: column;
+    transition: background 0.2s;
+  }
+
+  .layer:hover { background: var(--bg3); }
+
+  .layer-top {
+    display: flex;
+    align-items: baseline;
+    gap: 0.7rem;
+    margin-bottom: 0.65rem;
+  }
+
+  .layer-num {
+    font-size: 0.52rem;
+    color: var(--accent);
+  }
+
+  .layer h3 {
+    font-family: var(--serif);
+    font-size: 1.45rem;
+    font-weight: 400;
+    line-height: 1.2;
+    color: var(--text1);
+  }
+
+  .layer-body {
+    font-size: 0.82rem;
+    line-height: 1.7;
+    color: var(--text2);
+    margin-bottom: 1rem;
+  }
+
+  .layer-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    margin-top: auto;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .layer-tags span {
+    font-family: var(--mono);
+    font-size: 0.5rem;
+    color: var(--text3);
+    border: 1px solid var(--line);
+    padding: 0.14rem 0.34rem;
+  }
+
+  .layer-foot {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 1rem;
+    font-size: 0.5rem;
+    letter-spacing: 0.08em;
+    color: var(--text3);
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 900px) {
+    .layer-grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (max-width: 600px) {
+    .layer-grid { grid-template-columns: 1fr; }
+    .layer-foot { flex-direction: column; gap: 0.3rem; }
+  }
+</style>

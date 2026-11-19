@@ -1,0 +1,53 @@
+---
+interface Props {
+  crumb: string;
+  title: string;
+  deck?: string;
+}
+
+const { crumb, title, deck } = Astro.props;
+---
+
+<header class="page-header">
+  <div class="container">
+    <p class="section-label page-crumb"><a href="/">matheesan.ca</a> / {crumb}</p>
+    <h1 class="page-title">{title}</h1>
+    {deck && <p class="page-deck">{deck}</p>}
+    <slot />
+  </div>
+</header>
+
+<style>
+  .page-header {
+    padding: 8rem 0 2.5rem;
+    border-bottom: 1px solid var(--line);
+    background: var(--bg);
+  }
+
+  .page-crumb { margin-bottom: 1.4rem; }
+  .page-crumb a { color: inherit; text-decoration: none; }
+  .page-crumb a:hover { color: var(--accent2); }
+
+  .page-title {
+    font-family: var(--serif);
+    font-size: clamp(2.8rem, 6vw, 5rem);
+    font-weight: 300;
+    line-height: 0.98;
+    letter-spacing: -0.02em;
+    color: var(--text1);
+    max-width: 900px;
+  }
+
+  .page-deck {
+    font-family: var(--serif);
+    font-size: clamp(1.1rem, 2.2vw, 1.35rem);
+    line-height: 1.7;
+    color: var(--text2);
+    max-width: 700px;
+    margin-top: 1.2rem;
+  }
+
+  @media (max-width: 900px) {
+    .page-header { padding: 6.5rem 0 2rem; }
+  }
+</style>

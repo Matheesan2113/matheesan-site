@@ -1,0 +1,375 @@
+---
+import { toolingYears, toolingStages, toolingNotes } from '../data/profile';
+
+interface Props {
+  headless?: boolean;
+}
+
+const { headless = false } = Astro.props;
+---
+
+<section id="tooling" class:list={['tooling-section', { 'tooling-embedded': headless }]}>
+  <div class="container">
+    {!headless && (
+      <>
+        <p class="section-label">tooling</p>
+        <h2 class="section-title">The tools changed. The <em>loop</em> didn’t.</h2>
+        <p class="section-deck">
+          I’m a software engineer first. The voice agents are one artifact; the through-line is tooling —
+          choosing the model, harness and workflow that shorten the loop without hiding the failure.
+          Three tools per year, selected from the ones that actually changed how I work.
+        </p>
+      </>
+    )}
+
+    <div class="tooling-callout">
+      <span class="callout-label mono">// not just voice agents</span>
+      <p>
+        The rest of the job is still software engineering: API reviews, state machines, integrations,
+        infra, tests, release trains and incidents. The tools change; the review bar doesn’t.
+      </p>
+    </div>
+
+    <div class="workflow-strip" aria-label="Filter the timeline by workflow stage">
+      <button class="workflow-stage mono" type="button" data-stage-filter="all" aria-pressed="true">all</button>
+      {toolingStages.map((stage) => (
+        <>
+          <span class="workflow-arrow" aria-hidden="true">→</span>
+          <button class="workflow-stage mono" type="button" data-stage-filter={stage} aria-pressed="false">{stage}</button>
+        </>
+      ))}
+    </div>
+    <p class="workflow-hint mono">click a stage to filter the timeline · click again to clear</p>
+
+    <h2 class="sr-only">Tooling timeline</h2>
+
+    <div class="tooling-timeline">
+      {toolingYears.map((year) => (
+        <article class="tooling-year" id={`y-${year.year}`}>
+          <header class="year-head">
+            <span class="year mono">{year.year}</span>
+            <span class="year-label">{year.label}</span>
+            <span class="year-note">{year.note}</span>
+          </header>
+
+          <div class="year-tools">
+            {year.tools.map((tool) => (
+              <div class="tool-card" data-stage={tool.stage}>
+                <div class="tool-top">
+                  <h3>{tool.name}</h3>
+                  <span class:list={['tool-stage', 'mono', `stage-${tool.stage}`]}>{tool.stage}</span>
+                </div>
+                <p class="tool-changed">{tool.changed}</p>
+                <p class="tool-used"><span class="tool-arrow mono" aria-hidden="true">→</span>{tool.used}</p>
+              </div>
+            ))}
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <div class="tooling-notes">
+      {toolingNotes.map((note) => (
+        <div class="tooling-note">
+          <p class="tooling-note-key mono">{note.key}</p>
+          <p class="tooling-note-body">{note.body}</p>
+        </div>
+      ))}
+    </div>
+
+    <p class="tooling-crosslink mono">
+      under the tools — <a href="/career/#platform">model routers · knowledge bases · RAG →</a>
+    </p>
+
+    <p class="tooling-foot mono">
+      <span>18 tools · 6 years · one loop</span>
+      <span>selected from the tools that changed the loop, not a market ranking</span>
+    </p>
+  </div>
+</section>
+
+<style>
+  #tooling { background: var(--bg2); }
+  .tooling-embedded { padding-top: 2.5rem; }
+
+  .tooling-callout {
+    display: grid;
+    grid-template-columns: 170px 1fr;
+    gap: 1.5rem;
+    align-items: start;
+    border-left: 2px solid var(--accent);
+    background: rgba(14, 24, 40, 0.55);
+    padding: 1.1rem 1.2rem;
+    margin-bottom: 2.2rem;
+  }
+
+  .callout-label {
+    font-size: 0.54rem;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    padding-top: 0.15rem;
+  }
+
+  .tooling-callout p {
+    font-family: var(--serif);
+    font-size: 1.12rem;
+    line-height: 1.7;
+    color: var(--text2);
+    max-width: 760px;
+  }
+
+  .workflow-strip {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.8rem 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 0.4rem;
+  }
+
+  .workflow-stage {
+    font-family: var(--mono);
+    font-size: 0.55rem;
+    letter-spacing: 0.1em;
+    color: var(--text2);
+    background: none;
+    border: 1px solid var(--line);
+    padding: 0.25rem 0.55rem;
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s, background 0.2s;
+  }
+
+  .workflow-stage:hover,
+  .workflow-stage[aria-pressed='true'] {
+    color: var(--accent);
+    border-color: var(--wave2);
+    background: rgba(88, 174, 201, 0.07);
+  }
+
+  .workflow-hint {
+    margin: 0.55rem 0 0;
+    font-size: 0.5rem;
+    letter-spacing: 0.06em;
+    color: var(--text3);
+  }
+
+  .workflow-arrow { color: var(--text3); font-family: var(--mono); font-size: 0.62rem; }
+
+  .tooling-timeline { border-top: 1px solid var(--line); }
+
+  .tooling-year {
+    scroll-margin-top: 6rem;
+    display: grid;
+    grid-template-columns: 190px 1fr;
+    gap: 2rem;
+    padding: 1.6rem 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .year-head { display: flex; flex-direction: column; gap: 0.25rem; padding-top: 0.15rem; }
+
+  .year {
+    font-family: var(--serif);
+    font-size: 2.2rem;
+    font-weight: 300;
+    line-height: 1;
+    color: var(--moon);
+    letter-spacing: 0.02em;
+  }
+
+  .year-label {
+    font-family: var(--mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    text-transform: uppercase;
+  }
+
+  .year-note { font-size: 0.7rem; line-height: 1.5; color: var(--text3); max-width: 170px; }
+
+  .year-tools {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+  }
+
+  .tool-card {
+    background: var(--bg2);
+    padding: 1rem 1rem 0.95rem;
+    display: flex;
+    flex-direction: column;
+    transition: background 0.2s;
+  }
+
+  .tool-card:hover { background: var(--bg3); }
+
+  #tooling[data-filter]:not([data-filter='']) .tool-card { opacity: 0.32; }
+  #tooling[data-filter='build'] .tool-card[data-stage='build'],
+  #tooling[data-filter='research'] .tool-card[data-stage='research'],
+  #tooling[data-filter='operate'] .tool-card[data-stage='operate'],
+  #tooling[data-filter='review'] .tool-card[data-stage='review'],
+  #tooling[data-filter='integrate'] .tool-card[data-stage='integrate'] {
+    opacity: 1;
+    border-color: var(--wave2);
+    background: var(--bg3);
+  }
+
+  .tool-card { transition: opacity 0.25s, border-color 0.25s, background 0.2s; }
+
+  .tool-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.6rem;
+    margin-bottom: 0.55rem;
+  }
+
+  .tool-top h3 {
+    font-family: var(--serif);
+    font-size: 1.18rem;
+    font-weight: 400;
+    line-height: 1.2;
+    color: var(--text1);
+  }
+
+  .tool-stage {
+    font-size: 0.46rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text3);
+    border: 1px solid var(--line);
+    padding: 0.12rem 0.3rem;
+    white-space: nowrap;
+  }
+
+  .stage-code { color: var(--moon2); }
+  .stage-research { color: var(--moon2); }
+  .stage-build { color: var(--accent); }
+  .stage-review { color: var(--gold); }
+  .stage-integrate { color: var(--ok); }
+  .stage-operate { color: var(--warn); }
+
+  .tool-changed {
+    font-size: 0.78rem;
+    line-height: 1.55;
+    color: var(--text2);
+    margin-bottom: 0.65rem;
+  }
+
+  .tool-used {
+    margin-top: auto;
+    padding-top: 0.6rem;
+    border-top: 1px solid var(--line);
+    font-size: 0.72rem;
+    line-height: 1.6;
+    color: var(--text3);
+  }
+
+  .tool-arrow { color: var(--accent); margin-right: 0.35rem; }
+
+  .tooling-notes {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    margin-top: 2.2rem;
+  }
+
+  .tooling-note { background: var(--bg3); padding: 1rem 1.1rem; }
+
+  .tooling-note-key {
+    font-size: 0.52rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.4rem;
+  }
+
+  .tooling-note-body { font-size: 0.78rem; line-height: 1.65; color: var(--text2); }
+
+  .tooling-crosslink {
+    margin-top: 1.2rem;
+    font-size: 0.55rem;
+    letter-spacing: 0.06em;
+    color: var(--text3);
+  }
+
+  .tooling-crosslink a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--wave2); }
+  .tooling-crosslink a:hover { color: var(--accent2); border-bottom-color: var(--accent2); }
+
+  .tooling-foot {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 1rem;
+    font-size: 0.5rem;
+    letter-spacing: 0.06em;
+    color: var(--text3);
+    line-height: 1.7;
+  }
+
+  @media (max-width: 1000px) {
+    .tooling-year { grid-template-columns: 150px 1fr; gap: 1.4rem; }
+    .year-tools { grid-template-columns: 1fr; }
+    .tool-card { padding: 0.9rem 1rem; }
+  }
+
+  @media (max-width: 720px) {
+    .workflow-strip {
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      padding-bottom: 0.7rem;
+      scrollbar-width: thin;
+    }
+    .workflow-stage, .workflow-arrow { flex: 0 0 auto; }
+    .tooling-callout { grid-template-columns: 1fr; gap: 0.5rem; }
+    .tooling-year { grid-template-columns: 1fr; gap: 0.8rem; padding: 1.3rem 0; }
+    .year-head { flex-direction: row; flex-wrap: wrap; align-items: baseline; gap: 0.6rem; }
+    .year { font-size: 1.8rem; }
+    .year-note { max-width: none; flex-basis: 100%; }
+    .tooling-notes { grid-template-columns: 1fr; }
+    .tooling-crosslink {
+    margin-top: 1.2rem;
+    font-size: 0.55rem;
+    letter-spacing: 0.06em;
+    color: var(--text3);
+  }
+
+  .tooling-crosslink a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--wave2); }
+  .tooling-crosslink a:hover { color: var(--accent2); border-bottom-color: var(--accent2); }
+
+  .tooling-foot { flex-direction: column; gap: 0.3rem; }
+  }
+
+  @media (max-width: 480px) {
+    .workflow-strip { gap: 0.35rem; }
+    .workflow-stage { font-size: 0.5rem; padding: 0.2rem 0.4rem; }
+    .workflow-arrow { font-size: 0.55rem; }
+  }
+</style>
+
+<script>
+  const section = document.getElementById('tooling');
+  if (section) {
+    const buttons = [...section.querySelectorAll<HTMLButtonElement>('[data-stage-filter]')];
+    const apply = (stage: string) => {
+      const active = stage === 'all' ? '' : stage;
+      section.dataset.filter = active;
+      buttons.forEach((button) => {
+        button.setAttribute('aria-pressed', String(button.dataset.stageFilter === (active || 'all')));
+      });
+    };
+    buttons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const next = button.dataset.stageFilter ?? 'all';
+        const current = section.dataset.filter || 'all';
+        apply(next === 'all' || next === current ? 'all' : next);
+      });
+    });
+  }
+</script>

@@ -1,0 +1,259 @@
+---
+import SiteLayout from '../layouts/site.astro';
+import PageHeader from '../components/PageHeader.astro';
+import DeckVisual from '../components/DeckVisual.astro';
+import { music } from '../data/profile';
+---
+
+<SiteLayout
+  title="Music — Matheesan"
+  description="Matheesan is a DJ in Markham, Ontario. House, disco, ambient, Tamil and hip-hop — the crate, the booth notes, and the other kind of mixing."
+>
+  <PageHeader
+    crumb="music"
+    title="Sound, after hours."
+    deck="The crate, the booth notes, and the part of my brain that treats a transition like a system design. No autoplay — just the records I keep reaching for."
+  />
+
+  <section id="music">
+    <div class="container">
+      <div class="music-hero">
+        <div class="music-copy fade-up">
+          <p class="section-label">the other kind of mixing</p>
+          <h2 class="section-title">Read the room, not the <em>waveform</em>.</h2>
+          <p class="section-deck">
+            {music.intro}
+          </p>
+
+          <div class="music-actions">
+            {music.spotify.url ? (
+              <a href={music.spotify.url} class="btn-primary" target="_blank" rel="noopener noreferrer">
+                Spotify <span aria-hidden="true">↗</span>
+              </a>
+            ) : (
+              <a href={music.spotify.search} class="btn-primary" target="_blank" rel="noopener noreferrer" aria-label="Search Spotify for Matheesan Manokaran">
+                Spotify search <span aria-hidden="true">↗</span>
+              </a>
+            )}
+            <a href="/games/" class="btn-ghost">the games <span aria-hidden="true">→</span></a>
+          </div>
+
+          <p class="music-disclaimer mono">
+            no autoplay · no “now playing” widget · just the crate
+          </p>
+        </div>
+
+        <div class="music-visual fade-up">
+          <DeckVisual />
+          <p class="music-caption mono">side a · after hours · markham, on</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="crate">
+    <div class="container">
+      <p class="section-label">the crate</p>
+      <h2 class="section-title">What’s in the <em>bag</em>.</h2>
+      <p class="section-deck crate-deck">
+        No genre gatekeeping. If it moves the room, it stays. The bag changes with the night; these
+        are the lanes I keep coming back to.
+      </p>
+
+      <div class="crate-grid">
+        {music.crate.map((item, index) => (
+          <article class="crate-card">
+            <div class="crate-top">
+              <span class="crate-num mono">0{index + 1}</span>
+              <span class="crate-key mono">{item.key}</span>
+            </div>
+            <h3>{item.title}</h3>
+            <p>{item.body}</p>
+            <div class="crate-tags">
+              {item.tags.map((tag) => <span>{tag}</span>)}
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section id="booth">
+    <div class="container">
+      <p class="section-label">booth notes</p>
+      <h2 class="section-title">What DJing taught me about <em>systems</em>.</h2>
+      <p class="section-deck booth-deck">
+        The overlap is not a metaphor I forced. Both are about sequencing, state and the person on the
+        other side of the handoff.
+      </p>
+
+      <div class="booth-grid">
+        {music.booth.map((note, index) => (
+          <article class="booth-note">
+            <span class="booth-num mono">0{index + 1}</span>
+            <h3>{note.key}</h3>
+            <p>{note.body}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section id="music-next">
+    <div class="container">
+      <div class="music-next-row">
+        <p class="mono">next on the map</p>
+        <div>
+          <a href="/games/" class="section-link mono">the rotation <span aria-hidden="true">→</span></a>
+          <a href="/lab/" class="section-link mono">the lab <span aria-hidden="true">→</span></a>
+          <a href="/about/" class="section-link mono">the longer version <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+</SiteLayout>
+
+<style>
+  #music { padding-top: 2.5rem; padding-bottom: 4rem; background: var(--bg); }
+  #crate { background: var(--bg2); padding: 5.5rem 0; }
+  #booth { background: var(--bg); padding: 5.5rem 0; }
+  #music-next { background: var(--bg2); padding: 2.5rem 0; border-top: 1px solid var(--line); }
+
+  .music-hero {
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .music-copy .section-title { max-width: 13ch; }
+  .music-copy .section-deck { max-width: 54ch; margin-bottom: 1.6rem; }
+
+  .music-actions { display: flex; flex-wrap: wrap; gap: 0.7rem; align-items: center; }
+
+  .music-disclaimer {
+    margin-top: 1.2rem;
+    font-size: 0.5rem;
+    letter-spacing: 0.08em;
+    color: var(--text3);
+  }
+
+  .music-visual { justify-self: end; width: 100%; display: flex; flex-direction: column; align-items: flex-end; }
+
+  .music-caption {
+    margin-top: 0.65rem;
+    font-size: 0.5rem;
+    letter-spacing: 0.08em;
+    color: var(--text3);
+  }
+
+  .crate-deck, .booth-deck { max-width: 64ch; }
+
+  .crate-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    margin-top: 2rem;
+  }
+
+  .crate-card {
+    background: var(--bg2);
+    padding: 1.4rem 1.3rem;
+    display: flex;
+    flex-direction: column;
+    min-height: 230px;
+    transition: background 0.25s;
+  }
+
+  .crate-card:hover { background: var(--bg3); }
+
+  .crate-top { display: flex; justify-content: space-between; gap: 1rem; margin-bottom: 1rem; }
+  .crate-num { font-size: 0.5rem; color: var(--accent); }
+  .crate-key { font-size: 0.5rem; letter-spacing: 0.08em; color: var(--text3); text-transform: uppercase; }
+
+  .crate-card h3 {
+    font-family: var(--serif);
+    font-size: 1.45rem;
+    font-weight: 400;
+    line-height: 1.15;
+    color: var(--text1);
+    margin-bottom: 0.45rem;
+  }
+
+  .crate-card p { font-size: 0.82rem; line-height: 1.7; color: var(--text2); margin-bottom: 1rem; }
+
+  .crate-tags { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-top: auto; }
+
+  .crate-tags span {
+    font-family: var(--mono);
+    font-size: 0.48rem;
+    color: var(--text3);
+    border: 1px solid var(--line);
+    padding: 0.16rem 0.34rem;
+  }
+
+  .booth-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.2rem;
+    margin-top: 2rem;
+  }
+
+  .booth-note {
+    border-top: 1px solid var(--line);
+    padding-top: 1.1rem;
+  }
+
+  .booth-num { font-size: 0.5rem; color: var(--accent); }
+
+  .booth-note h3 {
+    font-family: var(--serif);
+    font-size: 1.35rem;
+    font-weight: 400;
+    line-height: 1.2;
+    color: var(--text1);
+    margin: 0.5rem 0 0.45rem;
+  }
+
+  .booth-note p { font-size: 0.85rem; line-height: 1.75; color: var(--text2); }
+
+  .music-next-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .music-next-row > p { font-size: 0.55rem; letter-spacing: 0.1em; color: var(--text3); text-transform: uppercase; }
+
+  .music-next-row > div { display: flex; flex-wrap: wrap; gap: 1.4rem; justify-content: flex-end; }
+
+  .section-link {
+    font-size: 0.58rem;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid var(--wave2);
+    padding-bottom: 0.15rem;
+    white-space: nowrap;
+  }
+
+  .section-link:hover { color: var(--accent2); border-bottom-color: var(--accent2); }
+
+  @media (max-width: 900px) {
+    .music-hero { grid-template-columns: 1fr; gap: 2.5rem; }
+    .music-visual { justify-self: start; align-items: flex-start; }
+    .music-copy .section-title { max-width: none; }
+    .crate-grid { grid-template-columns: 1fr 1fr; }
+    .booth-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 600px) {
+    .crate-grid { grid-template-columns: 1fr; }
+    .crate-card { min-height: 0; }
+    .music-next-row { flex-direction: column; align-items: flex-start; gap: 1rem; }
+    .music-next-row > div { justify-content: flex-start; }
+  }
+</style>

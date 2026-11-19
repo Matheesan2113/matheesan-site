@@ -1,5 +1,7 @@
 # build output
 dist/
+# local preview screenshots
+preview/
 # generated types
 .astro/
 

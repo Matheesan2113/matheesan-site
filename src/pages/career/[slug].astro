@@ -1,0 +1,142 @@
+---
+import SiteLayout from '../../layouts/site.astro';
+import CaseStudy from '../../components/CaseStudy.astro';
+import { caseFiles } from '../../data/profile';
+
+export async function getStaticPaths() {
+  return caseFiles.map((file, index) => ({
+    params: { slug: file.id },
+    props: { file, index },
+  }));
+}
+
+const { file, index } = Astro.props;
+const prev = index > 0 ? caseFiles[index - 1] : null;
+const next = index < caseFiles.length - 1 ? caseFiles[index + 1] : null;
+const origin = Astro.site?.origin ?? 'https://matheesan.ca';
+
+const jsonLd = {
+  '@type': 'CreativeWork',
+  '@id': `${origin}/career/${file.id}/#case`,
+  name: file.title,
+  description: file.deck,
+  abstract: file.problem,
+  keywords: file.tags.join(', '),
+  author: { '@id': `${origin}/#person` },
+  url: `${origin}/career/${file.id}/`,
+  isPartOf: { '@id': `${origin}/#website` },
+};
+---
+
+<SiteLayout
+  title={`${file.title} — Work — Matheesan`}
+  description={file.deck}
+  type="article"
+  extraJsonLd={jsonLd}
+>
+  <article class="case-page">
+    <div class="container">
+      <p class="section-label case-crumb">
+        <a href="/">matheesan.ca</a> / <a href="/career/">career</a> / {file.id}
+      </p>
+
+      <CaseStudy file={file} />
+
+      <footer class="case-foot">
+        <a href="/career/" class="btn-ghost btn-small">← all career</a>
+        <a href="/contact/" class="mono case-contact">have a similar problem? <span aria-hidden="true">→</span></a>
+      </footer>
+
+      <nav class="case-pager" aria-label="More case files">
+        {prev ? (
+          <a href={`/career/${prev.id}/`} class="case-pager-card">
+            <span class="mono">← previous case</span>
+            <span class="case-pager-title">{prev.title}</span>
+          </a>
+        ) : <span class="case-pager-empty" aria-hidden="true"><span class="mono">first case</span></span>}
+        {next ? (
+          <a href={`/career/${next.id}/`} class="case-pager-card case-pager-next">
+            <span class="mono">next case →</span>
+            <span class="case-pager-title">{next.title}</span>
+          </a>
+        ) : <span class="case-pager-empty" aria-hidden="true"><span class="mono">last case</span></span>}
+      </nav>
+    </div>
+  </article>
+</SiteLayout>
+
+<style>
+  .case-page { padding: 8rem 0 5rem; }
+
+  .case-crumb { margin-bottom: 2rem; }
+  .case-crumb a { color: inherit; text-decoration: none; }
+  .case-crumb a:hover { color: var(--accent2); }
+
+  .case-foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .case-contact {
+    font-size: 0.56rem;
+    letter-spacing: 0.08em;
+    color: var(--text3);
+    text-decoration: none;
+  }
+
+  .case-contact:hover { color: var(--accent); }
+
+  .case-pager {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    margin-top: 2rem;
+  }
+
+  .case-pager-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    padding: 1.1rem 1.2rem;
+    background: var(--bg2);
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+
+  .case-pager-card:hover { background: var(--bg3); }
+
+  .case-pager-card .mono { font-size: 0.52rem; letter-spacing: 0.08em; color: var(--text3); }
+
+  .case-pager-title {
+    font-family: var(--serif);
+    font-size: 1.2rem;
+    line-height: 1.3;
+    color: var(--text1);
+  }
+
+  .case-pager-next { text-align: right; align-items: flex-end; }
+
+  .case-pager-empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg2);
+    color: var(--text3);
+  }
+
+  .case-pager-empty .mono { font-size: 0.52rem; letter-spacing: 0.08em; }
+
+  @media (max-width: 620px) {
+    .case-page { padding-top: 6.5rem; }
+    .case-foot { flex-direction: column; align-items: flex-start; }
+    .case-pager { grid-template-columns: 1fr; }
+    .case-pager-next { text-align: left; align-items: flex-start; }
+  }
+</style>

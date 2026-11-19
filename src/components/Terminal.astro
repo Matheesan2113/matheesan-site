@@ -1,0 +1,328 @@
+---
+import { principles } from '../data/profile';
+---
+
+<div class="terminal" id="terminal">
+  <div class="terminal-bar">
+    <span class="terminal-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="terminal-title">matheesan@moon: ~</span>
+    <button type="button" class="terminal-clear" data-term-clear>clear</button>
+  </div>
+
+  <div class="terminal-body">
+    <div id="term-output" class="terminal-output" role="log" aria-live="polite" aria-label="Terminal output">
+      <p><span class="t-dim">matheesan.ca shell</span> <span class="t-faint">v2026.11</span></p>
+      <p><span class="t-dim">type</span> <span class="t-accent">help</span> <span class="t-dim">for commands. arrow keys work. so does curiosity.</span></p>
+    </div>
+
+    <form id="term-form" class="terminal-form" autocomplete="off">
+      <label class="sr-only" for="term-input">Terminal command</label>
+      <span class="terminal-prompt" aria-hidden="true">matheesan@moon:~$</span>
+      <input
+        id="term-input"
+        class="terminal-input"
+        type="text"
+        name="command"
+        spellcheck="false"
+        autocapitalize="off"
+        placeholder="whoami"
+        aria-describedby="term-hints"
+      />
+    </form>
+  </div>
+
+  <div class="terminal-hints" id="term-hints">
+    <span>try</span>
+    <button type="button" data-cmd="whoami">whoami</button>
+    <button type="button" data-cmd="music">music</button>
+    <button type="button" data-cmd="games">games</button>
+    <button type="button" data-cmd="now">now</button>
+    <button type="button" data-cmd="contact">contact</button>
+    <button type="button" data-cmd="sudo hire-me">sudo hire-me</button>
+  </div>
+</div>
+
+<style is:global>
+  .terminal {
+    border: 1px solid var(--line);
+    background: linear-gradient(180deg, #070d16 0%, #050a12 100%);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.02), 0 20px 50px rgba(0, 0, 0, 0.2);
+  }
+
+  .terminal-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.55rem 0.8rem;
+    border-bottom: 1px solid var(--line);
+    background: rgba(14, 24, 40, 0.55);
+  }
+
+  .terminal-dots { display: inline-flex; gap: 4px; }
+  .terminal-dots i { width: 6px; height: 6px; border-radius: 50%; background: var(--wave2); display: block; }
+  .terminal-dots i:nth-child(1) { background: #d98080; }
+  .terminal-dots i:nth-child(2) { background: var(--gold); }
+  .terminal-dots i:nth-child(3) { background: var(--ok); }
+
+  .terminal-title {
+    font-family: var(--mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.1em;
+    color: var(--text3);
+    flex: 1;
+  }
+
+  .terminal-clear {
+    font-family: var(--mono);
+    font-size: 0.55rem;
+    letter-spacing: 0.08em;
+    color: var(--text3);
+    background: none;
+    border: 0;
+    cursor: pointer;
+  }
+
+  .terminal-clear:hover { color: var(--accent2); }
+
+  .terminal-body {
+    padding: 0.9rem 1rem 0.8rem;
+    min-height: 250px;
+    max-height: 360px;
+    overflow-y: auto;
+    font-family: var(--mono);
+    font-size: 0.76rem;
+    line-height: 1.7;
+  }
+
+  .terminal-output p { margin: 0 0 0.25rem; color: var(--text2); white-space: pre-wrap; overflow-wrap: anywhere; }
+  .terminal-output p:last-child { margin-bottom: 0.6rem; }
+
+  .terminal-output a { color: var(--accent2); text-decoration: underline; text-underline-offset: 2px; }
+  .terminal-output a:hover { color: var(--moon); }
+
+  .t-dim { color: var(--text3); }
+  .t-faint { color: #3f5270; }
+  .t-accent { color: var(--accent2); }
+  .t-ok { color: var(--ok); }
+  .t-warn { color: var(--warn); }
+  .t-gold { color: var(--gold); }
+
+  .terminal-form {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    border-top: 1px dashed rgba(28, 47, 73, 0.7);
+    padding-top: 0.6rem;
+  }
+
+  .terminal-prompt { color: var(--ok); font-size: 0.72rem; white-space: nowrap; }
+
+  .terminal-input {
+    flex: 1;
+    min-width: 0;
+    background: none;
+    border: 0;
+    outline: none;
+    color: var(--text1);
+    font-family: var(--mono);
+    font-size: 0.76rem;
+    caret-color: var(--accent);
+  }
+
+  .terminal-input::placeholder { color: #33445f; }
+
+  .terminal-hints {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 0.7rem;
+    align-items: center;
+    padding: 0.55rem 1rem 0.7rem;
+    border-top: 1px solid var(--line);
+    font-family: var(--mono);
+    font-size: 0.55rem;
+    letter-spacing: 0.06em;
+    color: var(--text3);
+  }
+
+  .terminal-hints button {
+    font-family: var(--mono);
+    font-size: 0.55rem;
+    letter-spacing: 0.06em;
+    color: var(--accent);
+    background: none;
+    border: 0;
+    border-bottom: 1px solid rgba(88, 174, 201, 0.25);
+    padding: 0 0 1px;
+    cursor: pointer;
+  }
+
+  .terminal-hints button:hover { color: var(--accent2); border-bottom-color: currentColor; }
+
+  @media (max-width: 600px) {
+    .terminal-body { min-height: 230px; font-size: 0.7rem; }
+    .terminal-prompt { font-size: 0.64rem; }
+    .terminal-input { font-size: 0.7rem; }
+  }
+</style>
+
+<script>
+  const terminal = document.getElementById('terminal') as HTMLElement;
+  const form = document.getElementById('term-form') as HTMLFormElement;
+  const input = document.getElementById('term-input') as HTMLInputElement;
+  const output = document.getElementById('term-output') as HTMLDivElement;
+  let lastCommand = '';
+
+  const line = (parts: (string | Node)[], className = '') => {
+    const p = document.createElement('p');
+    if (className) p.className = className;
+    for (const part of parts) p.append(typeof part === 'string' ? document.createTextNode(part) : part);
+    output.append(p);
+    output.scrollTop = output.scrollHeight;
+  };
+
+  const link = (href: string, text: string) => {
+    const a = document.createElement('a');
+    a.href = href;
+    a.textContent = text;
+    return a;
+  };
+
+  const run = (raw: string) => {
+    const command = raw.trim();
+    if (!command) return;
+
+    line([`matheesan@moon:~$ ${command}`], 't-dim');
+
+    const [head, ...rest] = command.toLowerCase().split(/\s+/);
+    const arg = rest.join(' ');
+
+    switch (head) {
+      case 'help':
+        line(['available: whoami · music · games · stack · now · principles · contact · ls · date · pwd · cat README.md · dragon · sudo hire-me · clear']);
+        break;
+
+      case 'whoami':
+        line(['Matheesan Manokaran — engineer, DJ, gamer.']);
+        line(['Tamil-Canadian, born Toronto, raised Markham.']);
+        line(['I build LLM agents that survive real phone calls — and mix music after hours.']);
+        break;
+
+      case 'stack':
+        line(['TypeScript · Python · YAML DSL · GCP (Cloud Run, BigQuery) · Terraform']);
+        line(['Claude Code · MCP · React · wall-to-wall monitoring · too much chai']);
+        break;
+
+      case 'now':
+        line(['listening: house · disco · ambient · Tamil.']);
+        line(['playing: Wukong (Elden Ring on deck).']);
+        line(['mixing: a set I’ll never finish.']);
+        line(['building: agent evals · RAG.']);
+        line(['based in Markham, Ontario.']);
+        break;
+
+      case 'music':
+        line(['DJ — house, disco, ambient, Tamil, hip-hop, whatever the room needs.']);
+        line(['no autoplay. the crate is at /music.']);
+        line([link('/music/', '-> open /music')]);
+        break;
+
+      case 'games':
+        line(['Elden Ring · Black Myth: Wukong · Mario Kart · Valorant · Overwatch.']);
+        line(['currently: Wukong. comfort game: Mario Kart.']);
+        line([link('/games/', '-> open /games')]);
+        break;
+
+      case 'principles':
+        principles.forEach((p) => line([`${p.key} — ${p.body}`]));
+        break;
+
+      case 'contact':
+        line(['email is behind a form (spam is not a personality).']);
+        line([link('/contact/', '-> open /contact')]);
+        break;
+
+      case 'sudo':
+        if (arg === 'hire-me' || arg === 'hire me') {
+          line(['checking credentials…'], 't-dim');
+          line(['[ok] production LLM agents'], 't-ok');
+          line(['[ok] evals that catch silent green'], 't-ok');
+          line(['[ok] will say “I was wrong” in writing'], 't-ok');
+          line(['permission granted.'], 't-gold');
+          line([link('/contact/', '-> start the conversation')]);
+        } else {
+          line([`sudo: ${arg || 'what?'}: command not found (nice try)`], 't-warn');
+        }
+        break;
+
+      case 'ls':
+        line(['music/   games/   career/   lab/   notes/   about/   access/   resume/   contact/']);
+        break;
+
+      case 'date':
+        line([new Date().toLocaleString('en-CA', { timeZone: 'America/Toronto', dateStyle: 'full', timeStyle: 'short' }) + ' ET']);
+        break;
+
+      case 'pwd':
+        line(['/var/www/matheesan.ca']);
+        break;
+
+      case 'cat':
+        if (arg === 'readme.md' || arg === 'readme') {
+          line(['# Matheesan']);
+          line(['Engineer, DJ, gamer. Tamil-Canadian. Moon name. Dragon year. Wave country.']);
+          line(['Production LLM voice agents, evals, agentic tooling.']);
+          line(['Currently: Wukong, a new mix, and agent evals.']);
+        } else {
+          line([`cat: ${arg || 'nothing'}: no such file`], 't-warn');
+        }
+        break;
+
+      case 'clear':
+        output.replaceChildren();
+        break;
+
+      case 'dragon':
+        document.dispatchEvent(new CustomEvent('dragon:toggle'));
+        line(['dragon mode toggled.'], 't-gold');
+        break;
+
+      case 'exit':
+        line(['there is no exit. only scroll.'], 't-dim');
+        break;
+
+      default:
+        line([`command not found: ${command}.`], 't-warn');
+        line(['try `help`.']);
+    }
+  };
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    lastCommand = input.value;
+    run(input.value);
+    input.value = '';
+  });
+
+  terminal.querySelectorAll<HTMLButtonElement>('[data-cmd]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      lastCommand = btn.dataset.cmd ?? '';
+      run(lastCommand);
+      input.focus();
+    });
+  });
+
+  terminal.querySelector<HTMLButtonElement>('[data-term-clear]')?.addEventListener('click', () => {
+    output.replaceChildren();
+    input.focus();
+  });
+
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      input.value = lastCommand;
+    } else if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      input.value = '';
+    }
+  });
+</script>

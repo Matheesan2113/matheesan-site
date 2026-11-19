@@ -1,0 +1,89 @@
+---
+import { now } from '../data/profile';
+---
+
+<section id="signal" aria-label="Right now">
+  <div class="container">
+    <div class="signal-head">
+      <span class="signal-kicker mono">// now</span>
+      <span class="signal-note mono">current rotation · updated by mood</span>
+    </div>
+    <div class="signal-grid">
+      {now.map((metric) => (
+        <div class="signal-cell">
+          <div class="signal-value">{metric.value}</div>
+          <div class="signal-label">{metric.label}</div>
+          <div class="signal-note">{metric.note}</div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  #signal {
+    padding: 2.2rem 0;
+    background: var(--bg2);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .signal-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: 1.4rem;
+  }
+
+  .signal-kicker { color: var(--accent); font-size: 0.6rem; letter-spacing: 0.18em; }
+  .signal-note { color: var(--text3); font-size: 0.55rem; letter-spacing: 0.1em; }
+
+  .signal-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+  }
+
+  .signal-cell {
+    background: var(--bg2);
+    padding: 1.15rem 1.2rem 1.05rem;
+    transition: background 0.25s;
+  }
+
+  .signal-cell:hover { background: var(--bg3); }
+
+  .signal-value {
+    font-family: var(--serif);
+    font-size: clamp(1.9rem, 3.4vw, 2.7rem);
+    font-weight: 300;
+    line-height: 1;
+    color: var(--moon);
+    margin-bottom: 0.45rem;
+  }
+
+  .signal-label {
+    font-family: var(--mono);
+    font-size: 0.60rem;
+    letter-spacing: 0.08em;
+    color: var(--text2);
+    margin-bottom: 0.3rem;
+  }
+
+  .signal-cell .signal-note {
+    font-size: 0.54rem;
+    line-height: 1.5;
+    color: var(--text3);
+  }
+
+  @media (max-width: 860px) {
+    .signal-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 460px) {
+    .signal-grid { grid-template-columns: 1fr; }
+    .signal-head { flex-direction: column; gap: 0.3rem; }
+  }
+</style>

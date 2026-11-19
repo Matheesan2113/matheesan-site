@@ -1,0 +1,180 @@
+---
+const bars = [28, 52, 38, 74, 46, 88, 34, 62, 44, 80, 58, 36, 70, 48, 84, 40, 64, 30];
+---
+
+<div class="deck" aria-hidden="true">
+  <div class="deck-top">
+    <span class="mono">side a · after hours</span>
+    <span class="mono">33 rpm</span>
+  </div>
+
+  <div class="platter">
+    <div class="record">
+      <div class="record-label">M<span>.</span></div>
+    </div>
+    <div class="tonearm"><i></i></div>
+  </div>
+
+  <div class="eq">
+    {bars.map((height, index) => (
+      <span style={`--h:${height}%; --d:${(index % 7) * 0.12}s`}></span>
+    ))}
+  </div>
+
+  <div class="deck-foot mono">
+    <span>house · disco · ambient</span>
+    <span>cue 02</span>
+  </div>
+</div>
+
+<style>
+  .deck {
+    position: relative;
+    width: min(440px, 100%);
+    border: 1px solid var(--line);
+    background:
+      radial-gradient(ellipse 80% 70% at 30% 0%, rgba(88, 174, 201, 0.08), transparent 65%),
+      var(--bg2);
+    padding: 0.85rem;
+  }
+
+  .deck-top,
+  .deck-foot {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    font-size: 0.52rem;
+    letter-spacing: 0.08em;
+    color: var(--text3);
+    text-transform: uppercase;
+  }
+
+  .deck-top { margin-bottom: 0.8rem; }
+  .deck-foot { margin-top: 0.8rem; padding-top: 0.7rem; border-top: 1px solid var(--line); }
+
+  .platter {
+    position: relative;
+    aspect-ratio: 1;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--line);
+    background:
+      radial-gradient(circle at 50% 50%, rgba(88, 174, 201, 0.06), transparent 55%),
+      #05090f;
+    overflow: hidden;
+  }
+
+  .record {
+    width: 78%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    position: relative;
+    background:
+      repeating-radial-gradient(circle at 50% 50%, #101721 0 2px, #0b1119 2px 4px),
+      #0b1119;
+    box-shadow:
+      0 0 0 1px rgba(200, 216, 240, 0.08),
+      0 22px 50px rgba(0, 0, 0, 0.45);
+    animation: spin 18s linear infinite;
+  }
+
+  .record::before {
+    content: '';
+    position: absolute;
+    inset: 4%;
+    border-radius: 50%;
+    background:
+      conic-gradient(from 20deg, transparent 0 30%, rgba(200, 216, 240, 0.06) 42%, transparent 55% 100%);
+  }
+
+  .record-label {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 31%;
+    aspect-ratio: 1;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: radial-gradient(circle at 40% 35%, var(--moon2), #3f6f9a 55%, #1b3c5c);
+    font-family: var(--serif);
+    font-size: 1.5rem;
+    color: #071018;
+  }
+
+  .record-label span { color: var(--gold); }
+
+  .tonearm {
+    position: absolute;
+    top: 7%;
+    right: 9%;
+    width: 2px;
+    height: 44%;
+    background: linear-gradient(to bottom, var(--accent), rgba(88, 174, 201, 0.2));
+    transform-origin: top center;
+    transform: rotate(24deg);
+    box-shadow: 0 0 10px rgba(88, 174, 201, 0.2);
+  }
+
+  .tonearm::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: 50%;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--bg3);
+    border: 1px solid var(--accent);
+    transform: translateX(-50%);
+  }
+
+  .tonearm i {
+    position: absolute;
+    bottom: -3px;
+    left: 50%;
+    width: 8px;
+    height: 18px;
+    background: var(--gold);
+    transform: translateX(-50%);
+    border-radius: 1px;
+  }
+
+  .eq {
+    display: flex;
+    align-items: flex-end;
+    gap: 3px;
+    height: 46px;
+    margin-top: 0.85rem;
+  }
+
+  .eq span {
+    flex: 1;
+    height: var(--h);
+    background: linear-gradient(to top, rgba(88, 174, 201, 0.12), rgba(88, 174, 201, 0.65));
+    transform-origin: bottom;
+    animation: eq 1.2s ease-in-out infinite alternate;
+    animation-delay: var(--d);
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  @keyframes eq {
+    from { transform: scaleY(0.35); opacity: 0.5; }
+    to { transform: scaleY(1); opacity: 1; }
+  }
+
+  @media (hover: hover) {
+    .deck:hover .record { animation-play-state: paused; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .record, .eq span { animation: none; }
+  }
+
+  @media (max-width: 520px) {
+    .deck { padding: 0.65rem; }
+    .eq { height: 34px; }
+  }
+</style>

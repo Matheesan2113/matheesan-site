@@ -1,0 +1,457 @@
+---
+import Layout from '../layouts/layout.astro';
+import Cursor from '../components/Cursor.astro';
+import Nav from '../components/Nav.astro';
+import CommandPalette from '../components/CommandPalette.astro';
+import Footer from '../components/Footer.astro';
+import { site } from '../data/profile';
+---
+
+<Layout
+  title="Résumé — Matheesan"
+  description="Résumé for Matheesan Manokaran: senior software engineer building production systems and AI-native workflows — LLM agents, evals, agentic coding tooling and local inference. Seven years of AI/ML delivery."
+>
+  <Cursor />
+  <Nav />
+  <CommandPalette />
+
+  <main id="main" class="resume-page">
+    <div class="container">
+      <div class="resume-toolbar no-print">
+        <a href="/" class="mono">← matheesan.ca</a>
+        <button type="button" id="print-resume" class="btn-ghost btn-small">print / save PDF</button>
+      </div>
+
+      <article class="resume">
+        <header class="resume-head">
+          <div>
+            <p class="resume-kicker mono">résumé · 2026.11</p>
+            <h1>Matheesan Manokaran</h1>
+            <p class="resume-role">Senior Software Engineer · AI Platform, RAG &amp; Evals</p>
+          </div>
+          <div class="resume-contact mono">
+            <span>{site.location}</span>
+            <a href="/contact/">matheesan.ca/contact</a>
+            <a href={site.socials.github}>github.com/Matheesan2113</a>
+            <a href={site.socials.linkedin}>linkedin.com/in/matheesanm</a>
+          </div>
+        </header>
+
+        <section class="resume-section">
+          <h2 class="resume-label mono">summary</h2>
+          <p class="resume-summary">
+            Senior software engineer with seven years of AI/ML delivery, including five years building
+            production LLM agents. I work across the whole stack: model routing and
+            fallbacks, knowledge bases and RAG, stateful agents, evals and the tooling that makes
+            them safe to change. Strongest at the gap between green tests and production behaviour —
+            and at choosing the tool that shortens the loop without hiding the failure.
+          </p>
+        </section>
+
+        <section class="resume-section">
+          <h2 class="resume-label mono">experience</h2>
+
+          <div class="resume-jobs">
+          <div class="resume-job">
+            <div class="resume-job-head">
+              <div>
+                <h3>Replicant</h3>
+                <p class="resume-job-role">Senior Software Engineer · Delivery / Forward-Deployed AI</p>
+              </div>
+              <p class="resume-job-date mono">Oct 2021 — Oct 2026<br />Remote · Toronto</p>
+            </div>
+            <ul>
+              <li>
+                Took enterprise LLM voice agents from an empty repo to production: state machines,
+                tool calls, auth, fallbacks and hypercare.
+              </li>
+              <li>
+                Built the platform layer: provider routing and fallbacks, knowledge bases and
+                <strong>RAG</strong>, eval harnesses, guardrails and observability.
+              </li>
+              <li>
+                Caught launch-blocking auth, wrong-record and first-time-user defects before they
+                reached users; turned them into acceptance tests and release gates.
+              </li>
+              <li>
+                Led a stalled enterprise migration to <strong>100% cutover in five weeks</strong>;
+                rebuilt routing, hand-off payloads and a CI test gate.
+              </li>
+              <li>
+                Shipped AI coding skills and agentic tooling; drove GitHub Copilot, Cursor and
+                Claude Code adoption across engineering.
+              </li>
+              <li>
+                Worked across frontier and open-weight providers; treated model and prompt upgrades
+                as releases with regression evals.
+              </li>
+            </ul>
+          </div>
+
+          <div class="resume-job">
+            <div class="resume-job-head">
+              <div>
+                <h3>CGI</h3>
+                <p class="resume-job-role">Software Engineer — Emerging Tech</p>
+              </div>
+              <p class="resume-job-date mono">2019 — 2021<br />Toronto</p>
+            </div>
+            <ul>
+              <li>
+                Built OCR + classical NLP document pipelines before LLMs made extraction a prompt.
+              </li>
+              <li>
+                Took models from notebooks to reproducible deployments with containerisation, CI/CD,
+                monitoring and rollback.
+              </li>
+              <li>
+                Ran applied-AI discovery: rapid prototypes, build-vs-buy analysis and handoff to
+                operations.
+              </li>
+            </ul>
+          </div>
+
+          <div class="resume-job">
+            <div class="resume-job-head">
+              <div>
+                <h3>Avaya</h3>
+                <p class="resume-job-role">Software Engineering Intern — Professional Engineering Year</p>
+              </div>
+              <p class="resume-job-date mono">2018<br />Toronto</p>
+            </div>
+            <ul>
+              <li>Built test harnesses and log tooling for SIP/VoIP call flows.</li>
+              <li>Traced latency and state across real-time systems that could not be restarted casually.</li>
+            </ul>
+          </div>
+          </div>
+        </section>
+
+        <section class="resume-section">
+          <h2 class="resume-label mono">selected work</h2>
+          <div class="resume-projects">
+            <div>
+              <h3>The production voice agent</h3>
+              <p>
+                Empty repo to live, multi-turn agent: authentication, eligibility checks, atomic
+                transactions, fallbacks, and three launch blockers caught before users met them.
+              </p>
+            </div>
+            <div>
+              <h3>Silent green</h3>
+              <p>
+                Collected 16 real AI-authoring failures; 6 were “silent green” — change made, tests
+                passed, defect shipped. Turned them into eval scenarios with must / must-not assertions
+                and five lint rules accepted for the platform linter.
+              </p>
+            </div>
+            <div>
+              <h3>The migration rescue</h3>
+              <p>
+                Rebuilt transfer routing from a production snapshot, expanded hand-off payloads,
+                and made a product-facing test suite a CI merge gate. Cut over to 100% of traffic
+                in five weeks.
+              </p>
+            </div>
+            <div>
+              <h3>The prototype that lost</h3>
+              <p>
+                Benchmarked a Cloud Run replacement for a high-volume integration platform: p95 cold
+                start 401 ms against a 300 ms target, ~99% lower modelled cost — and recommended the
+                competing platform on the evidence.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section class="resume-section">
+          <h2 class="resume-label mono">skills</h2>
+          <dl class="resume-skills">
+            <div><dt>LLM &amp; agents</dt><dd>Tool-calling agents · state machines · prompt/state design · model upgrades · ASR/TTS pipelines · evals · MCP</dd></div>
+            <div><dt>AI platform</dt><dd>Model routing · fallbacks · knowledge bases · RAG · vector search · embeddings · citations</dd></div>
+            <div><dt>AI tooling</dt><dd>GitHub Copilot · Cursor · Claude Code · MCP · LangChain · Ollama · Whisper · Open WebUI</dd></div>
+            <div><dt>languages</dt><dd>TypeScript · Python · SQL · Bash</dd></div>
+            <div><dt>cloud &amp; infra</dt><dd>GCP (Cloud Run, BigQuery) · Terraform · Docker · CI/CD · observability</dd></div>
+            <div><dt>integrations</dt><dd>Genesys · NICE · Amazon Connect · Salesforce · REST / OAuth2</dd></div>
+            <div><dt>practices</dt><dd>AI-native SDLC · forward-deployed delivery · incident response · postmortems · technical writing · mentoring</dd></div>
+          </dl>
+        </section>
+
+        <section class="resume-section">
+          <h2 class="resume-label mono">education &amp; recognition</h2>
+          <div class="resume-edu">
+            <div>
+              <h3>BEng, Computer Engineering</h3>
+              <p>Ryerson University (now Toronto Metropolitan University) · 2015 — 2019</p>
+              <p class="resume-note">
+                Final-year ML project: Twitter data → interaction graphs → community structure.
+              </p>
+            </div>
+            <div>
+              <h3>Earlier foundations</h3>
+              <p>Document intelligence (CGI, 2019) · MLOps runway (CGI, 2020)</p>
+              <p class="resume-note">Real-time comms (Avaya, 2018) · graph communities (TMU, 2019)</p>
+            </div>
+          </div>
+        </section>
+
+        <footer class="resume-foot mono">
+          <span>public-safe version · customer names and internal metrics omitted</span>
+          <span>matheesan.ca</span>
+        </footer>
+      </article>
+    </div>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  .resume-page { padding: 7rem 0 0; }
+  .resume-page .container { max-width: 940px; }
+
+  .resume-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .resume-toolbar a {
+    font-size: 0.58rem;
+    letter-spacing: 0.08em;
+    color: var(--text3);
+    text-decoration: none;
+  }
+
+  .resume-toolbar a:hover { color: var(--accent); }
+
+  .resume {
+    border: 1px solid var(--line);
+    background: var(--bg2);
+    padding: 2.5rem 2.6rem;
+  }
+
+  .resume-head {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 2rem;
+    padding-bottom: 1.8rem;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .resume-kicker {
+    font-size: 0.55rem;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    margin-bottom: 0.6rem;
+  }
+
+  .resume-head h1 {
+    font-family: var(--serif);
+    font-size: clamp(2.4rem, 5vw, 3.5rem);
+    font-weight: 300;
+    line-height: 1;
+    color: var(--text1);
+    margin-bottom: 0.6rem;
+  }
+
+  .resume-role {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    line-height: 1.6;
+    color: var(--text2);
+  }
+
+  .resume-contact {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    align-items: flex-end;
+    text-align: right;
+    font-size: 0.58rem;
+    line-height: 1.5;
+    color: var(--text3);
+  }
+
+  .resume-contact a { color: var(--text2); text-decoration: none; }
+  .resume-contact a:hover { color: var(--accent2); }
+
+  .resume-section {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 2rem;
+    padding: 1.7rem 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .resume-section:last-of-type { border-bottom: 0; }
+
+  .resume-label {
+    font-size: 0.55rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    padding-top: 0.2rem;
+  }
+
+  .resume-summary {
+    font-family: var(--serif);
+    font-size: 1.12rem;
+    line-height: 1.75;
+    color: var(--text2);
+  }
+
+  .resume-job + .resume-job { margin-top: 1.6rem; padding-top: 1.4rem; border-top: 1px dashed var(--line); }
+
+  .resume-job-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 1.5rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .resume-job h3, .resume-projects h3, .resume-edu h3 {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text1);
+    margin-bottom: 0.15rem;
+  }
+
+  .resume-job-role { font-size: 0.8rem; color: var(--text2); }
+
+  .resume-job-date {
+    font-size: 0.55rem;
+    line-height: 1.6;
+    color: var(--text3);
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  .resume-job ul { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; }
+
+  .resume-job li {
+    position: relative;
+    padding-left: 0.9rem;
+    font-size: 0.8rem;
+    line-height: 1.65;
+    color: var(--text2);
+  }
+
+  .resume-job li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: var(--wave2);
+    font-size: 0.65rem;
+  }
+
+  .resume-job strong { color: var(--text1); font-weight: 500; }
+
+  .resume-projects {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.3rem 1.8rem;
+  }
+
+  .resume-projects p, .resume-edu p {
+    font-size: 0.78rem;
+    line-height: 1.65;
+    color: var(--text2);
+  }
+
+  .resume-skills { display: flex; flex-direction: column; gap: 0.55rem; }
+
+  .resume-skills > div {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 1rem;
+  }
+
+  .resume-skills dt {
+    font-family: var(--mono);
+    font-size: 0.55rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text3);
+    padding-top: 0.15rem;
+  }
+
+  .resume-skills dd { font-size: 0.78rem; line-height: 1.6; color: var(--text2); }
+
+  .resume-edu { display: grid; grid-template-columns: 1fr 1fr; gap: 1.8rem; }
+  .resume-edu h3 { margin-bottom: 0.25rem; }
+  .resume-note { font-style: italic; color: var(--text3) !important; margin-top: 0.25rem; }
+
+  .resume-foot {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--line);
+    font-size: 0.5rem;
+    letter-spacing: 0.05em;
+    color: var(--text3);
+  }
+
+  @media (max-width: 760px) {
+    .resume { padding: 1.6rem 1.3rem; }
+    .resume-head { grid-template-columns: 1fr; gap: 1rem; }
+    .resume-contact { align-items: flex-start; text-align: left; }
+    .resume-section { grid-template-columns: 1fr; gap: 0.7rem; }
+    .resume-projects, .resume-edu { grid-template-columns: 1fr; }
+    .resume-job-head { flex-direction: column; gap: 0.3rem; }
+    .resume-job-date { text-align: left; }
+    .resume-skills > div { grid-template-columns: 1fr; gap: 0.1rem; }
+    .resume-foot { flex-direction: column; gap: 0.3rem; }
+  }
+</style>
+
+<style is:global>
+  @media print {
+    @page { margin: 14mm; }
+
+    body {
+      background: #fff !important;
+      color: #111 !important;
+      font-size: 10pt;
+    }
+
+    #cursor, #cursor-ring, nav, footer, .no-print, .skip-link { display: none !important; }
+
+    .resume-page { padding: 0 !important; }
+    .resume-page .container { max-width: none !important; padding: 0 !important; }
+    .resume {
+      border: 0 !important;
+      background: #fff !important;
+      padding: 0 !important;
+    }
+
+    .resume-head, .resume-section, .resume-foot { border-color: #ccc !important; }
+
+    .resume-head h1, .resume-job h3, .resume-projects h3, .resume-edu h3,
+    .resume-summary, .resume-job strong { color: #111 !important; }
+
+    .resume-role, .resume-summary, .resume-job li, .resume-projects p,
+    .resume-skills dd, .resume-edu p { color: #333 !important; }
+
+    .resume-label, .resume-kicker, .resume-job-role, .resume-contact,
+    .resume-job-date, .resume-skills dt, .resume-foot { color: #555 !important; }
+
+    .resume-contact a { color: #333 !important; }
+    .resume-job li::before { color: #777 !important; }
+
+    .resume-section { break-inside: avoid; }
+    .resume-job { break-inside: avoid; }
+  }
+</style>
+
+<script>
+  document.getElementById('print-resume')?.addEventListener('click', () => window.print());
+
+  if (new URLSearchParams(location.search).get('print') === '1') {
+    window.addEventListener('load', () => window.print(), { once: true });
+  }
+</script>

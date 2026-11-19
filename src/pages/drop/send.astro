@@ -4,12 +4,16 @@ import '../../styles/drop.css';
 import drop from '../../data/drop.json';
 ---
 
-<Layout title="Send files — Matheesan" description="Send files privately." noindex>
+<Layout
+  mainId="drop"
+  title="Send files — Matheesan"
+  description="Send files privately." noindex
+>
   <main id="drop" data-endpoint={drop.endpoint}>
     <section>
       <div class="container">
         <p class="section-label"><a href="/">matheesan.ca</a> / send</p>
-        <h2 class="section-title">Send <em>files</em></h2>
+        <h1 class="section-title">Send <em>files</em></h1>
 
         <div id="guest-intro" class="drop-panel">
           <div class="drop-label" id="guest-label">upload link</div>

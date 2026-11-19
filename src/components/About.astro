@@ -1,72 +1,124 @@
-<section id="about">
-  <div class="container">
-    <p class="section-label">01 — about</p>
-    <div class="about-grid">
+---
+import { principles } from '../data/profile';
+import Terminal from './Terminal.astro';
 
-      <div class="about-left fade-up">
-        <div class="about-symbol">M.</div>
+interface Props {
+  headless?: boolean;
+}
+
+const { headless = false } = Astro.props;
+---
+
+<section id="about" class:list={{ 'about-embedded': headless }}>
+  <div class="container">
+    <div class="about-grid">
+      <aside class="about-left fade-up" aria-label="Identity">
+        <div class="about-symbol" aria-hidden="true">M<span>.</span></div>
+
         <div class="about-identities">
           <div class="identity"><span class="identity-dot"></span>Tamil-Canadian</div>
           <div class="identity"><span class="identity-dot"></span>Born Toronto, raised Markham</div>
           <div class="identity"><span class="identity-dot"></span>Tamil · English · French</div>
           <div class="identity"><span class="identity-dot"></span>Anime &amp; Japanese culture</div>
+          <div class="identity"><span class="identity-dot"></span>DJ · after hours</div>
+          <div class="identity"><span class="identity-dot"></span>Elden Ring · Wukong</div>
           <div class="identity"><span class="identity-dot"></span>Lifeguard &amp; aquatics leader</div>
           <div class="identity"><span class="identity-dot"></span>Competitor at heart</div>
         </div>
+
         <div class="symbol-row">
           <div class="symbol-item">
-            <span class="sym">月</span>
+            <span class="sym" lang="ja">月</span>
             <span class="sym-label">mathee<br />= moon</span>
           </div>
           <div class="symbol-item">
-            <span class="sym">龍</span>
+            <span class="sym" lang="ja">龍</span>
             <span class="sym-label">year of<br />the dragon</span>
           </div>
           <div class="symbol-item">
-            <span class="sym">波</span>
+            <span class="sym" lang="ja">波</span>
             <span class="sym-label">varuna<br />waves</span>
           </div>
         </div>
-      </div>
+
+        <p class="about-coord mono">43.8561° N · 79.3370° W<br />markham, ontario</p>
+      </aside>
 
       <div class="about-right">
-        <h2 class="section-title fade-up">Who I <em>am</em></h2>
-        <p class="about-bio fade-up">
-          I grew up in <strong>Markham</strong> — one of Canada's most multicultural cities —
-          the son of Tamil parents from Sri Lanka. My first language was Tamil. I picked up
-          English, then French through school. I grew up surrounded by Japanese anime, Chinese
-          New Year, and every cuisine you can imagine. That breadth shaped how I think.
-        </p>
-        <p class="about-detail fade-up">
-          My name, <em>Matheesan</em>, means moon in Tamil — <em>mathee</em> (மதி). I've always felt a
-          pull toward water: I became a lifeguard at 16, led aquatics programs, and won awards
-          through the Life Saving Society. My son was born in the year of the dragon, and named
-          after Varuna — the Hindu lord of storms and waves. The symbols chose us as much as we chose them.
-        </p>
-        <p class="about-detail fade-up">
-          Growing up, I competed — Tamil speaking competitions, badminton, soccer, Tae Kwon Do, swimming.
-          I received a Ministry of Citizenship volunteer award at 17. Competition sharpened me.
-          Engineering became the next arena: complex problems, no obvious answers, no ceiling on how
-          good you can get.
-        </p>
-        <p class="about-detail fade-up">
-          Off the keyboard: I DJ (novice, but passionate), collect experiences over things, eat at
-          Michelin-starred restaurants when I travel, and try to take 2–4 trips a year.
-          Music is always there — discovering new genres, finding sounds I didn't know I needed.
-        </p>
-      </div>
+        {!headless && (
+          <>
+            <p class="section-label">about</p>
+            <h2 class="section-title">Behind the <em>prompt</em></h2>
+          </>
+        )}
 
+        <div class="about-bio">
+          <p>
+            I grew up in <strong>Markham</strong> — one of Canada’s most multicultural cities — the son of
+            Tamil parents from Sri Lanka. My first language was Tamil. I picked up English, then French
+            through school. I grew up surrounded by Japanese anime, Chinese New Year, and every cuisine
+            you can imagine. That breadth shaped how I think.
+          </p>
+          <p>
+            My name, <em>Matheesan</em>, means moon in Tamil — <em>mathee</em> (<span class="tamil" lang="ta">மதி</span>). I’ve always felt a pull
+            toward water: lifeguard at 16, aquatics programs, awards through the Life Saving Society. My son
+            was born in the year of the dragon and named after Varuna — the Hindu lord of storms and waves.
+            The symbols chose us as much as we chose them.
+          </p>
+          <p>
+            Music and games are the other two languages. I DJ — house, disco, ambient, Tamil, whatever
+            the room needs — and I keep a rotation of <em>Elden Ring</em>, <em>Wukong</em>, <em>Mario Kart</em>,
+            <em>Valorant</em> and <em>Overwatch</em>. Both are about pattern, timing and losing gracefully
+            until the next attempt.
+          </p>
+          <p>
+            Engineering became the arena: complex problems, no obvious answers, no ceiling on how good you
+            can get. My final-year ML project — Twitter data into interaction graphs into community structure
+            — was the first time a model found something I hadn’t. Later I was putting LLM agents
+            in front of real callers and learning that the interesting part is not the demo. It’s the gap
+            between <strong>“the tests are green”</strong> and <strong>“it works on a real call.”</strong>
+          </p>
+          <p>
+            I’m genuinely optimistic about AI, and specific about it. I’m a software engineer first — the
+            tooling is a multiplier, not a substitute for the craft. The work I care about is not replacing
+            judgment; it’s making judgment legible, testable, and safe enough to automate.
+          </p>
+        </div>
+
+        <h2 class="sr-only">Operating principles</h2>
+
+        <div class="principles fade-up" aria-label="Operating principles">
+          {principles.map((principle, index) => (
+            <div class="principle">
+              <span class="principle-num mono">0{index + 1}</span>
+              <div>
+                <h3 class="principle-key">{principle.key}</h3>
+                <p class="principle-body">{principle.body}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <div class="terminal-wrap fade-up">
+      <div class="terminal-head">
+        <span class="mono">~/matheesan — interactive shell</span>
+        <span class="mono terminal-head-note">read-only · no production access · yes, it is real</span>
+      </div>
+      <Terminal />
     </div>
   </div>
 </section>
 
-<style is:global>
+<style>
   #about { background: var(--bg2); }
+  .about-embedded { padding-top: 2.5rem; }
 
   .about-grid {
     display: grid;
-    grid-template-columns: 1fr 1.4fr;
-    gap: 6rem;
+    grid-template-columns: 0.78fr 1.5fr;
+    gap: 5rem;
     align-items: start;
   }
 
@@ -77,12 +129,14 @@
 
   .about-symbol {
     font-family: var(--serif);
-    font-size: 7rem;
-    line-height: 1;
+    font-size: 8rem;
+    line-height: 0.8;
     color: var(--wave1);
-    margin-bottom: 2rem;
+    margin-bottom: 2.2rem;
     font-style: italic;
   }
+
+  .about-symbol span { color: var(--gold); }
 
   .about-identities {
     display: flex;
@@ -95,64 +149,134 @@
     align-items: center;
     gap: 0.75rem;
     font-family: var(--mono);
-    font-size: 0.68rem;
-    letter-spacing: 0.1em;
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
     color: var(--text2);
   }
 
   .identity-dot {
-    width: 5px;
-    height: 5px;
+    width: 4px;
+    height: 4px;
     border-radius: 50%;
     background: var(--accent);
     flex-shrink: 0;
   }
 
-  .about-bio {
-    font-family: var(--serif);
-    font-size: 1.25rem;
-    font-weight: 300;
-    line-height: 1.9;
-    color: var(--text1);
-    margin-bottom: 2rem;
-  }
-
-  .about-bio strong { font-weight: 400; color: var(--moon); }
-
-  .about-detail {
-    font-size: 0.95rem;
-    line-height: 1.8;
-    color: var(--text2);
-    margin-bottom: 1.4rem;
-  }
-
   .symbol-row {
     display: flex;
-    gap: 2rem;
-    margin-top: 2.5rem;
-    padding-top: 2rem;
-    border-top: 1px solid var(--navy);
+    gap: 1.8rem;
+    margin-top: 2.2rem;
+    padding-top: 1.8rem;
+    border-top: 1px solid var(--line);
   }
 
   .symbol-item { text-align: center; }
 
   .symbol-item .sym {
-    font-family: var(--serif);
-    font-size: 2rem;
+    font-family: var(--jp);
+    font-size: 1.9rem;
     color: var(--gold);
     display: block;
-    margin-bottom: 0.4rem;
+    margin-bottom: 0.35rem;
   }
 
   .symbol-item .sym-label {
     font-family: var(--mono);
-    font-size: 0.6rem;
-    letter-spacing: 0.15em;
+    font-size: 0.55rem;
+    letter-spacing: 0.12em;
+    line-height: 1.6;
     color: var(--text3);
   }
 
-  @media (max-width: 900px) {
-    .about-grid  { grid-template-columns: 1fr; }
-    .about-left  { position: static; }
+  .about-coord {
+    margin-top: 2rem;
+    font-size: 0.55rem;
+    line-height: 1.8;
+    letter-spacing: 0.1em;
+    color: var(--text3);
+  }
+
+  .about-bio p {
+    font-family: var(--serif);
+    font-size: 1.18rem;
+    font-weight: 300;
+    line-height: 1.85;
+    color: var(--text2);
+    margin-bottom: 1.3rem;
+  }
+
+  .about-bio p:first-child { color: var(--text1); }
+
+  .about-bio strong { font-weight: 500; color: var(--moon); }
+  .about-bio em { font-style: italic; color: var(--moon2); }
+  .about-bio .tamil { font-family: var(--tamil); font-style: normal; font-size: 0.92em; color: var(--moon2); }
+
+  .principles {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    margin-top: 2.4rem;
+  }
+
+  .principle {
+    display: flex;
+    gap: 0.9rem;
+    background: var(--bg2);
+    padding: 1.2rem 1.1rem;
+    transition: background 0.25s;
+  }
+
+  .principle:hover { background: var(--bg3); }
+
+  .principle-num {
+    font-size: 0.55rem;
+    color: var(--accent);
+    padding-top: 0.2rem;
+    flex-shrink: 0;
+  }
+
+  .principle-key {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    color: var(--text1);
+    margin-bottom: 0.4rem;
+  }
+
+  .principle-body {
+    font-size: 0.78rem;
+    line-height: 1.65;
+    color: var(--text2);
+  }
+
+  .terminal-wrap { margin-top: 5rem; }
+
+  .terminal-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: 0.7rem;
+  }
+
+  .terminal-head .mono { font-size: 0.6rem; letter-spacing: 0.12em; color: var(--accent); }
+  .terminal-head-note { color: var(--text3) !important; font-size: 0.52rem !important; }
+
+  @media (max-width: 960px) {
+    .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .about-left { position: static; }
+    .about-symbol { font-size: 5.5rem; margin-bottom: 1.4rem; }
+    .about-identities { display: grid; grid-template-columns: 1fr 1fr; }
+    .about-coord { display: none; }
+  }
+
+  @media (max-width: 620px) {
+    .about-identities { grid-template-columns: 1fr; }
+    .principles { grid-template-columns: 1fr; }
+    .terminal-head { flex-direction: column; gap: 0.25rem; }
+    .symbol-row { gap: 1.2rem; }
   }
 </style>

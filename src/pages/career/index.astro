@@ -1,0 +1,91 @@
+---
+import SiteLayout from '../../layouts/site.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import JobTimeline from '../../components/JobTimeline.astro';
+import CaseCard from '../../components/CaseCard.astro';
+import AlsoBuilt from '../../components/AlsoBuilt.astro';
+import PlatformLayers from '../../components/PlatformLayers.astro';
+import EarlyProjects from '../../components/EarlyProjects.astro';
+import { caseFiles } from '../../data/profile';
+---
+
+<SiteLayout
+  title="Career — Matheesan"
+  description="Matheesan’s career: production LLM systems, platform engineering, model routing, RAG, evals and AI tooling — plus case files and the résumé."
+>
+  <PageHeader
+    crumb="career"
+    title="Career, measured in loops."
+    deck="Forward-deployed AI, enterprise ML and a habit of finding the bug the green suite is hiding. The voice agents are the proof; the through-line is production software and the tooling around it."
+  />
+
+  <section class="work-section">
+    <div class="container">
+      <JobTimeline />
+    </div>
+  </section>
+
+  <EarlyProjects />
+  <PlatformLayers />
+
+  <section class="work-case-section">
+    <div class="container">
+      <div class="case-section">
+        <div class="case-section-head">
+          <div>
+            <p class="section-label">selected work</p>
+            <h2 class="section-title">Case <em>files</em>.</h2>
+          </div>
+          <p class="case-section-note mono">
+            public-safe · customer names omitted · technical detail kept
+          </p>
+        </div>
+
+        <div class="case-grid">
+          {caseFiles.map((file) => <CaseCard file={file} />)}
+        </div>
+      </div>
+
+      <AlsoBuilt />
+    </div>
+  </section>
+</SiteLayout>
+
+<style>
+  .work-section { padding: 2.5rem 0 4rem; }
+
+  .work-case-section { padding: 4rem 0 6rem; background: var(--bg); }
+
+  .case-section { margin-top: 0; }
+
+  .case-section-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .case-section-head .section-title { margin-bottom: 0; }
+
+  .case-section-note {
+    font-size: 0.54rem;
+    letter-spacing: 0.08em;
+    color: var(--text3);
+    text-align: right;
+    max-width: 220px;
+    line-height: 1.7;
+  }
+
+  .case-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.2rem;
+  }
+
+  @media (max-width: 900px) {
+    .case-section-head { flex-direction: column; align-items: flex-start; gap: 0.8rem; }
+    .case-section-note { text-align: left; max-width: none; }
+    .case-grid { grid-template-columns: 1fr; }
+  }
+</style>

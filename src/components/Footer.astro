@@ -1,41 +1,176 @@
+---
+import { site } from '../data/profile';
+
+const built = new Date().toLocaleDateString('en-CA', { timeZone: 'America/Toronto' });
+---
+
 <footer>
-  <div class="footer-left">
-    © 2026 <span>Matheesan</span> · built with intention
-  </div>
-  <div class="footer-links">
-    <a href="https://github.com/Matheesan2113" target="_blank" rel="noopener noreferrer">github</a>
-    <a href="/contact">contact</a>
+  <div class="container">
+    <div class="footer-cta">
+      <div>
+        <p class="footer-kicker mono">// next</p>
+        <p class="footer-cta-title">Say hello. Bring a hard problem or a Mario Kart challenge.</p>
+      </div>
+      <a href="/contact/" class="btn-primary">start a conversation <span aria-hidden="true">→</span></a>
+    </div>
+
+    <div class="footer-main">
+      <div class="footer-brand">
+        <a href="/" class="footer-logo mono">M.</a>
+        <p>© 2026 Matheesan. Built with intention.</p>
+        <p class="footer-status mono"><i aria-hidden="true"></i>{site.personalStatus}</p>
+      </div>
+
+      <nav class="footer-nav" aria-label="Footer">
+        <div>
+          <p class="footer-label mono">index</p>
+          <a href="/music/">music</a>
+          <a href="/games/">games</a>
+          <a href="/lab/">lab</a>
+          <a href="/notes/">notes</a>
+          <a href="/about/">about</a>
+        </div>
+        <div>
+          <p class="footer-label mono">career</p>
+          <a href="/career/">career</a>
+          <a href="/tooling/">tooling</a>
+          <a href="/resume/">résumé</a>
+          <a href="/contact/">contact</a>
+          <a href="/drop/">drop box</a>
+          <a href="/rss.xml">rss ↗</a>
+        </div>
+        <div>
+          <p class="footer-label mono">elsewhere</p>
+          <a href={site.socials.github} target="_blank" rel="noopener noreferrer">github ↗</a>
+          <a href={site.socials.linkedin} target="_blank" rel="noopener noreferrer">linkedin ↗</a>
+          <a href={site.socials.instagram} target="_blank" rel="noopener noreferrer">instagram ↗</a>
+        </div>
+      </nav>
+    </div>
+
+    <div class="footer-bottom mono">
+      <span>colophon: astro 6 · vanilla ts · no ui framework · github pages</span>
+      <span>build {built} · <a href="https://github.com/Matheesan2113/matheesan-site">source</a></span>
+    </div>
   </div>
 </footer>
 
-<style is:global>
+<style>
   footer {
-    padding: 4rem 3rem;
     background: var(--bg);
-    border-top: 1px solid var(--navy);
+    border-top: 1px solid var(--line);
+    padding: 4rem 0 2rem;
+  }
+
+  .footer-cta {
     display: flex;
-    align-items: center;
     justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+    padding-bottom: 2.5rem;
+    border-bottom: 1px solid var(--line);
   }
 
-  .footer-left {
-    font-family: var(--mono);
-    font-size: 0.68rem;
-    color: var(--text3);
+  .footer-kicker {
+    font-size: 0.55rem;
+    letter-spacing: 0.14em;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
   }
 
-  .footer-left span { color: var(--accent); }
+  .footer-cta-title {
+    font-family: var(--serif);
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+    font-weight: 300;
+    line-height: 1.15;
+    color: var(--text1);
+  }
 
-  .footer-links { display: flex; gap: 2rem; }
+  .footer-main {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 3rem;
+    padding: 2.5rem 0;
+  }
 
-  .footer-links a {
-    font-family: var(--mono);
-    font-size: 0.68rem;
-    letter-spacing: 0.1em;
-    color: var(--text3);
+  .footer-logo {
+    display: inline-block;
+    font-size: 0.9rem;
+    letter-spacing: 0.16em;
+    color: var(--accent);
     text-decoration: none;
-    transition: color 0.3s;
+    margin-bottom: 0.8rem;
   }
 
-  .footer-links a:hover { color: var(--accent); }
+  .footer-brand p {
+    font-size: 0.78rem;
+    color: var(--text3);
+    margin-bottom: 0.4rem;
+  }
+
+  .footer-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: 0.6rem;
+    font-size: 0.55rem;
+    letter-spacing: 0.06em;
+    color: var(--ok) !important;
+  }
+
+  .footer-status i {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+
+  .footer-nav {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .footer-label {
+    font-size: 0.5rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text3);
+    margin-bottom: 0.7rem;
+  }
+
+  .footer-nav a {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--text2);
+    text-decoration: none;
+    padding: 0.18rem 0;
+    transition: color 0.2s, transform 0.2s;
+  }
+
+  .footer-nav a:hover { color: var(--accent2); transform: translateX(3px); }
+
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding-top: 1.4rem;
+    border-top: 1px solid var(--line);
+    font-size: 0.5rem;
+    letter-spacing: 0.06em;
+    color: var(--text3);
+  }
+
+  .footer-bottom a { color: var(--text3); text-decoration: none; border-bottom: 1px solid var(--line); }
+  .footer-bottom a:hover { color: var(--accent); border-bottom-color: var(--wave2); }
+
+  @media (max-width: 860px) {
+    .footer-cta { flex-direction: column; align-items: flex-start; gap: 1.2rem; }
+    .footer-main { grid-template-columns: 1fr; gap: 2rem; }
+    .footer-bottom { flex-direction: column; gap: 0.5rem; }
+  }
+
+  @media (max-width: 520px) {
+    .footer-nav { grid-template-columns: 1fr 1fr; }
+  }
 </style>

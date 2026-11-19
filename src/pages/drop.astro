@@ -6,12 +6,16 @@ import drop from '../data/drop.json';
 const config = JSON.stringify({ endpoint: drop.endpoint ?? '', ...(drop.oidc ?? {}) });
 ---
 
-<Layout title="Drop — Matheesan" description="Private drop box." noindex>
+<Layout
+  mainId="drop"
+  title="Drop — Matheesan"
+  description="Private drop box." noindex
+>
   <main id="drop" data-config={config}>
     <section>
       <div class="container">
         <p class="section-label"><a href="/">matheesan.ca</a> / drop</p>
-        <h2 class="section-title">Drop <em>box</em></h2>
+        <h1 class="section-title">Drop <em>box</em></h1>
 
         <div id="signin" class="drop-panel">
           <div class="drop-label">private</div>

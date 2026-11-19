@@ -1,0 +1,81 @@
+<section id="career-teaser">
+  <div class="container">
+    <div class="career-card">
+      <div>
+        <p class="section-label">career</p>
+        <h2 class="career-title">The professional <em>record</em>.</h2>
+        <p class="career-deck">
+          If you’re here for the résumé: the experience, case studies and AI platform work live in
+          one place. The rest of this site is the rest of me.
+        </p>
+      </div>
+      <div class="career-links">
+        <a href="/career/" class="btn-primary">career &amp; case files <span aria-hidden="true">→</span></a>
+        <a href="/resume/" class="btn-ghost">résumé <span aria-hidden="true">→</span></a>
+        <a href="/tooling/" class="career-sub mono">tooling timeline <span aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  #career-teaser { background: var(--bg2); }
+
+  .career-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 3rem;
+    border: 1px solid var(--line);
+    background:
+      radial-gradient(ellipse 70% 90% at 100% 0%, rgba(88, 174, 201, 0.07), transparent 65%),
+      var(--bg2);
+    padding: 2rem;
+  }
+
+  .career-title {
+    font-family: var(--serif);
+    font-size: clamp(1.8rem, 3.6vw, 2.8rem);
+    font-weight: 300;
+    line-height: 1.05;
+    color: var(--text1);
+    margin-bottom: 0.7rem;
+  }
+
+  .career-title em { color: var(--moon2); }
+
+  .career-deck {
+    max-width: 52ch;
+    font-size: 0.9rem;
+    line-height: 1.75;
+    color: var(--text2);
+  }
+
+  .career-links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.7rem;
+    justify-content: flex-end;
+    flex: 0 0 auto;
+  }
+
+  .career-sub {
+    flex-basis: 100%;
+    text-align: right;
+    font-size: 0.52rem;
+    letter-spacing: 0.08em;
+    color: var(--text3);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    padding-bottom: 0.1rem;
+  }
+
+  .career-sub:hover { color: var(--accent); border-bottom-color: var(--wave2); }
+
+  @media (max-width: 900px) {
+    .career-card { flex-direction: column; align-items: flex-start; gap: 1.8rem; }
+    .career-links { justify-content: flex-start; }
+    .career-sub { text-align: left; }
+  }
+</style>

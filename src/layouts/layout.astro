@@ -5,32 +5,148 @@ interface Props {
   title: string;
   description?: string;
   noindex?: boolean;
+  image?: string;
+  type?: 'website' | 'article';
+  article?: {
+    published: Date;
+    tags?: string[];
+  };
+  mainId?: string;
+  extraJsonLd?: Record<string, unknown> | Record<string, unknown>[];
 }
 
 const {
   title,
-  description = 'Matheesan — Senior Software Engineer, AI advocate, homelab builder. Tamil-Canadian based in Markham.',
+  description = 'Matheesan Manokaran is a Tamil-Canadian engineer, DJ and gamer in Markham, Ontario. AI systems, music, Elden Ring, Wukong, Mario Kart, Valorant and Overwatch.',
   noindex = false,
+  image = '/og.png',
+  type = 'website',
+  article,
+  mainId = 'main',
+  extraJsonLd,
 } = Astro.props;
+
+const site = Astro.site ?? new URL('https://matheesan.ca');
+const canonical = new URL(Astro.url.pathname, site);
+const ogImage = new URL(image, site);
+
+const siteDescription =
+  'Tamil-Canadian engineer, DJ and gamer in Markham, Ontario. AI systems, music, Elden Ring, Wukong, Mario Kart, Valorant and Overwatch.';
+
+const person = {
+  '@type': 'Person',
+  '@id': `${site.origin}/#person`,
+  name: 'Matheesan Manokaran',
+  alternateName: 'Matheesan',
+  url: site.origin,
+  jobTitle: 'Senior Software Engineer',
+  description:
+    'Tamil-Canadian engineer, DJ and gamer in Markham, Ontario. Builds AI systems, mixes music, and keeps a rotation of Elden Ring, Wukong, Mario Kart, Valorant and Overwatch.',
+  knowsAbout: [
+    'DJing',
+    'Music',
+    'Video games',
+    'Large language model agents',
+    'AI evaluation',
+    'AI developer tooling',
+    'Agentic coding',
+    'Model Context Protocol',
+    'Local inference',
+    'Cloud Run',
+    'TypeScript',
+    'Python',
+  ],
+  sameAs: [
+    'https://github.com/Matheesan2113',
+    'https://www.linkedin.com/in/matheesanm',
+    'https://www.instagram.com/matheesan_m',
+  ],
+};
+
+const graph: Record<string, unknown>[] = [
+  person,
+  {
+    '@type': 'WebSite',
+    '@id': `${site.origin}/#website`,
+    url: site.origin,
+    name: 'Matheesan',
+    description: siteDescription,
+    publisher: { '@id': `${site.origin}/#person` },
+    inLanguage: 'en-CA',
+  },
+];
+
+if (extraJsonLd) {
+  graph.push(...(Array.isArray(extraJsonLd) ? extraJsonLd : [extraJsonLd]));
+}
+
+if (article) {
+  graph.push({
+    '@type': 'BlogPosting',
+    '@id': `${canonical.href}#article`,
+    headline: title,
+    description,
+    datePublished: article.published.toISOString(),
+    dateModified: article.published.toISOString(),
+    author: { '@id': `${site.origin}/#person` },
+    publisher: { '@id': `${site.origin}/#person` },
+    mainEntityOfPage: canonical.href,
+    image: ogImage.href,
+    keywords: article.tags?.join(', '),
+    inLanguage: 'en-CA',
+  });
+}
+
+const jsonLd = { '@context': 'https://schema.org', '@graph': graph };
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en-CA">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
-    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    <meta name="author" content="Matheesan Manokaran" />
+    <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow'} />
+    <meta name="theme-color" content="#05080e" />
+    <meta name="color-scheme" content="dark" />
     <meta name="google-site-verification" content="t4-H3qLM-jIxgSMy0rGKTfcaADngXaLvQWYjDe5JsEU" />
+
+    <link rel="canonical" href={canonical.href} />
+    <link rel="alternate" type="application/rss+xml" title="Matheesan — field notes" href="/rss.xml" />
+
+    <meta property="og:site_name" content="Matheesan" />
+    <meta property="og:type" content={type} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical.href} />
+    <meta property="og:image" content={ogImage.href} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Matheesan — software engineer first. AI tooling is the multiplier." />
+    <meta property="og:locale" content="en_CA" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage.href} />
+    <meta name="twitter:image:alt" content="Matheesan — software engineer first. AI tooling is the multiplier." />
+
     <title>{title}</title>
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="alternate icon" href="/favicon.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500&family=Noto+Sans+Tamil:wght@400&family=Noto+Serif+JP:wght@400&display=swap"
       rel="stylesheet"
     />
+
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   </head>
   <body>
+    <a class="skip-link" href={`#${mainId}`}>skip to content</a>
     <slot />
   </body>
 </html>

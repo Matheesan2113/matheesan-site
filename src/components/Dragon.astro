@@ -1,0 +1,107 @@
+<svg class="dragon-global" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <path d="M20,220 C60,180 80,120 140,100 C180,86 200,110 240,90 C280,70 300,40 340,30 C360,24 380,28 390,20" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M140,100 C130,80 120,60 100,50 C90,45 80,50 75,60" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M240,90 C250,70 260,50 270,40" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M240,90 C255,100 265,115 260,130" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+  <circle cx="95" cy="44" r="3.4" fill="currentColor" opacity="0.7"/>
+  <path d="M20,220 C10,240 8,260 15,270 C22,280 40,275 50,260" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M20,220 C30,235 28,255 20,265" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+</svg>
+
+<div id="dragon-toast" class="dragon-toast mono" role="status" aria-live="polite"></div>
+
+<style is:global>
+  body.dragon-mode {
+    --accent: #c9a96e;
+    --accent2: #e0c48f;
+    --wave2: #6b5432;
+  }
+
+  .dragon-global {
+    position: fixed;
+    left: 0;
+    top: 18%;
+    z-index: 9996;
+    width: min(380px, 45vw);
+    color: var(--gold);
+    opacity: 0;
+    pointer-events: none;
+    filter: drop-shadow(0 0 18px rgba(201, 169, 110, 0.18));
+  }
+
+  body.dragon-mode .dragon-global {
+    animation: dragonFly 3.4s cubic-bezier(0.4, 0, 0.2, 1) both;
+  }
+
+  body.dragon-mode #hero .moon {
+    box-shadow:
+      0 0 46px 14px rgba(201, 169, 110, 0.22),
+      0 0 100px 42px rgba(201, 169, 110, 0.1);
+  }
+
+  body.dragon-mode #hero .hero-name em { color: var(--gold); }
+
+  @keyframes dragonFly {
+    0%   { transform: translate(-40vw, 24px) scale(0.75); opacity: 0; }
+    14%  { opacity: 0.55; }
+    82%  { opacity: 0.3; }
+    100% { transform: translate(122vw, -42px) scale(1.2); opacity: 0; }
+  }
+
+  .dragon-toast {
+    position: fixed;
+    right: 1.5rem;
+    bottom: 1.5rem;
+    z-index: 9997;
+    padding: 0.55rem 0.8rem;
+    border: 1px solid rgba(201, 169, 110, 0.45);
+    background: rgba(5, 10, 18, 0.94);
+    color: var(--gold);
+    font-size: 0.55rem;
+    letter-spacing: 0.08em;
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.25s, transform 0.25s;
+    pointer-events: none;
+  }
+
+  .dragon-toast.show { opacity: 1; transform: translateY(0); }
+
+  @media (prefers-reduced-motion: reduce) {
+    body.dragon-mode .dragon-global { animation: none; opacity: 0; }
+  }
+</style>
+
+<script>
+  const toast = document.getElementById('dragon-toast');
+  let timer = 0;
+
+  const toggleDragon = () => {
+    const on = document.body.classList.toggle('dragon-mode');
+    if (!toast) return;
+    toast.textContent = on ? 'dragon mode on' : 'dragon mode off';
+    toast.classList.add('show');
+    window.clearTimeout(timer);
+    timer = window.setTimeout(() => toast.classList.remove('show'), 2600);
+  };
+
+  document.addEventListener('dragon:toggle', toggleDragon);
+
+  const konami = ['arrowup', 'arrowup', 'arrowdown', 'arrowdown', 'arrowleft', 'arrowright', 'arrowleft', 'arrowright', 'b', 'a'];
+  let index = 0;
+
+  document.addEventListener('keydown', (e) => {
+    const typing = (e.target as HTMLElement).matches('input, textarea, select, [contenteditable="true"]');
+    if (typing) return;
+    const key = e.key.toLowerCase();
+    if (key === konami[index]) {
+      index += 1;
+      if (index === konami.length) {
+        index = 0;
+        toggleDragon();
+      }
+    } else {
+      index = key === konami[0] ? 1 : 0;
+    }
+  });
+</script>

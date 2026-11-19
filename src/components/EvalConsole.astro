@@ -1,0 +1,159 @@
+---
+---
+
+<div class="eval-console">
+  <div class="eval-head">
+    <span class="mono">eval_console</span>
+    <span class="eval-tag mono">historical corpus · replay</span>
+    <button type="button" id="run-evals" class="eval-run">run</button>
+  </div>
+
+  <div class="eval-body">
+    <pre id="eval-output" aria-live="polite"><span class="eval-prompt">$</span> ./run-evals --suite silent-green</pre>
+  </div>
+
+  <div class="eval-foot mono">
+    <span>6/16 field failures encoded</span>
+    <span>5 rules accepted</span>
+    <span>0 silent</span>
+  </div>
+</div>
+
+<style is:global>
+  .eval-console {
+    border: 1px solid var(--line);
+    background: #060b13;
+    display: flex;
+    flex-direction: column;
+    min-height: 300px;
+  }
+
+  .eval-head {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.6rem 0.8rem;
+    border-bottom: 1px solid var(--line);
+    background: rgba(14, 24, 40, 0.5);
+  }
+
+  .eval-head .mono { font-size: 0.58rem; letter-spacing: 0.1em; color: var(--accent); }
+
+  .eval-tag {
+    color: var(--text3) !important;
+    font-size: 0.5rem !important;
+    letter-spacing: 0.06em !important;
+    flex: 1;
+  }
+
+  .eval-run {
+    font-size: 0.55rem;
+    letter-spacing: 0.08em;
+    color: var(--bg);
+    background: var(--accent);
+    border: 0;
+    padding: 0.28rem 0.6rem;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .eval-run:hover { background: var(--accent2); }
+  .eval-run:disabled { opacity: 0.5; cursor: default; }
+
+  .eval-body {
+    flex: 1;
+    padding: 0.9rem 1rem;
+    overflow-x: auto;
+  }
+
+  #eval-output {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    line-height: 1.85;
+    color: var(--text2);
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    margin: 0;
+  }
+
+  .eval-prompt { color: var(--ok); }
+
+  .eval-line { display: block; }
+  .eval-ok   { color: var(--ok); }
+  .eval-warn { color: var(--warn); }
+  .eval-dim  { color: var(--text3); }
+  .eval-accent { color: var(--accent2); }
+
+  .eval-foot {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1rem;
+    padding: 0.55rem 0.8rem;
+    border-top: 1px solid var(--line);
+    font-size: 0.5rem;
+    letter-spacing: 0.06em;
+    color: var(--text3);
+  }
+
+  .eval-foot span:last-child { color: var(--ok); margin-left: auto; }
+
+  @media (max-width: 600px) {
+    .eval-console { min-height: 240px; }
+    .eval-tag { display: none; }
+    #eval-output { font-size: 0.64rem; }
+  }
+</style>
+
+<script>
+  const button = document.getElementById('run-evals') as HTMLButtonElement;
+  const output = document.getElementById('eval-output') as HTMLPreElement;
+
+  const cases = [
+    { state: 'ok', name: 'auth-bypass', assertion: 'must fail closed' },
+    { state: 'ok', name: 'wrong-trip-cancel', assertion: 'must not confirm a rejected selection' },
+    { state: 'ok', name: 'first-time-booker', assertion: 'must reach booking state' },
+    { state: 'ok', name: 'stale-auth-suite', assertion: 'must execute > 0 tests' },
+    { state: 'warn', name: 'live-only-defect', assertion: 'unknown — needs a replay corpus' },
+  ];
+
+  let running = false;
+
+  const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+  const addLine = (html: string, className = 'eval-line') => {
+    const span = document.createElement('span');
+    span.className = className;
+    span.innerHTML = html;
+    output.append(span);
+    output.scrollTop = output.scrollHeight;
+  };
+
+  const run = async () => {
+    if (running) return;
+    running = true;
+    button.disabled = true;
+    button.textContent = 'running';
+
+    output.replaceChildren();
+    addLine('<span class="eval-prompt">$</span> ./run-evals --suite silent-green');
+    await wait(260);
+
+    for (const test of cases) {
+      const mark = test.state === 'ok' ? '[ok]' : '[??]';
+      const cls = test.state === 'ok' ? 'eval-ok' : 'eval-warn';
+      addLine(`  <span class="${cls}">${mark}</span> ${test.name.padEnd(22, ' ')} <span class="eval-dim">${test.assertion}</span>`);
+      await wait(360);
+    }
+
+    addLine('');
+    addLine('  <span class="eval-ok">4 passed</span>  <span class="eval-warn">1 unknown</span>  <span class="eval-dim">0 silent</span>');
+    addLine('  <span class="eval-dim">6/16 historical AI-authoring failures now have a must / must-not assertion.</span>');
+    addLine('  <span class="eval-accent">status: the suite can no longer score a silent green as a success.</span>');
+
+    button.textContent = 're-run';
+    button.disabled = false;
+    running = false;
+  };
+
+  button.addEventListener('click', run);
+</script>

@@ -1,0 +1,114 @@
+---
+import type { CaseFile } from '../data/profile';
+
+interface Props {
+  file: CaseFile;
+}
+
+const { file } = Astro.props;
+---
+
+<a class="case-card" href={`/career/${file.id}/`}>
+  <div class="case-card-top">
+    <span class="case-card-num mono">CASE {file.number}</span>
+    <span class="case-card-arrow" aria-hidden="true">→</span>
+  </div>
+  <h3 class="case-card-title">{file.title}</h3>
+  <p class="case-card-deck">{file.deck}</p>
+  <div class="case-card-metrics">
+    {file.metrics.map((metric) => <span>{metric}</span>)}
+  </div>
+  <div class="case-card-tags">
+    {file.tags.map((tag) => <span>{tag}</span>)}
+  </div>
+</a>
+
+<style>
+  .case-card {
+    display: flex;
+    flex-direction: column;
+    padding: 1.4rem 1.3rem;
+    border: 1px solid var(--line);
+    background: var(--bg2);
+    text-decoration: none;
+    transition: border-color 0.25s, background 0.25s, transform 0.25s;
+    min-height: 100%;
+  }
+
+  .case-card:hover {
+    border-color: var(--wave2);
+    background: var(--bg3);
+    transform: translateY(-2px);
+  }
+
+  .case-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.8rem;
+  }
+
+  .case-card-num {
+    font-size: 0.52rem;
+    letter-spacing: 0.1em;
+    color: var(--text3);
+  }
+
+  .case-card-arrow {
+    font-family: var(--mono);
+    font-size: 0.9rem;
+    color: var(--text3);
+    transition: color 0.2s, transform 0.2s;
+  }
+
+  .case-card:hover .case-card-arrow { color: var(--accent); transform: translateX(4px); }
+
+  .case-card-title {
+    font-family: var(--serif);
+    font-size: 1.5rem;
+    font-weight: 400;
+    line-height: 1.2;
+    color: var(--text1);
+    margin-bottom: 0.4rem;
+  }
+
+  .case-card-deck {
+    font-size: 0.84rem;
+    line-height: 1.6;
+    color: var(--text2);
+    margin-bottom: 1rem;
+  }
+
+  .case-card-metrics {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    margin-top: auto;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .case-card-metrics span {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    line-height: 1.5;
+    color: var(--moon2);
+    border-left: 1px solid var(--wave2);
+    padding-left: 0.55rem;
+  }
+
+  .case-card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    margin-top: 0.8rem;
+  }
+
+  .case-card-tags span {
+    font-family: var(--mono);
+    font-size: 0.5rem;
+    color: var(--text3);
+    border: 1px solid var(--line);
+    padding: 0.12rem 0.32rem;
+  }
+</style>

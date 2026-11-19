@@ -1,0 +1,118 @@
+---
+import { earlyProjects } from '../data/profile';
+---
+
+<section id="foundations">
+  <div class="container">
+    <p class="section-label">foundations</p>
+    <h2 class="section-title">Before the <em>boom</em>.</h2>
+    <p class="section-deck">
+      The tools were different; the job was the same: understand the system, build the pipeline, measure
+      the outcome. These are the projects that made the later AI work feel familiar.
+    </p>
+
+    <div class="early-grid">
+      {earlyProjects.map((project) => (
+        <article class="early-card">
+          <div class="early-top">
+            <span class="early-year">{project.year}</span>
+            <span class="early-org mono">{project.org}</span>
+          </div>
+          <h3>{project.title}</h3>
+          <p class="early-body">{project.body}</p>
+          <p class="early-why"><span class="mono" aria-hidden="true">→</span>{project.why}</p>
+          <div class="early-tags">
+            {project.tags.map((tag) => <span>{tag}</span>)}
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  #foundations { background: var(--bg); }
+
+  .early-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.2rem;
+  }
+
+  .early-card {
+    border: 1px solid var(--line);
+    background: var(--bg2);
+    padding: 1.4rem 1.3rem;
+    display: flex;
+    flex-direction: column;
+    transition: border-color 0.2s, background 0.2s;
+  }
+
+  .early-card:hover { border-color: var(--wave2); background: var(--bg3); }
+
+  .early-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: 0.7rem;
+  }
+
+  .early-year {
+    font-family: var(--serif);
+    font-size: 1.6rem;
+    font-weight: 300;
+    line-height: 1;
+    color: var(--moon);
+  }
+
+  .early-org {
+    font-size: 0.52rem;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    text-transform: uppercase;
+    text-align: right;
+  }
+
+  .early-card h3 {
+    font-family: var(--serif);
+    font-size: 1.35rem;
+    font-weight: 400;
+    line-height: 1.2;
+    color: var(--text1);
+    margin-bottom: 0.45rem;
+  }
+
+  .early-body {
+    font-size: 0.82rem;
+    line-height: 1.7;
+    color: var(--text2);
+    margin-bottom: 0.8rem;
+  }
+
+  .early-why {
+    font-size: 0.78rem;
+    line-height: 1.6;
+    color: var(--text3);
+    font-style: italic;
+    padding-top: 0.65rem;
+    border-top: 1px solid var(--line);
+    margin-bottom: 0.8rem;
+  }
+
+  .early-why .mono { color: var(--accent); margin-right: 0.35rem; font-style: normal; }
+
+  .early-tags { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-top: auto; }
+
+  .early-tags span {
+    font-family: var(--mono);
+    font-size: 0.5rem;
+    color: var(--text3);
+    border: 1px solid var(--line);
+    padding: 0.14rem 0.34rem;
+  }
+
+  @media (max-width: 700px) {
+    .early-grid { grid-template-columns: 1fr; }
+  }
+</style>

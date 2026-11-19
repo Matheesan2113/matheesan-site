@@ -1,0 +1,136 @@
+---
+const cards = [
+  {
+    label: 'ml lab',
+    title: 'The model is the easy part',
+    body: 'The agent loop, the eval console, the tooling stack — and where reliability actually lives.',
+    href: '/lab/#ml',
+  },
+  {
+    label: 'homelab',
+    title: 'A production lab under the moon',
+    body: 'RTX A2000, local inference, nine cameras, 22TB of storage and enough VLANs to be dangerous.',
+    href: '/lab/#homelab',
+  },
+  {
+    label: 'access',
+    title: 'Invite-only by design',
+    body: 'Jellyfin, Immich and the rest, behind Authentik SSO for people I actually know.',
+    href: '/lab/#access',
+  },
+];
+---
+
+<section id="lab">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <p class="section-label">lab</p>
+        <h2 class="section-title">Models, metal, and the <em>lab</em> underneath.</h2>
+      </div>
+      <a href="/lab/" class="section-link mono">explore the lab <span aria-hidden="true">→</span></a>
+    </div>
+
+    <p class="section-deck lab-deck">
+      Emerging tech is the part of me that takes things apart: agent loops, evals, local inference,
+      and a homelab with too many VLANs. Some of it is work-adjacent; most of it is curiosity.
+    </p>
+
+    <div class="lab-grid">
+      {cards.map((card) => (
+        <a class="lab-card" href={card.href}>
+          <span class="lab-card-label mono">{card.label}</span>
+          <h3>{card.title}</h3>
+          <p>{card.body}</p>
+          <span class="lab-card-arrow" aria-hidden="true">→</span>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  #lab { background: var(--bg); }
+
+  .section-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .section-head .section-title { margin-bottom: 0; }
+
+  .lab-deck { max-width: 68ch; margin-bottom: 2rem; }
+
+  .section-link {
+    font-size: 0.6rem;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid var(--wave2);
+    white-space: nowrap;
+    padding-bottom: 0.15rem;
+  }
+
+  .section-link:hover { color: var(--accent2); border-bottom-color: var(--accent2); }
+
+  .lab-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+  }
+
+  .lab-card {
+    display: flex;
+    flex-direction: column;
+    padding: 1.4rem 1.3rem;
+    background: var(--bg2);
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+
+  .lab-card:hover { background: var(--bg3); }
+
+  .lab-card-label {
+    font-size: 0.52rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.7rem;
+  }
+
+  .lab-card h3 {
+    font-family: var(--serif);
+    font-size: 1.45rem;
+    font-weight: 400;
+    line-height: 1.25;
+    color: var(--text1);
+    margin-bottom: 0.5rem;
+  }
+
+  .lab-card p {
+    font-size: 0.82rem;
+    line-height: 1.65;
+    color: var(--text2);
+    margin-bottom: 1.2rem;
+  }
+
+  .lab-card-arrow {
+    margin-top: auto;
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    color: var(--text3);
+    transition: color 0.2s, transform 0.2s;
+  }
+
+  .lab-card:hover .lab-card-arrow { color: var(--accent); transform: translateX(4px); }
+
+  @media (max-width: 900px) {
+    .lab-grid { grid-template-columns: 1fr; }
+    .section-head { flex-direction: column; align-items: flex-start; gap: 0.8rem; }
+  }
+</style>

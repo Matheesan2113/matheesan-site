@@ -1,214 +1,274 @@
+---
+const cards = [
+  {
+    code: '[gpu]',
+    title: 'Local inference',
+    body: 'RTX A2000 12GB passed through to the GPU VM. Ollama serves qwen3.5:9b, qwen3:8b-16k and nomic-embed-text; Whisper runs speech-to-text on CUDA; Open WebUI is the front door.',
+    tags: ['RTX A2000', 'Ollama', 'Whisper', 'CUDA', 'Open WebUI'],
+  },
+  {
+    code: '[cv]',
+    title: 'Computer vision',
+    body: 'Frigate NVR with YOLOv9m on nine cameras, license-plate recognition on the driveway, and face recognition — all on the isolated camera VLAN.',
+    tags: ['Frigate', 'YOLOv9m', 'LPR', 'Reolink', 'Tapo'],
+  },
+  {
+    code: '[ml]',
+    title: 'Photo intelligence',
+    body: 'Immich with CUDA-accelerated face and object recognition. Thumbnails on SSD, cache on a dedicated disk, originals on the NAS over NFS.',
+    tags: ['Immich', 'CUDA', 'Postgres', 'Valkey'],
+  },
+  {
+    code: '[px]',
+    title: 'Proxmox hypervisor',
+    body: 'AMD Ryzen 5 2600X, 62GB RAM. Multiple VMs with VLAN isolation and PCIe passthrough. Dual network: 1Gbps plus a 2.5Gbps direct link to the NAS.',
+    tags: ['Proxmox', 'KVM', 'ZFS', 'VLAN', 'PCIe'],
+  },
+  {
+    code: '[nas]',
+    title: '22TB storage',
+    body: 'TerraMaster + OpenMediaVault. Separate volumes for media, personal files, VM backups and ISOs, exported over NFS with jumbo frames on the 2.5Gbps link.',
+    tags: ['OMV', 'NFS', '22TB', '2.5Gbps'],
+  },
+  {
+    code: '[net]',
+    title: 'Network & identity',
+    body: 'Five VLANs, GL.iNet Flint 3, managed switches, Tailscale subnet routing and split DNS. Authentik SSO, Vaultwarden, AdGuard and CrowdSec keep the front door boring.',
+    tags: ['VLAN', 'Tailscale', 'Authentik', 'AdGuard', 'CrowdSec'],
+  },
+];
+
+const specs = [
+  { key: 'domain', value: '*.matheesan.ca — wildcard SSL via Let’s Encrypt + Route 53' },
+  { key: 'remote', value: 'Tailscale VPN with subnet routing + split DNS' },
+  { key: 'models', value: 'Ollama — qwen3.5:9b · qwen3:8b-16k · nomic-embed-text' },
+  { key: 'speech', value: 'Whisper STT on CUDA · Frigate LPR + face recognition' },
+  { key: 'monitoring', value: 'Prometheus · Grafana · Alertmanager · Uptime Kuma · Scrutiny' },
+  { key: 'secrets', value: 'Vaultwarden self-hosted + Bitwarden CLI automation' },
+];
+---
+
 <section id="homelab">
   <div class="container">
-    <p class="section-label">03 — homelab</p>
-    <h2 class="section-title fade-up">What I run <em>at home</em></h2>
-    <p class="homelab-intro fade-up">
-      My homelab is a production-grade infrastructure running on Proxmox, a 22TB NAS,
-      GPU passthrough, full VLAN segmentation, and a dozen self-hosted services — all
-      managed behind wildcard SSL on <code>*.matheesan.ca</code>.
-      It's part curiosity, part skill-building, part just loving that it works.
+    <p class="section-label">homelab</p>
+    <h2 class="section-title">A production lab, <em>under the moon</em>.</h2>
+    <p class="section-deck">
+      The homelab is where I test the ML I can’t put in production: local inference on a 12GB GPU,
+      computer vision on nine cameras, and enough VLANs to make a network engineer smile. It is part
+      curiosity, part skill-building, part just loving that it works.
     </p>
 
-    <div class="homelab-grid">
-      <div class="hl-card fade-up">
-        <div class="hl-card-icon">[px]</div>
-        <div class="hl-card-title">Proxmox Hypervisor</div>
-        <p class="hl-card-body">AMD Ryzen 5 2600X, 62GB RAM. Dual network: 1Gbps + 2.5Gbps direct link to NAS. Multiple VMs with VLAN isolation.</p>
-        <div class="hl-card-tags">
-          <span class="hl-tag">Proxmox</span>
-          <span class="hl-tag">KVM</span>
-          <span class="hl-tag">VLAN</span>
-          <span class="hl-tag">ZFS</span>
-        </div>
+    <div class="gpu-panel">
+      <div class="gpu-head mono">
+        <span>nvidia-smi</span>
+        <span class="gpu-live"><i aria-hidden="true"></i>passthrough ok</span>
       </div>
-
-      <div class="hl-card fade-up">
-        <div class="hl-card-icon">[gpu]</div>
-        <div class="hl-card-title">GPU Media Server</div>
-        <p class="hl-card-body">RTX A2000 12GB via PCIe passthrough. Powers Jellyfin hardware transcoding, Frigate NVR with YOLOv9m object detection, and Immich ML face recognition.</p>
-        <div class="hl-card-tags">
-          <span class="hl-tag">RTX A2000</span>
-          <span class="hl-tag">CUDA</span>
-          <span class="hl-tag">Jellyfin</span>
-          <span class="hl-tag">Frigate</span>
-        </div>
-      </div>
-
-      <div class="hl-card fade-up">
-        <div class="hl-card-icon">[nas]</div>
-        <div class="hl-card-title">22TB NAS</div>
-        <p class="hl-card-body">TerraMaster + OpenMediaVault. Multiple logical volumes for media, personal files, VM backups, and ISOs. 2.5Gbps direct link with jumbo frames.</p>
-        <div class="hl-card-tags">
-          <span class="hl-tag">OMV</span>
-          <span class="hl-tag">NFS</span>
-          <span class="hl-tag">22TB</span>
-          <span class="hl-tag">2.5Gbps</span>
-        </div>
-      </div>
-
-      <div class="hl-card fade-up">
-        <div class="hl-card-icon">[net]</div>
-        <div class="hl-card-title">Network Stack</div>
-        <p class="hl-card-body">5 VLANs, GL.iNet Flint 3 router, TP-Link managed switches, Tailscale VPN, AdGuard split DNS, NordVPN gateway for media stack.</p>
-        <div class="hl-card-tags">
-          <span class="hl-tag">VLAN</span>
-          <span class="hl-tag">Tailscale</span>
-          <span class="hl-tag">AdGuard</span>
-          <span class="hl-tag">WireGuard</span>
-        </div>
-      </div>
-
-      <div class="hl-card fade-up">
-        <div class="hl-card-icon">[cam]</div>
-        <div class="hl-card-title">5-Camera Security</div>
-        <p class="hl-card-body">Reolink cameras on isolated VLAN 10. Frigate NVR with GPU-accelerated detection, license plate recognition on driveway, face recognition, 4TB storage.</p>
-        <div class="hl-card-tags">
-          <span class="hl-tag">Frigate</span>
-          <span class="hl-tag">YOLOv9m</span>
-          <span class="hl-tag">LPR</span>
-          <span class="hl-tag">Reolink</span>
-        </div>
-      </div>
-
-      <div class="hl-card fade-up">
-        <div class="hl-card-icon">[ha]</div>
-        <div class="hl-card-title">Smart Home</div>
-        <p class="hl-card-body">Home Assistant + MQTT broker + Frigate integration. Ecobee, Google Home, Kasa switches, Chromecast. All services HTTPS via Nginx Proxy Manager.</p>
-        <div class="hl-card-tags">
-          <span class="hl-tag">Home Assistant</span>
-          <span class="hl-tag">MQTT</span>
-          <span class="hl-tag">NPM</span>
-          <span class="hl-tag">SSL</span>
-        </div>
+      <div class="gpu-grid">
+        <div><span class="gpu-key mono">GPU</span><strong>NVIDIA RTX A2000</strong></div>
+        <div><span class="gpu-key mono">VRAM</span><strong>12 GB</strong></div>
+        <div><span class="gpu-key mono">LLM</span><strong>qwen3.5:9b · qwen3:8b-16k</strong></div>
+        <div><span class="gpu-key mono">VISION</span><strong>YOLOv9m · LPR · face</strong></div>
       </div>
     </div>
 
-    <div class="spec-grid fade-up">
-      <div class="spec-row">
-        <span class="spec-key">domain</span>
-        <span class="spec-val">*.matheesan.ca — wildcard SSL via Let's Encrypt + Route 53</span>
-      </div>
-      <div class="spec-row">
-        <span class="spec-key">remote access</span>
-        <span class="spec-val">Tailscale VPN with subnet routing + split DNS</span>
-      </div>
-      <div class="spec-row">
-        <span class="spec-key">secrets</span>
-        <span class="spec-val">Vaultwarden self-hosted + Bitwarden CLI automation</span>
-      </div>
-      <div class="spec-row">
-        <span class="spec-key">media stack</span>
-        <span class="spec-val">Sonarr · Radarr · Prowlarr · Bazarr · Jellyseerr · Plex · Jellyfin</span>
-      </div>
-      <div class="spec-row">
-        <span class="spec-key">photos</span>
-        <span class="spec-val">Immich — GPU-accelerated ML, face &amp; object recognition</span>
-      </div>
-      <div class="spec-row">
-        <span class="spec-key">auth</span>
-        <span class="spec-val">Authentik SSO for family &amp; friends</span>
-      </div>
+    <div class="hl-grid">
+      {cards.map((card) => (
+        <article class="hl-card">
+          <div class="hl-code mono">{card.code}</div>
+          <h3>{card.title}</h3>
+          <p>{card.body}</p>
+          <div class="hl-tags">
+            {card.tags.map((tag) => <span>{tag}</span>)}
+          </div>
+        </article>
+      ))}
     </div>
+
+    <div class="spec-table">
+      {specs.map((spec) => (
+        <div class="spec-row">
+          <span class="spec-key mono">{spec.key}</span>
+          <span class="spec-value">{spec.value}</span>
+        </div>
+      ))}
+    </div>
+
+    <p class="hl-note mono">
+      the lab is invite-only · authentik sso · <a href="#access">access →</a>
+    </p>
   </div>
 </section>
 
-<style is:global>
+<style>
   #homelab { background: var(--bg2); }
 
-  .homelab-intro {
-    font-family: var(--serif);
-    font-size: 1.15rem;
-    line-height: 1.85;
-    color: var(--text2);
-    max-width: 680px;
-    margin-bottom: 4rem;
+  .gpu-panel {
+    border: 1px solid var(--line);
+    background: #060b13;
+    margin-bottom: 2rem;
   }
 
-  .homelab-intro code {
+  .gpu-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.55rem 0.8rem;
+    border-bottom: 1px solid var(--line);
+    font-size: 0.52rem;
+    letter-spacing: 0.06em;
+    color: var(--text3);
+  }
+
+  .gpu-live {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    color: var(--ok);
+  }
+
+  .gpu-live i {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+
+  .gpu-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .gpu-grid > div {
+    padding: 0.85rem 0.9rem;
+    border-right: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .gpu-grid > div:last-child { border-right: 0; }
+
+  .gpu-key {
+    font-size: 0.48rem;
+    letter-spacing: 0.1em;
+    color: var(--text3);
+  }
+
+  .gpu-grid strong {
     font-family: var(--mono);
-    font-size: 0.85em;
-    color: var(--accent);
+    font-size: 0.64rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--text2);
   }
 
-  .homelab-grid {
+  .hl-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
-    margin-bottom: 3rem;
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
   }
 
   .hl-card {
-    background: var(--bg3);
-    border: 1px solid var(--navy);
-    padding: 1.8rem;
-    border-radius: 2px;
-    transition: border-color 0.3s, transform 0.3s;
+    background: var(--bg);
+    padding: 1.4rem 1.3rem;
+    transition: background 0.25s;
   }
 
-  .hl-card:hover { border-color: var(--wave1); transform: translateY(-3px); }
+  .hl-card:hover { background: var(--bg2); }
 
-  .hl-card-icon {
-    font-family: var(--mono);
-    font-size: 1.1rem;
+  .hl-code {
+    font-size: 0.55rem;
+    letter-spacing: 0.08em;
     color: var(--accent);
-    margin-bottom: 1rem;
-    opacity: 0.8;
+    margin-bottom: 0.7rem;
   }
 
-  .hl-card-title { font-size: 0.92rem; font-weight: 500; color: var(--text1); margin-bottom: 0.5rem; }
-  .hl-card-body  { font-size: 0.82rem; line-height: 1.65; color: var(--text2); }
+  .hl-card h3 {
+    font-family: var(--serif);
+    font-size: 1.25rem;
+    font-weight: 400;
+    line-height: 1.2;
+    color: var(--text1);
+    margin-bottom: 0.5rem;
+  }
 
-  .hl-card-tags {
+  .hl-card p {
+    font-size: 0.8rem;
+    line-height: 1.65;
+    color: var(--text2);
+  }
+
+  .hl-tags {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.4rem;
-    margin-top: 1rem;
+    gap: 0.3rem;
+    margin-top: 0.9rem;
   }
 
-  .hl-tag {
+  .hl-tags span {
     font-family: var(--mono);
-    font-size: 0.58rem;
+    font-size: 0.5rem;
+    letter-spacing: 0.04em;
     color: var(--text3);
-    border: 1px solid var(--navy);
-    padding: 0.15rem 0.5rem;
+    border: 1px solid var(--line);
+    padding: 0.15rem 0.35rem;
   }
 
-  .spec-grid {
-    border: 1px solid var(--navy);
-    margin-top: 3rem;
+  .spec-table {
+    border: 1px solid var(--line);
+    border-top: 0;
+    margin-top: 0;
   }
 
   .spec-row {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    border-bottom: 1px solid var(--navy);
+    grid-template-columns: 160px 1fr;
+    border-bottom: 1px solid var(--line);
   }
 
-  .spec-row:last-child { border-bottom: none; }
+  .spec-row:last-child { border-bottom: 0; }
 
   .spec-key {
-    font-family: var(--mono);
-    font-size: 0.65rem;
-    letter-spacing: 0.1em;
+    font-size: 0.55rem;
+    letter-spacing: 0.08em;
     color: var(--text3);
-    padding: 0.9rem 1.2rem;
-    border-right: 1px solid var(--navy);
-    background: var(--bg3);
+    padding: 0.7rem 0.85rem;
+    border-right: 1px solid var(--line);
+    background: var(--bg2);
   }
 
-  .spec-val {
-    font-size: 0.82rem;
+  .spec-value {
+    font-size: 0.76rem;
+    line-height: 1.6;
     color: var(--text2);
-    padding: 0.9rem 1.2rem;
+    padding: 0.7rem 0.85rem;
   }
 
-  @media (max-width: 900px) {
-    .homelab-grid { grid-template-columns: repeat(2, 1fr); }
-    .spec-row     { grid-template-columns: 1fr; }
-    .spec-key     { border-right: none; border-bottom: 1px solid var(--navy); }
+  .hl-note {
+    margin-top: 1.2rem;
+    font-size: 0.52rem;
+    letter-spacing: 0.08em;
+    color: var(--text3);
   }
 
-  @media (max-width: 600px) {
-    .homelab-grid { grid-template-columns: 1fr; }
+  .hl-note a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--wave2); }
+
+  @media (max-width: 960px) {
+    .hl-grid { grid-template-columns: 1fr 1fr; }
+    .gpu-grid { grid-template-columns: 1fr 1fr; }
+    .gpu-grid > div:nth-child(2) { border-right: 0; }
+    .gpu-grid > div:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+  }
+
+  @media (max-width: 620px) {
+    .hl-grid { grid-template-columns: 1fr; }
+    .gpu-grid { grid-template-columns: 1fr; }
+    .gpu-grid > div { border-right: 0; border-bottom: 1px solid var(--line); }
+    .gpu-grid > div:last-child { border-bottom: 0; }
+    .spec-row { grid-template-columns: 1fr; }
+    .spec-key { border-right: 0; border-bottom: 1px solid var(--line); }
   }
 </style>

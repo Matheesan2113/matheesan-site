@@ -1,0 +1,191 @@
+---
+import Layout from '../../layouts/layout.astro';
+import Cursor from '../../components/Cursor.astro';
+import Nav from '../../components/Nav.astro';
+import CommandPalette from '../../components/CommandPalette.astro';
+import Footer from '../../components/Footer.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const notes = await getCollection('notes');
+  return notes.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+
+const notes = (await getCollection('notes')).sort(
+  (a, b) => a.data.date.valueOf() - b.data.date.valueOf(),
+);
+const index = notes.findIndex((note) => note.id === entry.id);
+const prev = index > 0 ? notes[index - 1] : null;
+const next = index < notes.length - 1 ? notes[index + 1] : null;
+
+const fmt = (date: Date) =>
+  date.toLocaleDateString('en-CA', { year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC' });
+---
+
+<Layout
+  title={`${entry.data.title} — Matheesan`}
+  description={entry.data.description}
+  type="article"
+  article={{ published: entry.data.date, tags: entry.data.tags }}
+>
+  <Cursor />
+  <Nav />
+  <CommandPalette />
+
+  <main id="main" class="note-page">
+    <article>
+      <div class="container container-narrow">
+        <p class="section-label note-crumb">
+          <a href="/">matheesan.ca</a> / <a href="/notes/">notes</a> / {entry.id}
+        </p>
+
+        <header class="note-head">
+          <p class="note-meta mono">{fmt(entry.data.date)} · {entry.data.reading} read</p>
+          <h1 class="note-title">{entry.data.title}</h1>
+          <p class="note-desc">{entry.data.description}</p>
+          <div class="note-tags">
+            {entry.data.tags.map((tag) => <span>{tag}</span>)}
+          </div>
+        </header>
+
+        <div class="prose note-prose">
+          <Content />
+        </div>
+
+        <footer class="note-foot">
+          <a href="/notes/" class="btn-ghost btn-small">← all field notes</a>
+          <a href="/contact/" class="mono note-reply">disagree? tell me →</a>
+        </footer>
+
+        <nav class="note-pager" aria-label="More notes">
+          {prev ? (
+            <a href={`/notes/${prev.id}/`} class="note-pager-card">
+              <span class="mono">← previous</span>
+              <span class="note-pager-title">{prev.data.title}</span>
+            </a>
+          ) : <span></span>}
+          {next ? (
+            <a href={`/notes/${next.id}/`} class="note-pager-card note-pager-next">
+              <span class="mono">next →</span>
+              <span class="note-pager-title">{next.data.title}</span>
+            </a>
+          ) : <span></span>}
+        </nav>
+      </div>
+    </article>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  .note-page { padding: 8rem 0 0; }
+  .note-page > article { padding-bottom: 5rem; }
+
+  .note-crumb { margin-bottom: 2rem; }
+  .note-crumb a { color: inherit; text-decoration: none; }
+  .note-crumb a:hover { color: var(--accent2); }
+
+  .note-head { margin-bottom: 2.5rem; }
+
+  .note-meta {
+    font-size: 0.58rem;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    margin-bottom: 0.9rem;
+  }
+
+  .note-title {
+    font-family: var(--serif);
+    font-size: clamp(2.2rem, 5vw, 3.6rem);
+    font-weight: 300;
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+    color: var(--text1);
+    margin-bottom: 1rem;
+  }
+
+  .note-desc {
+    font-family: var(--serif);
+    font-size: 1.2rem;
+    line-height: 1.7;
+    color: var(--text2);
+    margin-bottom: 1.2rem;
+  }
+
+  .note-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+
+  .note-tags span {
+    font-family: var(--mono);
+    font-size: 0.52rem;
+    color: var(--text3);
+    border: 1px solid var(--line);
+    padding: 0.18rem 0.4rem;
+  }
+
+  .note-prose { max-width: 720px; }
+
+  .note-foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .note-reply {
+    font-size: 0.55rem;
+    letter-spacing: 0.08em;
+    color: var(--text3);
+    text-decoration: none;
+  }
+
+  .note-reply:hover { color: var(--accent); }
+
+  .note-pager {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    margin-top: 2rem;
+  }
+
+  .note-pager-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    padding: 1.1rem 1.2rem;
+    background: var(--bg2);
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+
+  .note-pager-card:hover { background: var(--bg3); }
+
+  .note-pager-card .mono { font-size: 0.52rem; letter-spacing: 0.08em; color: var(--text3); }
+
+  .note-pager-title {
+    font-family: var(--serif);
+    font-size: 1.2rem;
+    line-height: 1.3;
+    color: var(--text1);
+  }
+
+  .note-pager-next { text-align: right; align-items: flex-end; }
+
+  @media (max-width: 620px) {
+    .note-page { padding-top: 6.5rem; }
+    .note-foot { flex-direction: column; align-items: flex-start; }
+    .note-pager { grid-template-columns: 1fr; }
+    .note-pager-next { text-align: left; align-items: flex-start; }
+  }
+</style>

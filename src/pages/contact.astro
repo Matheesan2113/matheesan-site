@@ -4,12 +4,16 @@ import contact from '../data/contact.json';
 const ready = Boolean(contact.endpoint && contact.siteKey);
 ---
 
-<Layout title="Contact — Matheesan" description="Send Matheesan a message.">
+<Layout
+  mainId="contact"
+  title="Contact — Matheesan"
+  description="Send Matheesan a message."
+>
   <main id="contact" data-endpoint={contact.endpoint}>
     <section>
       <div class="container">
         <p class="section-label"><a href="/">matheesan.ca</a> / contact</p>
-        <h2 class="section-title">Say <em>hello</em></h2>
+        <h1 class="section-title">Say <em>hello</em></h1>
 
         {ready ? (
           <form id="contact-form" class="contact-panel" novalidate>

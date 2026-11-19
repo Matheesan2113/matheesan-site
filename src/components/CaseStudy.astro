@@ -1,0 +1,142 @@
+---
+import type { CaseFile } from '../data/profile';
+
+interface Props {
+  file: CaseFile;
+}
+
+const { file } = Astro.props;
+
+const blocks = [
+  { label: 'problem', value: file.problem },
+  { label: 'approach', value: file.approach },
+  { label: 'the hard part', value: file.hard },
+  { label: 'result', value: file.result, result: true },
+  { label: 'what I’d do differently', value: file.differently, differently: true },
+];
+---
+
+<article class="case-study">
+  <header class="case-head">
+    <p class="case-kicker mono">CASE {file.number} · {file.tags[0]}</p>
+    <h1 class="case-title">{file.title}</h1>
+    <p class="case-deck">{file.deck}</p>
+
+    <div class="case-meta">
+      <div class="case-metrics">
+        {file.metrics.map((metric) => <span>{metric}</span>)}
+      </div>
+      <div class="case-tags">
+        {file.tags.map((tag) => <span>{tag}</span>)}
+      </div>
+    </div>
+  </header>
+
+  <div class="case-blocks">
+    {blocks.map((block) => (
+      <section class:list={['case-block', { 'case-block-result': block.result, 'case-block-diff': block.differently }]}>
+        <h2 class="mono">{block.label}</h2>
+        <p>{block.value}</p>
+      </section>
+    ))}
+  </div>
+</article>
+
+<style>
+  .case-head {
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .case-kicker {
+    font-size: 0.58rem;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    margin-bottom: 1rem;
+  }
+
+  .case-title {
+    font-family: var(--serif);
+    font-size: clamp(2.8rem, 6vw, 5rem);
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--text1);
+    margin-bottom: 1rem;
+  }
+
+  .case-deck {
+    font-family: var(--serif);
+    font-size: clamp(1.1rem, 2.2vw, 1.35rem);
+    line-height: 1.7;
+    color: var(--text2);
+    max-width: 700px;
+    margin-bottom: 1.8rem;
+  }
+
+  .case-meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    align-items: start;
+  }
+
+  .case-metrics { display: flex; flex-direction: column; gap: 0.35rem; }
+
+  .case-metrics span {
+    font-family: var(--mono);
+    font-size: 0.66rem;
+    line-height: 1.5;
+    color: var(--moon2);
+    border-left: 1px solid var(--wave2);
+    padding-left: 0.6rem;
+  }
+
+  .case-tags { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+
+  .case-tags span {
+    font-family: var(--mono);
+    font-size: 0.52rem;
+    color: var(--text3);
+    border: 1px solid var(--line);
+    padding: 0.16rem 0.38rem;
+  }
+
+  .case-blocks {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    max-width: 760px;
+    padding-top: 2.2rem;
+  }
+
+  .case-block { padding: 0; }
+
+  .case-block h2 {
+    font-size: 0.55rem;
+    font-weight: 400;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.4rem;
+  }
+
+  .case-block p {
+    font-size: 0.98rem;
+    line-height: 1.8;
+    color: var(--text2);
+  }
+
+  .case-block-result {
+    border-left: 2px solid var(--wave2);
+    padding-left: 1.2rem;
+  }
+
+  .case-block-result p { color: var(--text1); }
+
+  .case-block-diff p { color: var(--text3); font-style: italic; }
+
+  @media (max-width: 700px) {
+    .case-meta { grid-template-columns: 1fr; gap: 1rem; }
+  }
+</style>

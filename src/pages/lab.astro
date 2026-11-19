@@ -1,0 +1,28 @@
+---
+import SiteLayout from '../layouts/site.astro';
+import PageHeader from '../components/PageHeader.astro';
+import MlLab from '../components/MlLab.astro';
+import Homelab from '../components/Homelab.astro';
+import Access from '../components/Access.astro';
+---
+
+<SiteLayout
+  title="Lab — Matheesan"
+  description="The lab behind the work: production LLM agent loops, evals, local inference on an RTX A2000, a nine-camera Frigate setup, Immich, Proxmox and the homelab underneath."
+>
+  <PageHeader
+    crumb="lab"
+    title="The lab."
+    deck="Where the models meet the metal. Production agent loops and eval tooling up top; local inference, computer vision, storage and a slightly overbuilt network underneath."
+  />
+
+  <MlLab />
+  <Homelab />
+  <Access />
+</SiteLayout>
+
+<style is:global>
+  #ml { padding-top: 2.5rem; padding-bottom: 4rem; }
+  #homelab { padding-top: 4rem; padding-bottom: 4rem; }
+  #access { padding-top: 4rem; padding-bottom: 5rem; }
+</style>
