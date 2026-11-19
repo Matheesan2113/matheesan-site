@@ -9,7 +9,7 @@ import { site } from '../data/profile';
 
 <Layout
   title="Résumé — Matheesan"
-  description="Résumé for Matheesan Manokaran: senior software engineer building production systems and AI-native workflows — LLM agents, evals, agentic coding tooling and local inference. Seven years of AI/ML delivery."
+  description="Résumé for Matheesan Manokaran: senior software engineer at WayTrade, building an AI-powered marketplace for biofuels, feedstocks and critical materials. Previously production LLM agents, evals and AI tooling."
 >
   <div class="site site--career">
   <Cursor />
@@ -28,7 +28,7 @@ import { site } from '../data/profile';
           <div>
             <p class="resume-kicker mono">résumé · 2026.11</p>
             <h1>Matheesan Manokaran</h1>
-            <p class="resume-role">Senior Software Engineer · AI Platform, RAG &amp; Evals</p>
+            <p class="resume-role">Senior Software Engineer · Marketplace Platforms · AI Systems</p>
           </div>
           <div class="resume-contact mono">
             <span>{site.location}</span>
@@ -41,11 +41,12 @@ import { site } from '../data/profile';
         <section class="resume-section">
           <h2 class="resume-label mono">summary</h2>
           <p class="resume-summary">
-            Senior software engineer with seven years of AI/ML delivery, including five years building
-            production LLM agents. I work across the whole stack: model routing and
-            fallbacks, knowledge bases and RAG, stateful agents, evals and the tooling that makes
-            them safe to change. Strongest at the gap between green tests and production behaviour —
-            and at choosing the tool that shortens the loop without hiding the failure.
+            Senior software engineer with seven years of AI/ML delivery. Currently building
+            WayTrade’s AI-powered marketplace for biofuels, feedstocks and critical materials on a
+            small product team. Before that, five years building production LLM agents, model
+            routing, knowledge bases and RAG, evals and the agentic tooling around them. Strongest
+            at the gap between green tests and production behaviour — and at choosing the tool that
+            shortens the loop without hiding the failure.
           </p>
         </section>
 
@@ -56,12 +57,41 @@ import { site } from '../data/profile';
           <div class="resume-job">
             <div class="resume-job-head">
               <div>
+                <h3>WayTrade</h3>
+                <p class="resume-job-role">Senior Software Engineer · Marketplace Platform</p>
+              </div>
+              <p class="resume-job-date mono">Nov 2026 — Present<br />Remote</p>
+            </div>
+            <ul>
+              <li>
+                Building the AI-powered marketplace for biofuels, feedstocks and critical materials
+                on a small engineering team.
+              </li>
+              <li>
+                Connecting commercial, operational and compliance workflows on one trade record —
+                contracts, logistics, inventory, documents and finance.
+              </li>
+              <li>
+                Applying AI where it removes friction: matching supply and demand, surfacing
+                exceptions and recommending the next action.
+              </li>
+            </ul>
+          </div>
+
+          <div class="resume-job">
+            <div class="resume-job-head">
+              <div>
                 <h3>Replicant</h3>
                 <p class="resume-job-role">Senior Software Engineer · Delivery / Forward-Deployed AI</p>
               </div>
               <p class="resume-job-date mono">Oct 2021 — Oct 2026<br />Remote · Toronto</p>
             </div>
             <ul>
+              <li>
+                <strong>Built the org-wide agentic workbench solo</strong>: one engine connecting
+                multiple data silos and workstreams through plugins and MCPs, with DeepSeek/Claude
+                overnight planning, scoping, building and JIRA organization behind gates.
+              </li>
               <li>
                 Took enterprise LLM voice agents from an empty repo to production: state machines,
                 tool calls, auth, fallbacks and hypercare.
@@ -131,6 +161,14 @@ import { site } from '../data/profile';
         <section class="resume-section">
           <h2 class="resume-label mono">selected work</h2>
           <div class="resume-projects">
+            <div class="resume-project-featured">
+              <h3>The agentic workbench</h3>
+              <p>
+                One engine for the whole engineering org: plugins and MCPs connecting multiple data
+                silos and streams of work, with DeepSeek/Claude overnight planning, scoping, building
+                and JIRA organization behind gates. Built solo with my own harnesses.
+              </p>
+            </div>
             <div>
               <h3>The production voice agent</h3>
               <p>
@@ -170,6 +208,7 @@ import { site } from '../data/profile';
           <dl class="resume-skills">
             <div><dt>LLM &amp; agents</dt><dd>Tool-calling agents · state machines · prompt/state design · model upgrades · ASR/TTS pipelines · evals · MCP</dd></div>
             <div><dt>AI platform</dt><dd>Model routing · fallbacks · knowledge bases · RAG · vector search · embeddings · citations</dd></div>
+            <div><dt>marketplace</dt><dd>Trade workflows · offers · logistics · inventory · documents · compliance · finance</dd></div>
             <div><dt>AI tooling</dt><dd>GitHub Copilot · Cursor · Claude Code · MCP · LangChain · Ollama · Whisper · Open WebUI</dd></div>
             <div><dt>languages</dt><dd>TypeScript · Python · SQL · Bash</dd></div>
             <div><dt>cloud &amp; infra</dt><dd>GCP (Cloud Run, BigQuery) · Terraform · Docker · CI/CD · observability</dd></div>
@@ -355,6 +394,12 @@ import { site } from '../data/profile';
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1.3rem 1.8rem;
+  }
+
+  .resume-project-featured {
+    grid-column: 1 / -1;
+    border-left: 2px solid var(--accent);
+    padding-left: 0.8rem;
   }
 
   .resume-projects p, .resume-edu p {

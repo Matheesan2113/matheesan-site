@@ -1,8 +1,8 @@
 # matheesan.ca
 
-Personal site for Matheesan Manokaran — engineer, DJ, gamer, and the homelab where the models meet
-the metal. A neutral cyberpunk channel hub leads to six separately themed pages; career is one of
-them, not the frame around everything.
+Personal site for Matheesan Manokaran — senior software engineer at WayTrade, DJ, gamer, and the
+homelab where the models meet the metal. A neutral cyberpunk channel hub leads to six separately
+themed pages; career is one of them, not the frame around everything.
 
 **Live:** [https://matheesan.ca](https://matheesan.ca)
 
@@ -14,7 +14,7 @@ them, not the frame around everything.
 | `/music/` | Magenta club theme: DJ identity, crate, booth notes, deck visual and the real public Spotify library |
 | `/games/` | Acid-green HUD theme: the game rotation — Elden Ring, Wukong, Mario Kart, Valorant, Overwatch |
 | `/career/` | Experience timeline and case study index (linked, not primary) |
-| `/career/<slug>/` | Individual case study (voice-agent, migration, silent-green, cloud-run) |
+| `/career/<slug>/` | Individual case study (agentic-workbench, voice-agent, migration, silent-green, cloud-run) |
 | `/tooling/` | Full 2021–2026 tooling timeline and workflow principles |
 | `/lab/` | Emerging tech / ML lab, homelab and invite-only access |
 | `/about/` | The longer version: bio, principles, terminal, music, games and life |
@@ -83,6 +83,9 @@ they were cleared for public use. If you add a claim, add the source or don't ad
   about indigo/gold, career steel blue. Themes are set with `theme=` on `SiteLayout`.
 - Page headers carry a channel chip (for example `ch.01 / sound`) and a large translucent Japanese
   glyph. The hero also carries a vertical Tamil/Japanese glyph rail.
+- WayTrade is the current role: a small team building an AI-powered marketplace for biofuels,
+  feedstocks and critical materials. The featured project is the Replicant agentic workbench — one
+  engine for data silos, plugins, MCPs, DeepSeek/Claude overnight loops and gated JIRA work.
 - The tooling timeline is a curated narrative, not a market ranking: three tools per year, chosen
   because each one changed a different part of the loop.
 - The command palette opens with **Ctrl/Cmd+K** or `/`.

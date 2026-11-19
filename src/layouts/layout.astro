@@ -17,7 +17,7 @@ interface Props {
 
 const {
   title,
-  description = 'Matheesan Manokaran is a Tamil-Canadian engineer, DJ and gamer in Markham, Ontario. AI systems, music, Elden Ring, Wukong, Mario Kart, Valorant and Overwatch.',
+  description = 'Matheesan Manokaran is a Tamil-Canadian engineer, DJ and gamer in Markham, Ontario. Senior software engineer at WayTrade, building a marketplace for biofuels, feedstocks and critical materials.',
   noindex = false,
   image = '/og.png',
   type = 'website',
@@ -31,7 +31,7 @@ const canonical = new URL(Astro.url.pathname, site);
 const ogImage = new URL(image, site);
 
 const siteDescription =
-  'Tamil-Canadian engineer, DJ and gamer in Markham, Ontario. AI systems, music, Elden Ring, Wukong, Mario Kart, Valorant and Overwatch.';
+  'Tamil-Canadian engineer, DJ and gamer in Markham, Ontario. Senior software engineer at WayTrade, building a marketplace for biofuels, feedstocks and critical materials.';
 
 const person = {
   '@type': 'Person',
@@ -41,8 +41,16 @@ const person = {
   url: site.origin,
   jobTitle: 'Senior Software Engineer',
   description:
-    'Tamil-Canadian engineer, DJ and gamer in Markham, Ontario. Builds AI systems, mixes music, and keeps a rotation of Elden Ring, Wukong, Mario Kart, Valorant and Overwatch.',
+    'Tamil-Canadian engineer, DJ and gamer in Markham, Ontario. Builds marketplace platforms at WayTrade, mixes music, and keeps a rotation of Elden Ring, Wukong, Mario Kart, Valorant and Overwatch.',
+  worksFor: {
+    '@type': 'Organization',
+    name: 'WayTrade',
+    url: 'https://www.way.trade/',
+  },
   knowsAbout: [
+    'Marketplace platforms',
+    'Trade operations',
+    'Compliance workflows',
     'DJing',
     'Music',
     'Video games',

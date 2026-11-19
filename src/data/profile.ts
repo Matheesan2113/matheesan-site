@@ -10,9 +10,9 @@ export const site = {
   coords: '43.8561° N · 79.3370° W',
   positioning: 'Engineer by day. DJ by night. Gamer in between.',
   intro:
-    'Tamil-Canadian, born in Toronto, raised in Markham. I build AI systems for a living, mix music after hours, and spend the rest of my time in Elden Ring, Wukong, Mario Kart, Valorant and Overwatch. This is the whole map.',
-  status: 'open to senior / staff AI engineering & platform roles',
-  personalStatus: 'currently: agent evals · a new mix · Wukong',
+    'Tamil-Canadian, born in Toronto, raised in Markham. I build marketplace platforms at WayTrade, mix music after hours, and spend the rest of my time in Elden Ring, Wukong, Mario Kart, Valorant and Overwatch. This is the whole map.',
+  status: 'Senior Software Engineer at WayTrade',
+  personalStatus: 'currently: marketplace · a new mix · Wukong',
   socials: {
     github: 'https://github.com/Matheesan2113',
     linkedin: 'https://www.linkedin.com/in/matheesanm',
@@ -172,10 +172,10 @@ export const channels: Channel[] = [
     num: '06',
     title: 'career',
     jp: '職',
-    tagline: 'systems · case files · résumé',
+    tagline: 'agentic workbench · WayTrade',
     href: '/career/',
     accent: '#7fb2ff',
-    meta: 'the professional record',
+    meta: 'marketplace · case files',
   },
 ];
 
@@ -252,6 +252,7 @@ export const principles = [
 
 export type Job = {
   company: string;
+  url?: string;
   role: string;
   period: string;
   place: string;
@@ -263,6 +264,21 @@ export type Job = {
 
 export const jobs: Job[] = [
   {
+    company: 'WayTrade',
+    url: 'https://www.way.trade/',
+    role: 'Senior Software Engineer',
+    period: 'Nov 2026 — Present',
+    place: 'Remote',
+    summary:
+      'Senior software engineer on a small team building WayTrade’s AI-powered marketplace for biofuels, feedstocks and critical materials — the commercial, operational and compliance work behind a physical trade.',
+    highlights: [
+      'Building the marketplace platform end to end: trade records, offers, logistics, inventory, documents and finance in one system.',
+      'Working across the full trade lifecycle, where a delivery change cascades into inventory, production, cash and compliance.',
+      'Applying AI where it removes friction — matching supply and demand, surfacing exceptions and recommending the next action — with the trade record as the source of truth.',
+    ],
+    stack: ['marketplace platforms', 'product engineering', 'AI workflows', 'trade operations', 'compliance'],
+  },
+  {
     company: 'Replicant',
     role: 'Senior Software Engineer',
     period: 'Oct 2021 — Oct 2026',
@@ -270,6 +286,7 @@ export const jobs: Job[] = [
     summary:
       'Forward-deployed AI engineer: enterprise LLM voice agents, model routing, knowledge/RAG layers, evals and agentic tooling — from API review through launch and hypercare.',
     highlights: [
+      'Designed and built the org-wide agentic workbench solo: one engine connecting multiple data silos and workstreams through plugins and MCPs, with DeepSeek/Claude-powered overnight planning, scoping, building and JIRA organization behind gates.',
       'Took enterprise LLM voice agents from an empty repo to production: state machines, tool calls, auth, fallbacks and hypercare.',
       'Built the platform layer around them: provider routing and fallbacks, knowledge bases and RAG, eval harnesses, guardrails and observability.',
       'Worked across frontier and open-weight providers; treated model and prompt upgrades as releases with regression evals.',
@@ -314,7 +331,7 @@ export const careerStats = [
   { value: '2018', label: 'first enterprise system', note: 'Avaya · real-time comms' },
   { value: '2019', label: 'first production ML', note: 'CGI · document intelligence' },
   { value: '2021', label: 'first LLM agent', note: 'voice + tool use' },
-  { value: '2026', label: 'agentic tooling', note: 'routers · RAG · evals' },
+  { value: '2026', label: 'marketplace platform', note: 'WayTrade · biofuel' },
 ];
 
 export type EarlyProject = {
@@ -594,6 +611,7 @@ export const toolingNotes = [
 export type CaseFile = {
   id: string;
   number: string;
+  featured?: boolean;
   title: string;
   deck: string;
   metrics: string[];
@@ -606,6 +624,25 @@ export type CaseFile = {
 };
 
 export const caseFiles: CaseFile[] = [
+  {
+    id: 'agentic-workbench',
+    number: '00',
+    featured: true,
+    title: 'The agentic workbench',
+    deck: 'At Replicant: one engine for the whole org — data silos, plugins, MCPs and gated LLM work, built solo.',
+    metrics: ['solo build', 'org-wide', 'overnight loops'],
+    tags: ['agentic tooling', 'MCP', 'plugins', 'DeepSeek', 'Claude', 'JIRA', 'gates'],
+    problem:
+      'Engineers were working across disconnected data silos and separate streams of work. AI was useful per task, but there was no shared operating layer that could plan, scope, build and organize the work across those systems — and nothing could safely run overnight.',
+    approach:
+      'Designed and built a single agentic engine from scratch: a plugin layer and MCP connections for multiple data silos and workstreams, a common work graph, and LLM adapters for DeepSeek and Claude. Wrapped it in my own harnesses and a gated loop: plan, scope, build, organize JIRA, verify, request approval, then continue. It could run overnight without turning a plausible output into a silent change.',
+    hard:
+      'Unattended agents are a trust problem, not a prompt problem. Every action needed permissions, durable state, idempotency, an audit trail and a gate that could stop it. The engine had to stay legible when it was moving across systems, and it had to fail closed when a dependency or a model response was wrong.',
+    result:
+      'Gave engineers across the org one engine to organize multiple data silos and streams of work. Work that used to be scattered across tools — planning, scoping, building and JIRA organization — could be handed to an overnight loop and reviewed in the morning behind gates. It leveled up how the org used AI, not just how one team shipped.',
+    differently:
+      'I would productize the gate and audit surface first. The engine was only as useful as a person’s ability to see what it did, trust it and stop it.',
+  },
   {
     id: 'voice-agent',
     number: '01',
@@ -682,7 +719,7 @@ export const caseFiles: CaseFile[] = [
 
 export const alsoBuilt = [
   'An AI skill that generates every new agent’s API-integration contract from an OpenAPI spec, distributed to every agent repo.',
-  'An agentic workbench that turns failing production traces into reviewed draft fixes — with push / merge / deploy refused in code before a model is asked.',
+  'A trace-to-fix workbench that turns failing production traces into reviewed draft fixes — with push / merge / deploy refused in code before a model is asked.',
   'An unattended outbound dialer on Cloud Run Jobs with a generation-precondition lease, kill switch and Terraform-managed infrastructure.',
   'An incident postmortem that corrected an outage window by about an hour, because the worst phase ran under an alert mute.',
 ];

@@ -1,0 +1,158 @@
+<section id="workbench">
+  <div class="container">
+    <div class="wb-panel">
+      <div class="wb-copy fade-up">
+        <p class="section-label">// featured system · Replicant</p>
+        <h2 class="section-title">The agentic <em>workbench</em>.</h2>
+        <p class="wb-deck">
+          The most important project I built at Replicant. One engine that connected multiple data
+          silos and streams of work through plugins and MCPs, then let DeepSeek or Claude run the
+          night shift: planning, scoping, building and organizing JIRA behind gates. Built solo,
+          with my own harnesses.
+        </p>
+
+        <div class="wb-tags">
+          <span>solo build</span>
+          <span>org-wide</span>
+          <span>plugins + MCP</span>
+          <span>DeepSeek / Claude</span>
+          <span>overnight loops</span>
+          <span>gated execution</span>
+        </div>
+
+        <a href="/career/agentic-workbench/" class="btn-primary">read the case file <span aria-hidden="true">→</span></a>
+      </div>
+
+      <div class="wb-engine" aria-hidden="true">
+        <span class="wb-glyph" lang="ja">繋</span>
+        <span class="wb-engine-label mono">one engine<br />own harnesses</span>
+      </div>
+
+      <div class="wb-flow" aria-hidden="true">
+        <div class="wb-node"><span class="mono">01</span>data silos</div>
+        <span class="wb-arrow">→</span>
+        <div class="wb-node"><span class="mono">02</span>plugins + MCP</div>
+        <span class="wb-arrow">→</span>
+        <div class="wb-node wb-node-core"><span class="mono">03</span>engine</div>
+        <span class="wb-arrow">→</span>
+        <div class="wb-node"><span class="mono">04</span>DeepSeek / Claude</div>
+        <span class="wb-arrow">→</span>
+        <div class="wb-node wb-node-gate"><span class="mono">05</span>gates</div>
+        <span class="wb-arrow">→</span>
+        <div class="wb-node"><span class="mono">06</span>JIRA / build / scope</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  #workbench { background: var(--bg2); padding: 4rem 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+
+  .wb-panel {
+    border: 1px solid var(--wave2);
+    background:
+      radial-gradient(ellipse 55% 80% at 100% 0%, rgba(127, 178, 255, 0.1), transparent 65%),
+      var(--bg);
+    padding: 2rem;
+    position: relative;
+  }
+
+  .wb-panel::before,
+  .wb-panel::after {
+    content: '';
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    pointer-events: none;
+  }
+
+  .wb-panel::before { top: -1px; left: -1px; border-top: 1px solid var(--accent); border-left: 1px solid var(--accent); }
+  .wb-panel::after { bottom: -1px; right: -1px; border-bottom: 1px solid var(--accent); border-right: 1px solid var(--accent); }
+
+  .wb-engine {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.4rem;
+    pointer-events: none;
+  }
+
+  .wb-glyph {
+    font-family: var(--jp);
+    font-size: clamp(5rem, 11vw, 9rem);
+    line-height: 0.9;
+    color: var(--accent);
+    opacity: 0.06;
+  }
+
+  .wb-engine-label {
+    font-size: 0.45rem;
+    line-height: 1.6;
+    letter-spacing: 0.1em;
+    color: var(--text3);
+    text-transform: uppercase;
+    text-align: right;
+  }
+
+  .wb-deck {
+    max-width: 62ch;
+    font-family: var(--serif);
+    font-size: 1.08rem;
+    line-height: 1.8;
+    color: var(--text2);
+    margin-bottom: 1.2rem;
+  }
+
+  .wb-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-bottom: 1.5rem; }
+
+  .wb-tags span {
+    font-family: var(--mono);
+    font-size: 0.5rem;
+    letter-spacing: 0.04em;
+    color: var(--text2);
+    border: 1px solid var(--line);
+    padding: 0.18rem 0.38rem;
+  }
+
+  .wb-flow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 2rem;
+    padding-top: 1.4rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .wb-node {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    border: 1px solid var(--line);
+    background: var(--bg2);
+    padding: 0.5rem 0.6rem;
+    font-family: var(--mono);
+    font-size: 0.52rem;
+    line-height: 1.4;
+    color: var(--text2);
+  }
+
+  .wb-node .mono { color: var(--accent); font-size: 0.45rem; }
+  .wb-node-core { border-color: var(--accent); color: var(--text1); box-shadow: 0 0 18px rgba(127, 178, 255, 0.1); }
+  .wb-node-gate { border-color: var(--gold); color: var(--gold); }
+
+  .wb-arrow { color: var(--text3); font-family: var(--mono); font-size: 0.7rem; }
+
+  @media (max-width: 900px) {
+    .wb-engine { display: none; }
+  }
+
+  @media (max-width: 700px) {
+    .wb-panel { padding: 1.3rem; }
+    .wb-flow { align-items: flex-start; }
+    .wb-arrow { display: none; }
+  }
+</style>

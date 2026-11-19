@@ -6,12 +6,13 @@ import CaseCard from '../../components/CaseCard.astro';
 import AlsoBuilt from '../../components/AlsoBuilt.astro';
 import PlatformLayers from '../../components/PlatformLayers.astro';
 import EarlyProjects from '../../components/EarlyProjects.astro';
+import WorkbenchFeature from '../../components/WorkbenchFeature.astro';
 import { caseFiles } from '../../data/profile';
 ---
 
 <SiteLayout
   title="Career — Matheesan"
-  description="Matheesan’s career: production LLM systems, platform engineering, model routing, RAG, evals and AI tooling — plus case files and the résumé."
+  description="Matheesan’s career: now building WayTrade’s AI-powered marketplace for biofuels and feedstocks; previously production LLM systems, RAG, evals and AI tooling."
   theme="career"
 >
   <PageHeader
@@ -19,7 +20,7 @@ import { caseFiles } from '../../data/profile';
     title="Career, measured in loops."
     channel="ch.06 / work"
     glyph="職"
-    deck="Forward-deployed AI, enterprise ML and a habit of finding the bug the green suite is hiding. The voice agents are the proof; the through-line is production software and the tooling around it."
+    deck="Now building WayTrade’s marketplace for biofuels and feedstocks. Before that: forward-deployed AI, enterprise ML and a habit of finding the bug the green suite is hiding. The through-line is production software and the tooling around it."
   />
 
   <section class="work-section">
@@ -27,6 +28,8 @@ import { caseFiles } from '../../data/profile';
       <JobTimeline />
     </div>
   </section>
+
+  <WorkbenchFeature />
 
   <EarlyProjects />
   <PlatformLayers />

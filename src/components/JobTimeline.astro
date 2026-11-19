@@ -33,7 +33,7 @@ import { jobs, careerStats } from '../data/profile';
             <h2 class="job-role">{job.role}</h2>
             {index === 0 && <span class="job-badge mono">most recent</span>}
           </div>
-          <p class="job-company">{job.company}</p>
+          <p class="job-company">{job.url ? <a href={job.url} target="_blank" rel="noopener noreferrer">{job.company} <span aria-hidden="true">↗</span></a> : job.company}</p>
           <p class="job-summary">{job.summary}</p>
 
           {job.highlights.length > 0 && (
@@ -156,6 +156,14 @@ import { jobs, careerStats } from '../data/profile';
     border: 1px solid rgba(126, 224, 184, 0.3);
     padding: 0.15rem 0.4rem;
   }
+
+  .job-company a {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .job-company a:hover { color: var(--accent); border-bottom-color: var(--wave2); }
 
   .job-company {
     font-family: var(--mono);

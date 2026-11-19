@@ -8,7 +8,7 @@ interface Props {
 const { file } = Astro.props;
 ---
 
-<a class="case-card" href={`/career/${file.id}/`}>
+<a class:list={['case-card', { 'case-card-featured': file.featured }]} href={`/career/${file.id}/`}>
   <div class="case-card-top">
     <span class="case-card-num mono">CASE {file.number}</span>
     <span class="case-card-arrow" aria-hidden="true">→</span>
@@ -40,6 +40,21 @@ const { file } = Astro.props;
     background: var(--bg3);
     transform: translateY(-2px);
   }
+
+  .case-card-featured {
+    grid-column: 1 / -1;
+    border-color: var(--wave2);
+    background:
+      radial-gradient(ellipse 60% 120% at 100% 0%, rgba(127, 178, 255, 0.08), transparent 65%),
+      var(--bg2);
+    border-left: 2px solid var(--accent);
+  }
+
+  .case-card-featured .case-card-num { color: var(--accent); }
+  .case-card-featured .case-card-title { font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 300; max-width: 18ch; }
+  .case-card-featured .case-card-deck { max-width: 68ch; }
+  .case-card-featured .case-card-metrics { flex-direction: row; flex-wrap: wrap; gap: 0.4rem 1.2rem; }
+  .case-card-featured .case-card-metrics span { border-left-color: var(--accent); }
 
   .case-card-top {
     display: flex;
