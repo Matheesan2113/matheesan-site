@@ -99,6 +99,15 @@ import { music } from '../data/profile';
         mix or the long library — or open the profile and dig through all {music.spotify.publicPlaylists}.
       </p>
 
+      <div class="spotify-covers">
+        {music.spotify.playlists.map((playlist, index) => (
+          <a class="spotify-cover" href={playlist.url} target="_blank" rel="noopener noreferrer" aria-label={`Open ${playlist.title} on Spotify`}>
+            <img src={playlist.art} alt="" width="800" height="800" loading="lazy" decoding="async" />
+            <span class="spotify-cover-label mono">0{index + 1} / {playlist.title}</span>
+          </a>
+        ))}
+      </div>
+
       <div class="spotify-grid">
         {music.spotify.playlists.map((playlist, index) => (
           <a href={playlist.url} class="spotify-card" target="_blank" rel="noopener noreferrer">
@@ -277,6 +286,35 @@ import { music } from '../data/profile';
 
   .spotify-profile:hover { color: #6ef59a; border-bottom-color: #6ef59a; }
 
+  .spotify-covers {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .spotify-cover {
+    display: block;
+    text-decoration: none;
+    border: 1px solid var(--line);
+    background: var(--bg2);
+    transition: border-color 0.2s, transform 0.2s;
+  }
+
+  .spotify-cover:hover { border-color: var(--spotify); transform: translateY(-2px); }
+
+  .spotify-cover img { width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; display: block; }
+
+  .spotify-cover-label {
+    display: block;
+    padding: 0.55rem 0.65rem;
+    border-top: 1px solid var(--line);
+    color: var(--text2);
+    font-size: 0.5rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
   .spotify-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -376,6 +414,7 @@ import { music } from '../data/profile';
     .crate-card { min-height: 0; }
     .spotify-grid { grid-template-columns: 1fr; }
     .spotify-card { min-height: 0; }
+    .spotify-covers { grid-template-columns: 1fr 1fr; }
     .spotify-foot { flex-direction: column; align-items: flex-start; }
     .music-next-row { flex-direction: column; align-items: flex-start; gap: 1rem; }
     .music-next-row > div { justify-content: flex-start; }

@@ -1,0 +1,152 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700">
+  
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#08111f"/>
+      <stop offset="0.55" stop-color="#05080e"/>
+      <stop offset="1" stop-color="#0a1526"/>
+    </linearGradient>
+    <radialGradient id="halo">
+      <stop offset="0" stop-color="#4fffd0" stop-opacity=".22"/>
+      <stop offset="0.55" stop-color="#4fffd0" stop-opacity=".06"/>
+      <stop offset="1" stop-color="#4fffd0" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid" width="34" height="34" patternUnits="userSpaceOnUse">
+      <path d="M34 0H0V34" fill="none" stroke="#58aec9" stroke-opacity=".07" stroke-width=".7"/>
+    </pattern>
+    <pattern id="scan" width="4" height="4" patternUnits="userSpaceOnUse">
+      <rect width="4" height="1" fill="#ffffff" opacity=".018"/>
+    </pattern>
+    <filter id="soft"><feGaussianBlur stdDeviation="4"/></filter>
+    <filter id="glow"><feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10Z" fill="#4fffd0"/>
+    </marker>
+    <marker id="arrow-gold" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10Z" fill="#c9a96e"/>
+    </marker>
+  </defs>
+  
+  <rect width="1200" height="700" fill="#05080e"/>
+  <rect width="1200" height="700" fill="url(#bg)"/>
+  <rect width="1200" height="700" fill="url(#grid)"/>
+  <rect x="20" y="20" width="1160" height="660" fill="none" stroke="#4fffd0" stroke-opacity=".3"/>
+  <rect x="20" y="20" width="1160" height="660" fill="url(#scan)"/>
+  <path d="M20 52V32H40M1180 52V32H1160M20 648V668H40M1180 648V668H1160" fill="none" stroke="#4fffd0" stroke-opacity=".8" stroke-width="1.2"/>
+  <text x="44" y="48" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" letter-spacing="2.2" fill="#4fffd0">HOMELAB / MOON-01 / TOPOLOGY</text>
+  <text x="1156" y="48" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" letter-spacing="1.8" fill="#6b82a5">NOT TO SCALE</text>
+  <text x="54" y="100" font-family="Georgia, 'Times New Roman', serif" font-size="44" fill="#dce6f5">A production lab under the moon.</text>
+  <text x="56" y="124" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" letter-spacing="2" fill="#6b82a5">LOCAL INFERENCE / COMPUTER VISION / STORAGE / IDENTITY</text>
+
+  <rect x="56" y="160" width="336" height="330" fill="rgba(8,17,31,.88)" stroke="#4fffd0" stroke-opacity=".5"/>
+  <text x="76" y="190" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12" letter-spacing="1.6" fill="#4fffd0">PROXMOX</text>
+  <text x="76" y="208" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9" fill="#6b82a5">AMD RYZEN 9 5900X / 128 GB</text>
+  
+  <g>
+    <rect x="76" y="228" width="296" height="80" fill="rgba(8,17,31,.86)" stroke="#c9a96e" stroke-opacity=".5"/>
+    <path d="M76 238V228H88M360 228H372V238M76 298V308H88M360 308H372V298" fill="none" stroke="#c9a96e" stroke-opacity=".9"/>
+    <text x="88" y="252" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11" letter-spacing="1.5" fill="#c9a96e">RTX A2000 12 GB</text>
+    <text x="88" y="270" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="8.5" letter-spacing=".6" fill="#6b82a5">CUDA / Ollama / Whisper / ComfyUI</text>
+  </g>
+  
+  <g>
+    <rect x="76" y="324" width="136" height="64" fill="rgba(8,17,31,.86)" stroke="#4fffd0" stroke-opacity=".5"/>
+    <path d="M76 334V324H88M200 324H212V334M76 378V388H88M200 388H212V378" fill="none" stroke="#4fffd0" stroke-opacity=".9"/>
+    <text x="88" y="348" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11" letter-spacing="1.5" fill="#4fffd0">OLLAMA</text>
+    <text x="88" y="366" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="8.5" letter-spacing=".6" fill="#6b82a5">local inference</text>
+  </g>
+  
+  <g>
+    <rect x="236" y="324" width="136" height="64" fill="rgba(8,17,31,.86)" stroke="#4fffd0" stroke-opacity=".5"/>
+    <path d="M236 334V324H248M360 324H372V334M236 378V388H248M360 388H372V378" fill="none" stroke="#4fffd0" stroke-opacity=".9"/>
+    <text x="248" y="348" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11" letter-spacing="1.5" fill="#4fffd0">IMMICH ML</text>
+    <text x="248" y="366" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="8.5" letter-spacing=".6" fill="#6b82a5">face + object</text>
+  </g>
+  
+  <g>
+    <rect x="76" y="404" width="136" height="58" fill="rgba(8,17,31,.86)" stroke="#4fffd0" stroke-opacity=".5"/>
+    <path d="M76 414V404H88M200 404H212V414M76 452V462H88M200 462H212V452" fill="none" stroke="#4fffd0" stroke-opacity=".9"/>
+    <text x="88" y="428" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11" letter-spacing="1.5" fill="#4fffd0">FRIGATE</text>
+    <text x="88" y="446" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="8.5" letter-spacing=".6" fill="#6b82a5">9 cameras</text>
+  </g>
+  
+  <g>
+    <rect x="236" y="404" width="136" height="58" fill="rgba(8,17,31,.86)" stroke="#4fffd0" stroke-opacity=".5"/>
+    <path d="M236 414V404H248M360 404H372V414M236 452V462H248M360 462H372V452" fill="none" stroke="#4fffd0" stroke-opacity=".9"/>
+    <text x="248" y="428" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11" letter-spacing="1.5" fill="#4fffd0">WHISPER</text>
+    <text x="248" y="446" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="8.5" letter-spacing=".6" fill="#6b82a5">transcription</text>
+  </g>
+
+  
+  <g>
+    <rect x="456" y="292" width="172" height="108" fill="rgba(8,17,31,.86)" stroke="#7df9ff" stroke-opacity=".5"/>
+    <path d="M456 302V292H468M616 292H628V302M456 390V400H468M616 400H628V390" fill="none" stroke="#7df9ff" stroke-opacity=".9"/>
+    <text x="468" y="316" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11" letter-spacing="1.5" fill="#7df9ff">10G SWITCH</text>
+    <text x="468" y="334" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="8.5" letter-spacing=".6" fill="#6b82a5">VLAN 10 / 20 / 30 / 40</text>
+  </g>
+  <path d="M392 320 C420 320 430 340 450 340" fill="none" stroke="#4fffd0" stroke-width="1.2"  marker-end="url(#arrow)"/>
+  <path d="M392 350 C420 350 430 350 450 350" fill="none" stroke="#4fffd0" stroke-width="1.2"  marker-end="url(#arrow)"/>
+  <path d="M392 430 C420 430 430 380 450 372" fill="none" stroke="#4fffd0" stroke-width="1.2"  marker-end="url(#arrow)"/>
+
+  
+  <g>
+    <rect x="456" y="460" width="172" height="96" fill="rgba(8,17,31,.86)" stroke="#c9a96e" stroke-opacity=".5"/>
+    <path d="M456 470V460H468M616 460H628V470M456 546V556H468M616 556H628V546" fill="none" stroke="#c9a96e" stroke-opacity=".9"/>
+    <text x="468" y="484" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11" letter-spacing="1.5" fill="#c9a96e">22 TB ZFS</text>
+    <text x="468" y="502" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="8.5" letter-spacing=".6" fill="#6b82a5">TORNADO + SNAPSHOTS</text>
+  </g>
+  <path d="M456 480 C420 480 410 440 392 400" fill="none" stroke="#c9a96e" stroke-width="1.2" stroke-dasharray="4 5" marker-end="url(#arrow)"/>
+
+  
+  <g>
+    <rect x="760" y="120" width="380" height="88" fill="rgba(8,17,31,.86)" stroke="#4fffd0" stroke-opacity=".5"/>
+    <path d="M760 130V120H772M1128 120H1140V130M760 198V208H772M1128 208H1140V198" fill="none" stroke="#4fffd0" stroke-opacity=".9"/>
+    <text x="772" y="144" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11" letter-spacing="1.5" fill="#4fffd0">FRIGATE NVR</text>
+    <text x="772" y="162" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="8.5" letter-spacing=".6" fill="#6b82a5">9 cameras / object recognition / alerts</text>
+  </g>
+  
+  <g>
+    <rect x="760" y="228" width="180" height="88" fill="rgba(8,17,31,.86)" stroke="#4fffd0" stroke-opacity=".5"/>
+    <path d="M760 238V228H772M928 228H940V238M760 306V316H772M928 316H940V306" fill="none" stroke="#4fffd0" stroke-opacity=".9"/>
+    <text x="772" y="252" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11" letter-spacing="1.5" fill="#4fffd0">IMMICH</text>
+    <text x="772" y="270" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="8.5" letter-spacing=".6" fill="#6b82a5">photos / face / timeline</text>
+  </g>
+  
+  <g>
+    <rect x="960" y="228" width="180" height="88" fill="rgba(8,17,31,.86)" stroke="#4fffd0" stroke-opacity=".5"/>
+    <path d="M960 238V228H972M1128 228H1140V238M960 306V316H972M1128 316H1140V306" fill="none" stroke="#4fffd0" stroke-opacity=".9"/>
+    <text x="972" y="252" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11" letter-spacing="1.5" fill="#4fffd0">JELLYFIN</text>
+    <text x="972" y="270" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="8.5" letter-spacing=".6" fill="#6b82a5">media / invite-only</text>
+  </g>
+  
+  <g>
+    <rect x="760" y="336" width="380" height="88" fill="rgba(8,17,31,.86)" stroke="#c9a96e" stroke-opacity=".5"/>
+    <path d="M760 346V336H772M1128 336H1140V346M760 414V424H772M1128 424H1140V414" fill="none" stroke="#c9a96e" stroke-opacity=".9"/>
+    <text x="772" y="360" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11" letter-spacing="1.5" fill="#c9a96e">AUTHENTIK</text>
+    <text x="772" y="378" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="8.5" letter-spacing=".6" fill="#6b82a5">SSO / OIDC / access policy</text>
+  </g>
+  
+  <g>
+    <rect x="760" y="444" width="380" height="82" fill="rgba(8,17,31,.86)" stroke="#7df9ff" stroke-opacity=".5"/>
+    <path d="M760 454V444H772M1128 444H1140V454M760 516V526H772M1128 526H1140V516" fill="none" stroke="#7df9ff" stroke-opacity=".9"/>
+    <text x="772" y="468" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11" letter-spacing="1.5" fill="#7df9ff">OBSERVABILITY</text>
+    <text x="772" y="486" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="8.5" letter-spacing=".6" fill="#6b82a5">Grafana / Prometheus / Uptime Kuma</text>
+  </g>
+  <path d="M628 320 C680 320 700 164 754 164" fill="none" stroke="#4fffd0" stroke-width="1.2"  marker-end="url(#arrow)"/>
+  <path d="M628 330 C680 330 700 272 754 272" fill="none" stroke="#4fffd0" stroke-width="1.2"  marker-end="url(#arrow)"/>
+  <path d="M628 350 C680 350 700 380 754 380" fill="none" stroke="#c9a96e" stroke-width="1.2"  marker-end="url(#arrow)"/>
+  <path d="M628 370 C680 370 700 480 754 480" fill="none" stroke="#7df9ff" stroke-width="1.2"  marker-end="url(#arrow)"/>
+  <path d="M940 272H954" fill="none" stroke="#4fffd0" stroke-width="1.2" stroke-dasharray="3 5" />
+  <circle cx="628" cy="350" r="4" fill="#4fffd0"/>
+
+  <text x="56" y="548" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9" fill="#4fffd0" letter-spacing="1.2" >NETWORK</text>
+  <text x="56" y="570" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9" fill="#8ba0bf" letter-spacing="1.2" >10G core / 2.5G uplink / WireGuard / Tailscale</text>
+  <text x="56" y="600" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9" fill="#c9a96e" letter-spacing="1.2" >STORAGE</text>
+  <text x="56" y="622" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9" fill="#8ba0bf" letter-spacing="1.2" >22 TB ZFS / snapshots / offsite backup</text>
+  <text x="744" y="548" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9" fill="#c9a96e" letter-spacing="1.2" >ACCESS</text>
+  <text x="744" y="570" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9" fill="#8ba0bf" letter-spacing="1.2" >Authentik SSO / invite-only / least privilege</text>
+  <text x="744" y="600" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9" fill="#4fffd0" letter-spacing="1.2" >STATUS</text>
+  <text x="744" y="622" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9" fill="#8ba0bf" letter-spacing="1.2" >nominal / monitored / backed up</text>
+  <line x1="54" y1="520" x2="1146" y2="520" stroke="#4fffd0" stroke-opacity=".2"/>
+  <text x="1146" y="646" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9" letter-spacing="1.5" fill="#4fffd0">MOON-01 / ALWAYS ON</text>
+  </svg>

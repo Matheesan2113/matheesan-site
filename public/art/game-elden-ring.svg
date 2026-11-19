@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+  
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#08111f"/>
+      <stop offset="0.55" stop-color="#05080e"/>
+      <stop offset="1" stop-color="#0a1526"/>
+    </linearGradient>
+    <radialGradient id="halo">
+      <stop offset="0" stop-color="#c9a96e" stop-opacity=".22"/>
+      <stop offset="0.55" stop-color="#c9a96e" stop-opacity=".06"/>
+      <stop offset="1" stop-color="#c9a96e" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid" width="34" height="34" patternUnits="userSpaceOnUse">
+      <path d="M34 0H0V34" fill="none" stroke="#82a9d6" stroke-opacity=".07" stroke-width=".7"/>
+    </pattern>
+    <pattern id="scan" width="4" height="4" patternUnits="userSpaceOnUse">
+      <rect width="4" height="1" fill="#ffffff" opacity=".018"/>
+    </pattern>
+    <filter id="soft"><feGaussianBlur stdDeviation="4"/></filter>
+    <filter id="glow"><feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10Z" fill="#c9a96e"/>
+    </marker>
+    <marker id="arrow-gold" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10Z" fill="#c9a96e"/>
+    </marker>
+  </defs>
+  
+  <rect width="1200" height="675" fill="#05080e"/>
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <rect width="1200" height="675" fill="url(#grid)"/>
+  <rect x="20" y="20" width="1160" height="635" fill="none" stroke="#c9a96e" stroke-opacity=".3"/>
+  <rect x="20" y="20" width="1160" height="635" fill="url(#scan)"/>
+  <path d="M20 52V32H40M1180 52V32H1160M20 623V643H40M1180 623V643H1160" fill="none" stroke="#c9a96e" stroke-opacity=".8" stroke-width="1.2"/>
+  <text x="44" y="48" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" letter-spacing="2.2" fill="#c9a96e">MATHEESAN / GAME KEY ART</text>
+  <text x="1156" y="48" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" letter-spacing="1.8" fill="#6b82a5">THE BENCHMARK</text>
+  
+      <circle cx="760" cy="270" r="220" fill="url(#halo)"/>
+      <g filter="url(#glow)">
+        <path d="M620 180 A180 180 0 0 1 900 180" fill="none" stroke="#c9a96e" stroke-width="18" stroke-opacity=".55"/>
+        <path d="M640 170 A160 160 0 0 1 880 170" fill="none" stroke="#c9a96e" stroke-width="2" stroke-opacity=".9" stroke-dasharray="3 8"/>
+        <path d="M690 150 A120 120 0 0 1 830 150" fill="none" stroke="#82a9d6" stroke-width="1" stroke-opacity=".5"/>
+      </g>
+      <path d="M720 520V300M760 520V240M800 520V320M840 520V270" stroke="#0a1526" stroke-width="18"/>
+      <path d="M700 520 C740 470 760 500 780 440 C800 380 820 460 850 400" stroke="#c9a96e" stroke-opacity=".2" fill="none" stroke-width="2"/>
+      <path d="M0 540 C260 500 380 570 620 535 C860 500 980 550 1200 520" stroke="#1b3a5c" fill="none"/>
+      <path d="M0 568 C260 528 380 598 620 563 C860 528 980 578 1200 548" stroke="#82a9d6" stroke-opacity=".5" fill="none"/>
+      <g fill="#05080e" stroke="#c9a96e" stroke-opacity=".6">
+        <circle cx="560" cy="470" r="10"/>
+        <path d="M550 480V520M560 480V520M550 495L540 515M560 495L570 515"/>
+      </g>
+      <text x="620" y="290" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" letter-spacing="3" fill="#c9a96e">SHATTERED</text>
+      <text x="620" y="316" font-family="Georgia, 'Times New Roman', serif" font-size="34" fill="#dce6f5">ring</text>
+    
+  <text x="56" y="624" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" letter-spacing="2.2" fill="#c9a96e">Elden Ring / THE ROTATION</text>
+  <text x="1144" y="624" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" letter-spacing="1.6" fill="#6b82a5">NO RANK / JUST PLAY</text>
+  </svg>

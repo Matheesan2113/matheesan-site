@@ -1,0 +1,153 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700">
+  
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#08111f"/>
+      <stop offset="0.55" stop-color="#05080e"/>
+      <stop offset="1" stop-color="#0a1526"/>
+    </linearGradient>
+    <radialGradient id="halo">
+      <stop offset="0" stop-color="#7fb2ff" stop-opacity=".22"/>
+      <stop offset="0.55" stop-color="#7fb2ff" stop-opacity=".06"/>
+      <stop offset="1" stop-color="#7fb2ff" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid" width="34" height="34" patternUnits="userSpaceOnUse">
+      <path d="M34 0H0V34" fill="none" stroke="#58aec9" stroke-opacity=".07" stroke-width=".7"/>
+    </pattern>
+    <pattern id="scan" width="4" height="4" patternUnits="userSpaceOnUse">
+      <rect width="4" height="1" fill="#ffffff" opacity=".018"/>
+    </pattern>
+    <filter id="soft"><feGaussianBlur stdDeviation="4"/></filter>
+    <filter id="glow"><feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10Z" fill="#7fb2ff"/>
+    </marker>
+    <marker id="arrow-gold" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10Z" fill="#c9a96e"/>
+    </marker>
+  </defs>
+  
+  <rect width="1200" height="700" fill="#05080e"/>
+  <rect width="1200" height="700" fill="url(#bg)"/>
+  <rect width="1200" height="700" fill="url(#grid)"/>
+  <rect x="20" y="20" width="1160" height="660" fill="none" stroke="#7fb2ff" stroke-opacity=".3"/>
+  <rect x="20" y="20" width="1160" height="660" fill="url(#scan)"/>
+  <path d="M20 52V32H40M1180 52V32H1160M20 648V668H40M1180 648V668H1160" fill="none" stroke="#7fb2ff" stroke-opacity=".8" stroke-width="1.2"/>
+  <text x="44" y="48" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" letter-spacing="2.2" fill="#7fb2ff">AGENTIC WORKBENCH / SYSTEM MAP</text>
+  <text x="1156" y="48" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" letter-spacing="1.8" fill="#6b82a5">CASE 00 / REPLICANT</text>
+  <circle cx="520" cy="300" r="230" fill="url(#halo)"/>
+  <text x="54" y="100" font-family="Georgia, 'Times New Roman', serif" font-size="44" fill="#dce6f5">The agentic workbench.</text>
+  <text x="56" y="124" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" letter-spacing="2" fill="#6b82a5">ONE ENGINE / MULTI-SILO / OVERNIGHT / GATED</text>
+
+  <text x="54" y="180" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9" letter-spacing="1.6" fill="#7fb2ff">INPUTS</text>
+  
+  <g>
+    <rect x="54" y="148" width="168" height="58" fill="rgba(8,17,31,.86)" stroke="#58aec9" stroke-opacity=".5"/>
+    <path d="M54 158V148H66M210 148H222V158M54 196V206H66M210 206H222V196" fill="none" stroke="#58aec9" stroke-opacity=".9"/>
+    <text x="66" y="172" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11" letter-spacing="1.5" fill="#58aec9">DATA LAKE</text>
+    <text x="66" y="190" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="8.5" letter-spacing=".6" fill="#6b82a5">structured + unstructured</text>
+  </g>
+  <g>
+    <rect x="54" y="228" width="168" height="58" fill="rgba(8,17,31,.86)" stroke="#58aec9" stroke-opacity=".5"/>
+    <path d="M54 238V228H66M210 228H222V238M54 276V286H66M210 286H222V276" fill="none" stroke="#58aec9" stroke-opacity=".9"/>
+    <text x="66" y="252" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11" letter-spacing="1.5" fill="#58aec9">TICKETS</text>
+    <text x="66" y="270" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="8.5" letter-spacing=".6" fill="#6b82a5">JIRA / workstreams</text>
+  </g>
+  <g>
+    <rect x="54" y="308" width="168" height="58" fill="rgba(8,17,31,.86)" stroke="#58aec9" stroke-opacity=".5"/>
+    <path d="M54 318V308H66M210 308H222V318M54 356V366H66M210 366H222V356" fill="none" stroke="#58aec9" stroke-opacity=".9"/>
+    <text x="66" y="332" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11" letter-spacing="1.5" fill="#58aec9">DOCS / SPECS</text>
+    <text x="66" y="350" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="8.5" letter-spacing=".6" fill="#6b82a5">contracts + context</text>
+  </g>
+  <g>
+    <rect x="54" y="388" width="168" height="58" fill="rgba(8,17,31,.86)" stroke="#58aec9" stroke-opacity=".5"/>
+    <path d="M54 398V388H66M210 388H222V398M54 436V446H66M210 446H222V436" fill="none" stroke="#58aec9" stroke-opacity=".9"/>
+    <text x="66" y="412" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11" letter-spacing="1.5" fill="#58aec9">REPOS / CI</text>
+    <text x="66" y="430" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="8.5" letter-spacing=".6" fill="#6b82a5">code + builds</text>
+  </g>
+  <path d="M222 177H236" fill="none" stroke="#58aec9" stroke-width="1.2"  /><path d="M222 257H236" fill="none" stroke="#58aec9" stroke-width="1.2"  /><path d="M222 337H236" fill="none" stroke="#58aec9" stroke-width="1.2"  /><path d="M222 417H236" fill="none" stroke="#58aec9" stroke-width="1.2"  />
+
+  <rect x="236" y="130" width="42" height="330" fill="rgba(8,17,31,.9)" stroke="#58aec9" stroke-opacity=".55"/>
+  <text transform="rotate(-90 257 300)" x="257" y="300" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="8.5" letter-spacing="2" fill="#58aec9">PLUGIN BUS</text>
+  <circle cx="257" cy="158" r="3.5" fill="#58aec9"/><circle cx="257" cy="238" r="3.5" fill="#58aec9"/><circle cx="257" cy="318" r="3.5" fill="#58aec9"/><circle cx="257" cy="398" r="3.5" fill="#58aec9"/>
+  <text x="286" y="150" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9" fill="#c9a96e">MCP / PLUGINS</text>
+
+  <path d="M278 300 C350 300 390 300 455 300" fill="none" stroke="#7fb2ff" stroke-width="1.2"  marker-end="url(#arrow)"/>
+  <text x="324" y="286" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="8" fill="#6b82a5">tool calls</text>
+
+  <g filter="url(#glow)">
+    <circle cx="520" cy="300" r="132" fill="none" stroke="#7fb2ff" stroke-opacity=".28" stroke-dasharray="2 7"/>
+    <circle cx="520" cy="300" r="105" fill="rgba(8,17,31,.94)" stroke="#7fb2ff" stroke-opacity=".8"/>
+    <circle cx="520" cy="300" r="78" fill="none" stroke="#7fb2ff" stroke-opacity=".2"/>
+  </g>
+  <text x="520" y="284" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9" letter-spacing="2" fill="#7fb2ff">ENGINE</text>
+  <text x="520" y="326" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="46" fill="#dce6f5">M.</text>
+  <text x="520" y="350" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="8" letter-spacing="1.4" fill="#6b82a5">ORCHESTRATION</text>
+  <circle cx="652.0" cy="300.0" r="3" fill="#7fb2ff"/><circle cx="586.0" cy="414.3" r="3" fill="#7fb2ff"/><circle cx="454.0" cy="414.3" r="3" fill="#7fb2ff"/><circle cx="388.0" cy="300.0" r="3" fill="#7fb2ff"/><circle cx="454.0" cy="185.7" r="3" fill="#7fb2ff"/><circle cx="586.0" cy="185.7" r="3" fill="#7fb2ff"/>
+
+  
+  <g>
+    <rect x="760" y="122" width="176" height="76" fill="rgba(8,17,31,.86)" stroke="#c9a96e" stroke-opacity=".5"/>
+    <path d="M760 132V122H772M924 122H936V132M760 188V198H772M924 198H936V188" fill="none" stroke="#c9a96e" stroke-opacity=".9"/>
+    <text x="772" y="146" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11" letter-spacing="1.5" fill="#c9a96e">DEEPSEEK</text>
+    <text x="772" y="164" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="8.5" letter-spacing=".6" fill="#6b82a5">reasoning / planning</text>
+  </g>
+  
+  <g>
+    <rect x="760" y="218" width="176" height="76" fill="rgba(8,17,31,.86)" stroke="#c9a96e" stroke-opacity=".5"/>
+    <path d="M760 228V218H772M924 218H936V228M760 284V294H772M924 294H936V284" fill="none" stroke="#c9a96e" stroke-opacity=".9"/>
+    <text x="772" y="242" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11" letter-spacing="1.5" fill="#c9a96e">CLAUDE</text>
+    <text x="772" y="260" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="8.5" letter-spacing=".6" fill="#6b82a5">build / review / tool use</text>
+  </g>
+  <path d="M650 270 C700 270 718 160 754 160" fill="none" stroke="#c9a96e" stroke-width="1.2"  marker-end="url(#arrow)"/>
+  <path d="M650 330 C700 330 718 256 754 256" fill="none" stroke="#c9a96e" stroke-width="1.2"  marker-end="url(#arrow)"/>
+  <text x="680" y="186" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="8" fill="#6b82a5">LLM</text>
+  <text x="680" y="292" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="8" fill="#6b82a5">LLM</text>
+
+  <rect x="760" y="350" width="176" height="190" fill="rgba(8,17,31,.9)" stroke="#7ee0b8" stroke-opacity=".55"/>
+  <text x="774" y="374" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11" letter-spacing="1.5" fill="#7ee0b8">GATES</text>
+  <text x="774" y="390" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="8" fill="#6b82a5">FAIL CLOSED</text>
+  <g><rect x="774" y="414" width="148" height="28" fill="rgba(126,224,184,.045)" stroke="#7ee0b8" stroke-opacity=".28"/><text x="786" y="432" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="8" letter-spacing="1" fill="#8ba0bf">PERMISSIONS</text><circle cx="908" cy="428" r="3" fill="#7ee0b8"/></g><g><rect x="774" y="452" width="148" height="28" fill="rgba(126,224,184,.045)" stroke="#7ee0b8" stroke-opacity=".28"/><text x="786" y="470" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="8" letter-spacing="1" fill="#8ba0bf">TESTS + EVALS</text><circle cx="908" cy="466" r="3" fill="#7ee0b8"/></g><g><rect x="774" y="490" width="148" height="28" fill="rgba(126,224,184,.045)" stroke="#7ee0b8" stroke-opacity=".28"/><text x="786" y="508" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="8" letter-spacing="1" fill="#8ba0bf">HUMAN APPROVAL</text><circle cx="908" cy="504" r="3" fill="#7ee0b8"/></g>
+  <path d="M650 330 C700 330 705 420 754 420" fill="none" stroke="#7ee0b8" stroke-width="1.2"  marker-end="url(#arrow)"/>
+  <text x="674" y="400" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="8" fill="#6b82a5">verify</text>
+
+  
+  <g>
+    <rect x="998" y="122" width="148" height="54" fill="rgba(8,17,31,.86)" stroke="#7fb2ff" stroke-opacity=".5"/>
+    <path d="M998 132V122H1010M1134 122H1146V132M998 166V176H1010M1134 176H1146V166" fill="none" stroke="#7fb2ff" stroke-opacity=".9"/>
+    <text x="1010" y="146" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11" letter-spacing="1.5" fill="#7fb2ff">PLAN</text>
+    <text x="1010" y="164" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="8.5" letter-spacing=".6" fill="#6b82a5">gated output</text>
+  </g>
+  <g>
+    <rect x="998" y="194" width="148" height="54" fill="rgba(8,17,31,.86)" stroke="#7fb2ff" stroke-opacity=".5"/>
+    <path d="M998 204V194H1010M1134 194H1146V204M998 238V248H1010M1134 248H1146V238" fill="none" stroke="#7fb2ff" stroke-opacity=".9"/>
+    <text x="1010" y="218" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11" letter-spacing="1.5" fill="#7fb2ff">SCOPE</text>
+    <text x="1010" y="236" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="8.5" letter-spacing=".6" fill="#6b82a5">gated output</text>
+  </g>
+  <g>
+    <rect x="998" y="266" width="148" height="54" fill="rgba(8,17,31,.86)" stroke="#7fb2ff" stroke-opacity=".5"/>
+    <path d="M998 276V266H1010M1134 266H1146V276M998 310V320H1010M1134 320H1146V310" fill="none" stroke="#7fb2ff" stroke-opacity=".9"/>
+    <text x="1010" y="290" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11" letter-spacing="1.5" fill="#7fb2ff">BUILD</text>
+    <text x="1010" y="308" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="8.5" letter-spacing=".6" fill="#6b82a5">gated output</text>
+  </g>
+  <g>
+    <rect x="998" y="338" width="148" height="54" fill="rgba(8,17,31,.86)" stroke="#7fb2ff" stroke-opacity=".5"/>
+    <path d="M998 348V338H1010M1134 338H1146V348M998 382V392H1010M1134 392H1146V382" fill="none" stroke="#7fb2ff" stroke-opacity=".9"/>
+    <text x="1010" y="362" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11" letter-spacing="1.5" fill="#7fb2ff">JIRA</text>
+    <text x="1010" y="380" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="8.5" letter-spacing=".6" fill="#6b82a5">gated output</text>
+  </g>
+  <g>
+    <rect x="998" y="410" width="148" height="54" fill="rgba(8,17,31,.86)" stroke="#7ee0b8" stroke-opacity=".5"/>
+    <path d="M998 420V410H1010M1134 410H1146V420M998 454V464H1010M1134 464H1146V454" fill="none" stroke="#7ee0b8" stroke-opacity=".9"/>
+    <text x="1010" y="434" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11" letter-spacing="1.5" fill="#7ee0b8">REVIEW</text>
+    <text x="1010" y="452" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="8.5" letter-spacing=".6" fill="#6b82a5">human in the loop</text>
+  </g>
+  <path d="M936 149H990" fill="none" stroke="#7fb2ff" stroke-width="1.2"  marker-end="url(#arrow)"/><path d="M936 221H990" fill="none" stroke="#7fb2ff" stroke-width="1.2"  marker-end="url(#arrow)"/><path d="M936 293H990" fill="none" stroke="#7fb2ff" stroke-width="1.2"  marker-end="url(#arrow)"/><path d="M936 365H990" fill="none" stroke="#7fb2ff" stroke-width="1.2"  marker-end="url(#arrow)"/><path d="M936 437H990" fill="none" stroke="#7ee0b8" stroke-width="1.2"  marker-end="url(#arrow)"/>
+  <path d="M760 398 C700 398 700 300 650 300" fill="none" stroke="#7ee0b8" stroke-width="1.2" stroke-dasharray="4 5" />
+
+  <line x1="54" y1="540" x2="1146" y2="540" stroke="#7fb2ff" stroke-opacity=".2"/>
+  <text x="54" y="570" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9" letter-spacing="2" fill="#7fb2ff">OVERNIGHT LOOP</text>
+  <g><circle cx="200" cy="540" r="4" fill="#7fb2ff"/><text x="200" y="566" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="8" fill="#8ba0bf">22:00</text><text x="200" y="584" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="8" letter-spacing="1.6" fill="#6b82a5">PLAN</text></g><g><circle cx="358" cy="540" r="4" fill="#7fb2ff"/><text x="358" y="566" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="8" fill="#8ba0bf">00:00</text><text x="358" y="584" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="8" letter-spacing="1.6" fill="#6b82a5">SCOPE</text></g><g><circle cx="516" cy="540" r="4" fill="#7fb2ff"/><text x="516" y="566" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="8" fill="#8ba0bf">02:00</text><text x="516" y="584" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="8" letter-spacing="1.6" fill="#6b82a5">BUILD</text></g><g><circle cx="674" cy="540" r="4" fill="#7fb2ff"/><text x="674" y="566" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="8" fill="#8ba0bf">04:00</text><text x="674" y="584" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="8" letter-spacing="1.6" fill="#6b82a5">JIRA</text></g><g><circle cx="832" cy="540" r="4" fill="#7fb2ff"/><text x="832" y="566" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="8" fill="#8ba0bf">06:00</text><text x="832" y="584" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="8" letter-spacing="1.6" fill="#6b82a5">GATE</text></g><g><circle cx="990" cy="540" r="4" fill="#7ee0b8"/><text x="990" y="566" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="8" fill="#7ee0b8">07:00</text><text x="990" y="584" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="8" letter-spacing="1.6" fill="#6b82a5">HUMAN</text></g>
+  <text x="54" y="646" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9" letter-spacing="1.5" fill="#6b82a5">BUILT SOLO / OWN HARNESSES / ONE ENGINE</text>
+  <text x="1146" y="646" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9" letter-spacing="1.5" fill="#c9a96e">STATUS: ORG-WIDE</text>
+  </svg>

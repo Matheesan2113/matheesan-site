@@ -32,6 +32,16 @@ const blocks = [
     </div>
   </header>
 
+  {file.figure && (
+    <figure class="case-figure">
+      <img src={file.figure.src} alt={file.figure.alt} width="1200" height="700" loading="lazy" decoding="async" />
+      <figcaption class="mono">
+        <span>{file.figure.caption}</span>
+        <a href={file.figure.src} target="_blank" rel="noopener noreferrer">open full <span aria-hidden="true">↗</span></a>
+      </figcaption>
+    </figure>
+  )}
+
   <div class="case-blocks">
     {blocks.map((block) => (
       <section class:list={['case-block', { 'case-block-result': block.result, 'case-block-diff': block.differently }]}>
@@ -101,6 +111,28 @@ const blocks = [
     border: 1px solid var(--line);
     padding: 0.16rem 0.38rem;
   }
+
+  .case-figure {
+    margin: 2rem 0 0;
+    border: 1px solid var(--line);
+    background: var(--bg2);
+  }
+
+  .case-figure img { display: block; width: 100%; height: auto; }
+
+  .case-figure figcaption {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.55rem 0.75rem;
+    border-top: 1px solid var(--line);
+    font-size: 0.5rem;
+    letter-spacing: 0.08em;
+    color: var(--text3);
+  }
+
+  .case-figure figcaption a { color: var(--accent); text-decoration: none; }
+  .case-figure figcaption a:hover { color: var(--accent2); }
 
   .case-blocks {
     display: flex;

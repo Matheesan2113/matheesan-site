@@ -44,14 +44,17 @@ import { games } from '../data/profile';
       <div class="game-grid">
         {games.map((game) => (
           <article class:list={['game-card', { 'game-featured': game.id === 'elden-ring' }]} id={game.id}>
-            <div class="game-top">
-              <span class="mono">{game.status}</span>
-              <span class="mono">{game.kind}</span>
-            </div>
-            <h3>{game.title}</h3>
-            <p class="game-body">{game.body}</p>
-            <div class="game-tags">
-              {game.tags.map((tag) => <span>{tag}</span>)}
+            <img class="game-art" src={game.art} alt="" width="1200" height="675" loading="lazy" decoding="async" />
+            <div class="game-content">
+              <div class="game-top">
+                <span class="mono">{game.status}</span>
+                <span class="mono">{game.kind}</span>
+              </div>
+              <h3>{game.title}</h3>
+              <p class="game-body">{game.body}</p>
+              <div class="game-tags">
+                {game.tags.map((tag) => <span>{tag}</span>)}
+              </div>
             </div>
           </article>
         ))}
@@ -160,13 +163,32 @@ import { games } from '../data/profile';
 
   .game-card {
     background: var(--bg2);
-    padding: 1.6rem 1.5rem;
+    padding: 0;
     scroll-margin-top: 6rem;
     display: flex;
     flex-direction: column;
     min-height: 260px;
+    overflow: hidden;
     transition: background 0.25s;
   }
+
+  .game-art {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    display: block;
+    border-bottom: 1px solid var(--line);
+    background: var(--bg);
+  }
+
+  .game-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 1.35rem 1.5rem 1.4rem;
+  }
+
+  .game-featured .game-art { aspect-ratio: 16 / 7; }
 
   .game-card:hover { background: var(--bg3); }
 

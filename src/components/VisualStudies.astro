@@ -1,0 +1,123 @@
+<</a>section id="studies">
+  <div class="container">
+    <div class="studies-head">
+      <div>
+        <p class="section-label">// visual studies</p>
+        <h2 class="section-title">Moon, dragon, <em>wave</em>.</h2>
+      </div>
+      <p class="studies-note mono">original vector studies · 2026</p>
+    </div>
+
+    <p class="section-deck studies-deck">
+      Three studies for the name and the myth: the moon that <em>Matheesan</em> means, the dragon year,
+      and Varuna’s waves. Built as vector art — part poster, part system diagram, part sketchbook.
+    </p>
+
+    <div class="study-grid">
+      <figure class="study-card">
+        <a class="study-open" href="/art/study-moon.svg" target="_blank" rel="noopener noreferrer" aria-label="Open full vector study of the moon in phases"><img src="/art/study-moon.svg" alt="Vector study of the moon in phases, with orbital rings and a central moon labeled Mathee." width="900" height="600" loading="lazy" decoding="async" /></a>
+        <figcaption>
+          <span class="study-num mono">01</span>
+          <span class="study-title">moon</span>
+          <span class="study-sub mono">orbital study</span>
+        </figcaption>
+      </figure>
+
+      <figure class="study-card">
+        <a class="study-open" href="/art/study-dragon.svg" target="_blank" rel="noopener noreferrer" aria-label="Open full line study of a dragon over waves"><img src="/art/study-dragon.svg" alt="Line study of a dragon flowing over layered waves in gold and blue." width="900" height="600" loading="lazy" decoding="async" /></a>
+        <figcaption>
+          <span class="study-num mono">02</span>
+          <span class="study-title">dragon</span>
+          <span class="study-sub mono">line study</span>
+        </figcaption>
+      </figure>
+
+      <figure class="study-card">
+        <a class="study-open" href="/art/study-wave.svg" target="_blank" rel="noopener noreferrer" aria-label="Open full signal study of layered waves"><img src="/art/study-wave.svg" alt="Signal study of layered waves and concentric sonar rings in teal and blue." width="900" height="600" loading="lazy" decoding="async" /></a>
+        <figcaption>
+          <span class="study-num mono">03</span>
+          <span class="study-title">wave</span>
+          <span class="study-sub mono">signal study</span>
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<style>
+  #studies { background: var(--bg2); padding: 5rem 0; }
+
+  .studies-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .studies-head .section-title { margin-bottom: 0; }
+
+  .studies-note {
+    font-size: 0.5rem;
+    letter-spacing: 0.08em;
+    color: var(--text3);
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .studies-deck { max-width: 68ch; margin-bottom: 2rem; }
+
+  .study-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+  }
+
+  .study-card {
+    margin: 0;
+    background: var(--bg2);
+    display: flex;
+    flex-direction: column;
+    transition: background 0.25s;
+  }
+
+  .study-card:hover { background: var(--bg3); }
+
+  .study-open { display: block; }
+
+  .study-open img { transition: opacity 0.2s; }
+  .study-open:hover img { opacity: 0.82; }
+
+  .study-card img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .study-card figcaption {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: baseline;
+    gap: 0.7rem;
+    padding: 0.8rem 0.9rem;
+  }
+
+  .study-num { font-size: 0.48rem; color: var(--accent); }
+  .study-title { font-family: var(--serif); font-size: 1.5rem; line-height: 1; color: var(--text1); }
+  .study-sub { font-size: 0.45rem; color: var(--text3); text-align: right; }
+
+  @media (max-width: 900px) {
+    .study-grid { grid-template-columns: 1fr 1fr; }
+    .study-card:last-child { grid-column: 1 / -1; }
+  }
+
+  @media (max-width: 620px) {
+    .studies-head { flex-direction: column; align-items: flex-start; gap: 0.8rem; }
+    .study-grid { grid-template-columns: 1fr; }
+    .study-card:last-child { grid-column: auto; }
+  }
+</style>

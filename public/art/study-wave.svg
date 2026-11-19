@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="600" viewBox="0 0 900 600">
+  
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#08111f"/>
+      <stop offset="0.55" stop-color="#05080e"/>
+      <stop offset="1" stop-color="#0a1526"/>
+    </linearGradient>
+    <radialGradient id="halo">
+      <stop offset="0" stop-color="#4fffd0" stop-opacity=".22"/>
+      <stop offset="0.55" stop-color="#4fffd0" stop-opacity=".06"/>
+      <stop offset="1" stop-color="#4fffd0" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid" width="34" height="34" patternUnits="userSpaceOnUse">
+      <path d="M34 0H0V34" fill="none" stroke="#58aec9" stroke-opacity=".07" stroke-width=".7"/>
+    </pattern>
+    <pattern id="scan" width="4" height="4" patternUnits="userSpaceOnUse">
+      <rect width="4" height="1" fill="#ffffff" opacity=".018"/>
+    </pattern>
+    <filter id="soft"><feGaussianBlur stdDeviation="4"/></filter>
+    <filter id="glow"><feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10Z" fill="#4fffd0"/>
+    </marker>
+    <marker id="arrow-gold" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10Z" fill="#c9a96e"/>
+    </marker>
+  </defs>
+  
+  <rect width="900" height="600" fill="#05080e"/>
+  <rect width="900" height="600" fill="url(#bg)"/>
+  <rect width="900" height="600" fill="url(#grid)"/>
+  <rect x="20" y="20" width="860" height="560" fill="none" stroke="#4fffd0" stroke-opacity=".3"/>
+  <rect x="20" y="20" width="860" height="560" fill="url(#scan)"/>
+  <path d="M20 52V32H40M880 52V32H860M20 548V568H40M880 548V568H860" fill="none" stroke="#4fffd0" stroke-opacity=".8" stroke-width="1.2"/>
+  <text x="44" y="48" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" letter-spacing="2.2" fill="#4fffd0">VISUAL STUDY / MATHEESAN</text>
+  <text x="856" y="48" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" letter-spacing="1.8" fill="#6b82a5">VECTOR / 2026</text>
+  
+      <path d="M60 260 C180 210 260 310 380 260 C500 210 580 310 700 260 C780 230 820 250 860 240" fill="none" stroke="#82a9d6" stroke-opacity="0.12" stroke-width="1"/><path d="M60 282 C180 232 260 332 380 282 C500 232 580 332 700 282 C780 252 820 272 860 262" fill="none" stroke="#4fffd0" stroke-opacity="0.16999999999999998" stroke-width="1.2"/><path d="M60 304 C180 254 260 354 380 304 C500 254 580 354 700 304 C780 274 820 294 860 284" fill="none" stroke="#82a9d6" stroke-opacity="0.22" stroke-width="1.4"/><path d="M60 326 C180 276 260 376 380 326 C500 276 580 376 700 326 C780 296 820 316 860 306" fill="none" stroke="#4fffd0" stroke-opacity="0.27" stroke-width="1.6"/><path d="M60 348 C180 298 260 398 380 348 C500 298 580 398 700 348 C780 318 820 338 860 328" fill="none" stroke="#82a9d6" stroke-opacity="0.32" stroke-width="1.8"/><path d="M60 370 C180 320 260 420 380 370 C500 320 580 420 700 370 C780 340 820 360 860 350" fill="none" stroke="#4fffd0" stroke-opacity="0.37" stroke-width="2"/><path d="M60 392 C180 342 260 442 380 392 C500 342 580 442 700 392 C780 362 820 382 860 372" fill="none" stroke="#82a9d6" stroke-opacity="0.42000000000000004" stroke-width="2.2"/><path d="M60 414 C180 364 260 464 380 414 C500 364 580 464 700 414 C780 384 820 404 860 394" fill="none" stroke="#4fffd0" stroke-opacity="0.47000000000000003" stroke-width="2.4000000000000004"/>
+      <circle cx="450" cy="290" r="130" fill="none" stroke="#4fffd0" stroke-opacity=".25" stroke-dasharray="2 8"/>
+      <circle cx="450" cy="290" r="86" fill="none" stroke="#4fffd0" stroke-opacity=".4"/>
+      <circle cx="450" cy="290" r="42" fill="rgba(79,255,208,.06)" stroke="#4fffd0" stroke-opacity=".6"/>
+      <path d="M450 290L540 220" stroke="#4fffd0" stroke-width="1.4" opacity=".6"/>
+      <circle cx="540" cy="220" r="4" fill="#4fffd0"/>
+      <text x="450" y="284" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="8" letter-spacing="3" fill="#4fffd0">VARUNA</text>
+      <text x="450" y="316" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="30" fill="#dce6f5">waves</text>
+      <text x="60" y="160" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9" letter-spacing="3" fill="#4fffd0">SIGNAL / TIDE / RETURN</text>
+    
+  <text x="44" y="550" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" letter-spacing="2.2" fill="#4fffd0">VARUNA / WAVE / SIGNAL STUDY 03</text>
+  <text x="856" y="550" text-anchor="end" font-family="Georgia, 'Times New Roman', serif" font-size="34" fill="#dce6f5">wave.</text>
+  </svg>

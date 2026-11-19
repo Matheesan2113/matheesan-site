@@ -33,6 +33,7 @@ const angles = [-90, -30, 30, 90, 150, 210];
       </div>
 
       <div class="orbit-core" id="channel-core" aria-hidden="true">
+        <span class="core-preview" aria-hidden="true"></span>
         <span class="core-kicker mono" id="core-kicker">ch.00 / hub</span>
         <span class="core-glyph" id="core-glyph" lang="ja">月</span>
         <span class="core-title" id="core-title">06 channels</span>
@@ -51,6 +52,7 @@ const angles = [-90, -30, 30, 90, 150, 210];
           data-glyph={channel.ta ?? channel.jp}
           data-lang={channel.ta ? 'ta' : 'ja'}
           data-accent={channel.accent}
+          data-preview={channel.preview}
           aria-label={`Open ${channel.title} — ${channel.tagline}`}
         >
           <span class="node-top">
@@ -175,8 +177,32 @@ const angles = [-90, -30, 30, 90, 150, 210];
     justify-content: center;
     text-align: center;
     padding: 1rem;
+    overflow: hidden;
     transition: border-color 0.25s, box-shadow 0.25s;
   }
+
+  .core-preview {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background-image: var(--core-image, url('/art/study-moon.svg'));
+    background-size: cover;
+    background-position: center;
+    opacity: 0.62;
+    filter: brightness(1.25) saturate(1.1) contrast(1.1);
+    pointer-events: none;
+  }
+
+  .orbit-core::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: radial-gradient(circle at 50% 45%, transparent 0 26%, rgba(5, 8, 14, 0.62) 72%, rgba(5, 8, 14, 0.88) 100%);
+    pointer-events: none;
+  }
+
+  .orbit-core > *:not(.core-preview) { position: relative; z-index: 1; }
 
   .core-kicker {
     font-size: 0.45rem;
@@ -352,6 +378,7 @@ const angles = [-90, -30, 30, 90, 150, 210];
   if (core && kicker && glyph && title && desc) {
     const reset = () => {
       core.style.removeProperty('--ch');
+      core.style.removeProperty('--core-image');
       kicker.textContent = 'ch.00 / hub';
       glyph.textContent = '月';
       glyph.lang = 'ja';
@@ -362,6 +389,7 @@ const angles = [-90, -30, 30, 90, 150, 210];
     nodes.forEach((node) => {
       const show = () => {
         core.style.setProperty('--ch', node.dataset.accent ?? '');
+        if (node.dataset.preview) core.style.setProperty('--core-image', `url('${node.dataset.preview}')`);
         kicker.textContent = `ch.${node.dataset.num} / ${node.dataset.title}`;
         glyph.textContent = node.dataset.glyph ?? '月';
         glyph.lang = node.dataset.lang ?? 'ja';

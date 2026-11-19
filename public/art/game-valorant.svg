@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+  
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#08111f"/>
+      <stop offset="0.55" stop-color="#05080e"/>
+      <stop offset="1" stop-color="#0a1526"/>
+    </linearGradient>
+    <radialGradient id="halo">
+      <stop offset="0" stop-color="#ff4655" stop-opacity=".22"/>
+      <stop offset="0.55" stop-color="#ff4655" stop-opacity=".06"/>
+      <stop offset="1" stop-color="#ff4655" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid" width="34" height="34" patternUnits="userSpaceOnUse">
+      <path d="M34 0H0V34" fill="none" stroke="#7df9ff" stroke-opacity=".07" stroke-width=".7"/>
+    </pattern>
+    <pattern id="scan" width="4" height="4" patternUnits="userSpaceOnUse">
+      <rect width="4" height="1" fill="#ffffff" opacity=".018"/>
+    </pattern>
+    <filter id="soft"><feGaussianBlur stdDeviation="4"/></filter>
+    <filter id="glow"><feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10Z" fill="#ff4655"/>
+    </marker>
+    <marker id="arrow-gold" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10Z" fill="#c9a96e"/>
+    </marker>
+  </defs>
+  
+  <rect width="1200" height="675" fill="#05080e"/>
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <rect width="1200" height="675" fill="url(#grid)"/>
+  <rect x="20" y="20" width="1160" height="635" fill="none" stroke="#ff4655" stroke-opacity=".3"/>
+  <rect x="20" y="20" width="1160" height="635" fill="url(#scan)"/>
+  <path d="M20 52V32H40M1180 52V32H1160M20 623V643H40M1180 623V643H1160" fill="none" stroke="#ff4655" stroke-opacity=".8" stroke-width="1.2"/>
+  <text x="44" y="48" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" letter-spacing="2.2" fill="#ff4655">MATHEESAN / GAME KEY ART</text>
+  <text x="1156" y="48" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" letter-spacing="1.8" fill="#6b82a5">AIM TRAINING</text>
+  
+      <circle cx="600" cy="300" r="260" fill="url(#halo)"/>
+      <g opacity=".7">
+        <path d="M100 180H500V520H100Z" fill="none" stroke="#ff4655" stroke-opacity=".18"/>
+        <path d="M760 120H1100V560H760Z" fill="none" stroke="#7df9ff" stroke-opacity=".18"/>
+        <path d="M100 180L500 520M500 180L100 520M760 120L1100 560M1100 120L760 560" stroke="#ff4655" stroke-opacity=".1"/>
+      </g>
+      <g stroke="#ff4655" stroke-width="2">
+        <circle cx="600" cy="300" r="90" fill="none" stroke-opacity=".7"/>
+        <circle cx="600" cy="300" r="40" fill="none" stroke-opacity=".5"/>
+        <path d="M600 190V410M490 300H710" stroke-opacity=".5"/>
+        <path d="M600 260V340M560 300H640" stroke-width="5"/>
+      </g>
+      <circle cx="600" cy="300" r="5" fill="#ff4655"/>
+      <path d="M220 430L360 380L450 430L360 480Z" fill="none" stroke="#7df9ff" stroke-opacity=".4"/>
+      <path d="M780 220L930 160L1040 210L900 280Z" fill="none" stroke="#ff4655" stroke-opacity=".35"/>
+      <text x="760" y="470" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" letter-spacing="3" fill="#ff4655">CROSSHAIR</text>
+      <text x="720" y="502" font-family="Georgia, 'Times New Roman', serif" font-size="30" fill="#dce6f5">hold the line</text>
+    
+  <text x="56" y="624" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" letter-spacing="2.2" fill="#ff4655">Valorant / THE ROTATION</text>
+  <text x="1144" y="624" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" letter-spacing="1.6" fill="#6b82a5">NO RANK / JUST PLAY</text>
+  </svg>

@@ -54,6 +54,7 @@ npm run preview   # preview the build
   `tags`, and `reading` frontmatter. The index, RSS feed and sitemap pick it up automatically.
 - **Site chrome / SEO defaults** — `src/layouts/layout.astro`.
 - **Palette commands** — `src/components/CommandPalette.astro`.
+- **Art / diagrams** — `scripts/make-art.mjs` generates the SVGs in `public/art/` (workbench and homelab diagrams, playlist covers, game key art and the moon/dragon/wave studies). Run it with `node scripts/make-art.mjs` after editing.
 - **OG image** — `public/og.png` (1200×630). Editable sources: `scripts/og.html` (open in a browser
   and screenshot at 1200×630) and `scripts/make-og.mjs` (sharp render; expects a fontconfig pointing
   at Cormorant Garamond, Space Mono and DM Sans, e.g.

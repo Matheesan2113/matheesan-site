@@ -95,10 +95,10 @@ export const music = {
     profile: 'Matheesan Manokaran',
     publicPlaylists: 47,
     playlists: [
-      { title: 'Lock In 2025', note: '8 tracks · focus mode', url: 'https://open.spotify.com/playlist/12V6JHuA6suAygcmkzSVKB' },
-      { title: 'Games', note: '48 tracks · boss fights & racing', url: 'https://open.spotify.com/playlist/2spbr821bl0V8wV5k42gx6' },
-      { title: 'Mixxx', note: '22 tracks · global bass / dancehall', url: 'https://open.spotify.com/playlist/7jXQ0WwqIc7cj6ErLcYFUX' },
-      { title: 'LumiereNew1', note: '101 tracks · the long library', url: 'https://open.spotify.com/playlist/6x9MRizxBcPUCQjgI3GA2g' },
+      { title: 'Lock In 2025', note: '8 tracks · focus mode', url: 'https://open.spotify.com/playlist/12V6JHuA6suAygcmkzSVKB', art: '/art/cover-lock-in.svg' },
+      { title: 'Games', note: '48 tracks · boss fights & racing', url: 'https://open.spotify.com/playlist/2spbr821bl0V8wV5k42gx6', art: '/art/cover-games.svg' },
+      { title: 'Mixxx', note: '22 tracks · global bass / dancehall', url: 'https://open.spotify.com/playlist/7jXQ0WwqIc7cj6ErLcYFUX', art: '/art/cover-mixxx.svg' },
+      { title: 'LumiereNew1', note: '101 tracks · the long library', url: 'https://open.spotify.com/playlist/6x9MRizxBcPUCQjgI3GA2g', art: '/art/cover-lumiere.svg' },
     ],
   },
 };
@@ -113,6 +113,7 @@ export type Channel = {
   href: string;
   accent: string;
   meta: string;
+  preview: string;
 };
 
 export const channels: Channel[] = [
@@ -124,6 +125,7 @@ export const channels: Channel[] = [
     tagline: 'global bass · Tamil · gaming OSTs',
     href: '/music/',
     accent: '#ff4fd8',
+    preview: '/art/cover-lock-in.svg',
     meta: '47 public playlists',
   },
   {
@@ -134,6 +136,7 @@ export const channels: Channel[] = [
     tagline: 'Elden Ring · Wukong · Mario Kart',
     href: '/games/',
     accent: '#a8ff60',
+    preview: '/art/game-elden-ring.svg',
     meta: '5 in rotation',
   },
   {
@@ -144,6 +147,7 @@ export const channels: Channel[] = [
     tagline: 'agent loops · evals · homelab',
     href: '/lab/',
     accent: '#4fffd0',
+    preview: '/art/lab-topology.svg',
     meta: 'models / metal',
   },
   {
@@ -154,6 +158,7 @@ export const channels: Channel[] = [
     tagline: 'field notes from the loop',
     href: '/notes/',
     accent: '#ffb86b',
+    preview: '/art/study-wave.svg',
     meta: '3 transmissions',
   },
   {
@@ -165,6 +170,7 @@ export const channels: Channel[] = [
     tagline: 'Tamil · moon · dragon · waves',
     href: '/about/',
     accent: '#82a9d6',
+    preview: '/art/study-moon.svg',
     meta: 'the longer version',
   },
   {
@@ -175,12 +181,14 @@ export const channels: Channel[] = [
     tagline: 'agentic workbench · WayTrade',
     href: '/career/',
     accent: '#7fb2ff',
+    preview: '/art/workbench-diagram.svg',
     meta: 'marketplace · case files',
   },
 ];
 
 export type Game = {
   id: string;
+  art: string;
   title: string;
   kind: string;
   status: string;
@@ -191,6 +199,7 @@ export type Game = {
 export const games: Game[] = [
   {
     id: 'elden-ring',
+    art: '/art/game-elden-ring.svg',
     title: 'Elden Ring',
     kind: 'soulslike · open world',
     status: 'the benchmark',
@@ -199,6 +208,7 @@ export const games: Game[] = [
   },
   {
     id: 'black-myth-wukong',
+    art: '/art/game-wukong.svg',
     title: 'Black Myth: Wukong',
     kind: 'action RPG',
     status: 'currently playing',
@@ -207,6 +217,7 @@ export const games: Game[] = [
   },
   {
     id: 'mario-kart',
+    art: '/art/game-mario-kart.svg',
     title: 'Mario Kart',
     kind: 'kart racer',
     status: 'comfort game',
@@ -215,6 +226,7 @@ export const games: Game[] = [
   },
   {
     id: 'valorant',
+    art: '/art/game-valorant.svg',
     title: 'Valorant',
     kind: 'tactical FPS',
     status: 'aim training',
@@ -223,6 +235,7 @@ export const games: Game[] = [
   },
   {
     id: 'overwatch',
+    art: '/art/game-overwatch.svg',
     title: 'Overwatch',
     kind: 'hero shooter',
     status: 'team fight',
@@ -612,6 +625,7 @@ export type CaseFile = {
   id: string;
   number: string;
   featured?: boolean;
+  figure?: { src: string; alt: string; caption: string };
   title: string;
   deck: string;
   metrics: string[];
@@ -628,6 +642,11 @@ export const caseFiles: CaseFile[] = [
     id: 'agentic-workbench',
     number: '00',
     featured: true,
+    figure: {
+      src: '/art/workbench-diagram.svg',
+      alt: 'System map of the agentic workbench: data silos connect through a plugin bus to the engine, DeepSeek and Claude adapters, gates, and gated plan, scope, build, JIRA and review outputs.',
+      caption: 'workbench / system map · not to scale',
+    },
     title: 'The agentic workbench',
     deck: 'At Replicant: one engine for the whole org — data silos, plugins, MCPs and gated LLM work, built solo.',
     metrics: ['solo build', 'org-wide', 'overnight loops'],
