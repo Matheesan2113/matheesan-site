@@ -30,10 +30,7 @@ import Access from '../components/Access.astro';
   <div class="container">
     <figure class="lab-figure">
       <img src="/art/lab-topology.svg" alt="Homelab topology: a Proxmox host with an RTX A2000 running Ollama, Immich ML, Frigate for nine cameras and Whisper; a 10G switch, 22 TB ZFS storage, and services including Immich, Jellyfin, Authentik and observability." width="1200" height="700" loading="lazy" decoding="async" />
-      <figcaption class="mono">
-        <span>moon-01 / topology · not to scale</span>
-        <a href="/art/lab-topology.svg" target="_blank" rel="noopener noreferrer">open full <span aria-hidden="true">↗</span></a>
-      </figcaption>
+      <figcaption class="mono">moon-01 / topology · not to scale</figcaption>
     </figure>
   </div>
 
@@ -74,18 +71,12 @@ import Access from '../components/Access.astro';
   .lab-figure img { display: block; width: 100%; height: auto; }
 
   .lab-figure figcaption {
-    display: flex;
-    justify-content: space-between;
-    gap: 1rem;
     padding: 0.55rem 0.75rem;
     border-top: 1px solid var(--line);
     font-size: 0.5rem;
     letter-spacing: 0.08em;
     color: var(--text3);
   }
-
-  .lab-figure figcaption a { color: var(--accent); text-decoration: none; }
-  .lab-figure figcaption a:hover { color: var(--accent2); }
 
   #ml { padding-top: 2.5rem; padding-bottom: 4rem; }
   #homelab { padding-top: 4rem; padding-bottom: 4rem; }

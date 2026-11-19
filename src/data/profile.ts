@@ -18,7 +18,10 @@ export const site = {
     linkedin: 'https://www.linkedin.com/in/matheesanm',
     instagram: 'https://www.instagram.com/matheesan_m',
     spotify: 'https://open.spotify.com/user/22rvhmytriuvutsre3m722uzq',
+    steam: 'https://steamcommunity.com/id/DragonKingSlayer25/',
   },
+  psn: 'matheesan25',
+  steamName: 'Moongod',
 };
 
 export const now = [

@@ -10,7 +10,7 @@ themed pages; career is one of them, not the frame around everything.
 
 | Route | Purpose |
 |---|---|
-| `/` | Neutral channel hub: hero, now strip, orbital channel selector, latest transmissions |
+| `/` | Neutral channel hub: hero, now strip and the orbital channel selector |
 | `/music/` | Magenta club theme: DJ identity, crate, booth notes, deck visual and the real public Spotify library |
 | `/games/` | Acid-green HUD theme: the game rotation — Elden Ring, Wukong, Mario Kart, Valorant, Overwatch |
 | `/career/` | Experience timeline and case study index (linked, not primary) |

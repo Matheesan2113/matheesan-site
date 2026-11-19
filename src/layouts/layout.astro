@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import { site as profile } from '../data/profile';
 
 interface Props {
   title: string;
@@ -69,6 +70,10 @@ const person = {
     'https://www.linkedin.com/in/matheesanm',
     'https://www.instagram.com/matheesan_m',
     'https://open.spotify.com/user/22rvhmytriuvutsre3m722uzq',
+    profile.socials.steam,
+  ],
+  identifier: [
+    { '@type': 'PropertyValue', propertyID: 'PSN', value: profile.psn },
   ],
 };
 
