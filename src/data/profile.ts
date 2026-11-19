@@ -17,11 +17,12 @@ export const site = {
     github: 'https://github.com/Matheesan2113',
     linkedin: 'https://www.linkedin.com/in/matheesanm',
     instagram: 'https://www.instagram.com/matheesan_m',
+    spotify: 'https://open.spotify.com/user/22rvhmytriuvutsre3m722uzq',
   },
 };
 
 export const now = [
-  { value: 'house', label: 'listening', note: 'disco · ambient · Tamil' },
+  { value: 'bass', label: 'listening', note: 'global · Tamil · gaming OSTs' },
   { value: 'Wukong', label: 'playing', note: 'Elden Ring on deck' },
   { value: 'decks', label: 'mixing', note: 'a set I’ll never finish' },
   { value: 'Markham', label: 'based', note: '43.8561° N · 79.3370° W' },
@@ -36,37 +37,37 @@ export type CrateItem = {
 
 export const music = {
   intro:
-    'I DJ — house, disco, ambient, Tamil, hip-hop, whatever the room needs. The same part of my brain that likes a clean API likes a clean transition: read the room, set up the next move, don’t over-explain the drop.',
+    'I DJ — global bass, Latin club, Tamil and Malayalam, gaming OSTs, whatever the room needs. The same part of my brain that likes a clean API likes a clean transition: read the room, set up the next move, don’t over-explain the drop.',
   crate: [
     {
-      key: 'warm-up',
-      title: 'Warm-up',
-      body: 'Deep house, broken beat and slow disco. The first hour is a conversation, not a countdown.',
-      tags: ['deep house', 'broken beat', 'slow disco'],
+      key: 'global bass',
+      title: 'Global bass',
+      body: 'Dancehall, afrobeats and Latin club. Kybba, Sean Paul, Bad Bunny, El Alfa — the low end does the talking.',
+      tags: ['dancehall', 'afrobeats', 'Latin club'],
     },
     {
-      key: 'peak time',
-      title: 'Peak time',
-      body: 'Disco, house and anything with a vocal that makes the room move before the drums do.',
-      tags: ['disco', 'house', 'vocals'],
+      key: 'Tamil / Malayalam',
+      title: 'Tamil / Malayalam',
+      body: 'Film, indie and unplugged. Aksomaniac, Sai Abhyankkar, A. R. Rahman, Ilaiyaraaja — the first library I ever had.',
+      tags: ['Tamil film', 'Malayalam', 'unplugged'],
+    },
+    {
+      key: 'gaming',
+      title: 'Gaming OSTs',
+      body: 'Squid Game, boss-fight percussion, racing energy. The playlist literally has a “Games” folder with 48 tracks in it.',
+      tags: ['OSTs', 'boss fights', 'racing'],
+    },
+    {
+      key: 'lock-in',
+      title: 'Lock-in',
+      body: 'The focus rotation: Sean Paul, Akon, Billie Eilish, Daddy Yankee. Familiar enough to disappear into, loud enough to keep the cursor moving.',
+      tags: ['focus', 'hip-hop', 'pop'],
     },
     {
       key: 'after hours',
       title: 'After hours',
       body: 'Ambient, dub techno and late-night Tamil. For the drive home and the thoughts that arrive with it.',
-      tags: ['ambient', 'dub techno', 'Tamil'],
-    },
-    {
-      key: 'roots',
-      title: 'Roots',
-      body: 'Tamil film music, A. R. Rahman, Ilaiyaraaja. The first library I ever had, still the deepest.',
-      tags: ['Tamil film', 'A. R. Rahman', 'Ilaiyaraaja'],
-    },
-    {
-      key: 'home',
-      title: 'Home listening',
-      body: 'Jazz, film scores, lo-fi and the kind of album you put on to do one thing for three hours.',
-      tags: ['jazz', 'scores', 'lo-fi'],
+      tags: ['ambient', 'dub techno', 'late night'],
     },
     {
       key: 'wildcard',
@@ -90,10 +91,93 @@ export const music = {
     },
   ],
   spotify: {
-    url: '',
-    search: 'https://open.spotify.com/search/Matheesan%20Manokaran',
+    url: 'https://open.spotify.com/user/22rvhmytriuvutsre3m722uzq',
+    profile: 'Matheesan Manokaran',
+    publicPlaylists: 47,
+    playlists: [
+      { title: 'Lock In 2025', note: '8 tracks · focus mode', url: 'https://open.spotify.com/playlist/12V6JHuA6suAygcmkzSVKB' },
+      { title: 'Games', note: '48 tracks · boss fights & racing', url: 'https://open.spotify.com/playlist/2spbr821bl0V8wV5k42gx6' },
+      { title: 'Mixxx', note: '22 tracks · global bass / dancehall', url: 'https://open.spotify.com/playlist/7jXQ0WwqIc7cj6ErLcYFUX' },
+      { title: 'LumiereNew1', note: '101 tracks · the long library', url: 'https://open.spotify.com/playlist/6x9MRizxBcPUCQjgI3GA2g' },
+    ],
   },
 };
+
+export type Channel = {
+  id: string;
+  num: string;
+  title: string;
+  jp: string;
+  ta?: string;
+  tagline: string;
+  href: string;
+  accent: string;
+  meta: string;
+};
+
+export const channels: Channel[] = [
+  {
+    id: 'music',
+    num: '01',
+    title: 'music',
+    jp: '音',
+    tagline: 'global bass · Tamil · gaming OSTs',
+    href: '/music/',
+    accent: '#ff4fd8',
+    meta: '47 public playlists',
+  },
+  {
+    id: 'games',
+    num: '02',
+    title: 'games',
+    jp: '遊',
+    tagline: 'Elden Ring · Wukong · Mario Kart',
+    href: '/games/',
+    accent: '#a8ff60',
+    meta: '5 in rotation',
+  },
+  {
+    id: 'lab',
+    num: '03',
+    title: 'lab',
+    jp: '実',
+    tagline: 'agent loops · evals · homelab',
+    href: '/lab/',
+    accent: '#4fffd0',
+    meta: 'models / metal',
+  },
+  {
+    id: 'notes',
+    num: '04',
+    title: 'notes',
+    jp: '記',
+    tagline: 'field notes from the loop',
+    href: '/notes/',
+    accent: '#ffb86b',
+    meta: '3 transmissions',
+  },
+  {
+    id: 'about',
+    num: '05',
+    title: 'about',
+    jp: '月',
+    ta: 'மதி',
+    tagline: 'Tamil · moon · dragon · waves',
+    href: '/about/',
+    accent: '#82a9d6',
+    meta: 'the longer version',
+  },
+  {
+    id: 'career',
+    num: '06',
+    title: 'career',
+    jp: '職',
+    tagline: 'systems · case files · résumé',
+    href: '/career/',
+    accent: '#7fb2ff',
+    meta: 'the professional record',
+  },
+];
 
 export type Game = {
   id: string;

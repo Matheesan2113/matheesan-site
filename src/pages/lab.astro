@@ -9,12 +9,23 @@ import Access from '../components/Access.astro';
 <SiteLayout
   title="Lab — Matheesan"
   description="The lab behind the work: production LLM agent loops, evals, local inference on an RTX A2000, a nine-camera Frigate setup, Immich, Proxmox and the homelab underneath."
+  theme="lab"
 >
   <PageHeader
     crumb="lab"
     title="The lab."
+    channel="ch.03 / lab"
+    glyph="実"
     deck="Where the models meet the metal. Production agent loops and eval tooling up top; local inference, computer vision, storage and a slightly overbuilt network underneath."
   />
+
+  <div class="lab-hud mono" aria-label="Lab status">
+    <span><i aria-hidden="true"></i>node moon-01</span>
+    <span>gpu rtx a2000</span>
+    <span>cameras 09</span>
+    <span>storage 22tb</span>
+    <span class="lab-hud-ok">status nominal</span>
+  </div>
 
   <MlLab />
   <Homelab />
@@ -22,6 +33,28 @@ import Access from '../components/Access.astro';
 </SiteLayout>
 
 <style is:global>
+  .lab-hud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1.4rem;
+    align-items: center;
+    padding: 0.7rem 2rem;
+    background: var(--bg2);
+    border-bottom: 1px solid var(--line);
+    font-size: 0.5rem;
+    letter-spacing: 0.08em;
+    color: var(--text3);
+    text-transform: uppercase;
+  }
+
+  .lab-hud span { display: inline-flex; align-items: center; gap: 0.4rem; }
+  .lab-hud i { width: 5px; height: 5px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 8px var(--ok); }
+  .lab-hud-ok { color: var(--ok); }
+
+  @media (max-width: 700px) {
+    .lab-hud { padding: 0.7rem 1.2rem; gap: 0.35rem 0.8rem; }
+  }
+
   #ml { padding-top: 2.5rem; padding-bottom: 4rem; }
   #homelab { padding-top: 4rem; padding-bottom: 4rem; }
   #access { padding-top: 4rem; padding-bottom: 5rem; }

@@ -16,6 +16,7 @@
   --ok:        #7ee0b8;
   --warn:      #e2c17c;
   --err:       #e08a8a;
+  --spotify:   #1db954;
   --text1:     #dce6f5;
   --text2:     #8ba0bf;
   --text3:     #6b82a5;
@@ -387,4 +388,301 @@ code {
 @media (prefers-reduced-motion: reduce) {
   ::view-transition-old(root),
   ::view-transition-new(root) { animation: none; }
+}
+
+/* ─── Channel themes ────────────────────────────────────────── */
+.site {
+  --grid: rgba(88, 174, 201, 0.075);
+  --glow: rgba(88, 174, 201, 0.16);
+  min-height: 100vh;
+  background: var(--bg);
+  position: relative;
+}
+
+.site--music {
+  --accent: #ff4fd8;
+  --accent2: #7df9ff;
+  --line: #2a1735;
+  --wave2: #6d2a63;
+  --moon2: #b48cff;
+  --gold: #ffd166;
+  --ok: #7df9ff;
+  --grid: rgba(255, 79, 216, 0.09);
+  --glow: rgba(255, 79, 216, 0.2);
+  background:
+    radial-gradient(ellipse 60% 38% at 82% 0%, rgba(255, 79, 216, 0.08), transparent 68%),
+    var(--bg);
+}
+
+.site--games {
+  --accent: #a8ff60;
+  --accent2: #ffd166;
+  --line: #1e3328;
+  --wave2: #3f6b3c;
+  --moon2: #8fe6b4;
+  --gold: #ffb347;
+  --ok: #a8ff60;
+  --grid: rgba(168, 255, 96, 0.08);
+  --glow: rgba(168, 255, 96, 0.17);
+  background:
+    radial-gradient(ellipse 58% 36% at 78% 0%, rgba(168, 255, 96, 0.055), transparent 68%),
+    var(--bg);
+}
+
+.site--lab {
+  --accent: #4fffd0;
+  --accent2: #7df9ff;
+  --line: #143b3a;
+  --wave2: #1f6b66;
+  --moon2: #70e7d0;
+  --gold: #d4ff6a;
+  --ok: #4fffd0;
+  --grid: rgba(79, 255, 208, 0.075);
+  --glow: rgba(79, 255, 208, 0.17);
+  background:
+    radial-gradient(ellipse 60% 38% at 80% 0%, rgba(79, 255, 208, 0.06), transparent 68%),
+    var(--bg);
+}
+
+.site--notes {
+  --accent: #ffb86b;
+  --accent2: #ffe0a3;
+  --line: #3a2b1b;
+  --wave2: #7a5a2a;
+  --moon2: #e8c78e;
+  --gold: #ffb86b;
+  --ok: #ffd166;
+  --grid: rgba(255, 184, 107, 0.075);
+  --glow: rgba(255, 184, 107, 0.16);
+  background:
+    radial-gradient(ellipse 58% 36% at 78% 0%, rgba(255, 184, 107, 0.05), transparent 68%),
+    var(--bg);
+}
+
+.site--about {
+  --accent: #82a9d6;
+  --accent2: #a9c8ef;
+  --line: #22324a;
+  --wave2: #2a4e78;
+  --moon2: #82a9d6;
+  --gold: #c9a96e;
+  --ok: #7ee0b8;
+  --grid: rgba(130, 169, 214, 0.08);
+  --glow: rgba(130, 169, 214, 0.18);
+  background:
+    radial-gradient(ellipse 58% 38% at 80% 0%, rgba(130, 169, 214, 0.06), transparent 68%),
+    var(--bg);
+}
+
+.site--career {
+  --accent: #7fb2ff;
+  --accent2: #b7d4ff;
+  --line: #1d2b44;
+  --wave2: #2f4f7a;
+  --moon2: #9ab8e6;
+  --gold: #9fd8ff;
+  --ok: #7ee0b8;
+  --grid: rgba(127, 178, 255, 0.075);
+  --glow: rgba(127, 178, 255, 0.18);
+  background:
+    radial-gradient(ellipse 58% 36% at 80% 0%, rgba(127, 178, 255, 0.05), transparent 68%),
+    var(--bg);
+}
+
+/* ─── Page header HUD ───────────────────────────────────────── */
+.page-header {
+  position: relative;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+.page-header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 44px 44px;
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, rgba(0,0,0,0.35) 55%, transparent 92%);
+  mask-image: linear-gradient(to bottom, #000 0%, rgba(0,0,0,0.35) 55%, transparent 92%);
+  pointer-events: none;
+}
+
+.page-header::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.022) 0,
+    rgba(255, 255, 255, 0.022) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  pointer-events: none;
+  opacity: 0.55;
+}
+
+.page-header .container {
+  position: relative;
+  z-index: 1;
+}
+
+.page-topline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-bottom: 1.4rem;
+}
+
+.page-topline .page-crumb { margin-bottom: 0; }
+
+.page-channel {
+  font-family: var(--mono);
+  font-size: 0.5rem;
+  letter-spacing: 0.1em;
+  color: var(--text3);
+  text-transform: uppercase;
+  border: 1px solid var(--line);
+  padding: 0.2rem 0.45rem;
+  white-space: nowrap;
+}
+
+.page-topline .page-channel { color: var(--accent); border-color: var(--wave2); }
+
+.page-glyph {
+  position: absolute;
+  right: 2rem;
+  top: 5.6rem;
+  z-index: 0;
+  font-family: var(--jp);
+  font-size: clamp(7rem, 18vw, 15rem);
+  line-height: 1;
+  color: var(--accent);
+  opacity: 0.055;
+  pointer-events: none;
+  user-select: none;
+}
+
+.site--music .page-header {
+  background:
+    radial-gradient(ellipse 60% 90% at 88% 0%, rgba(255, 79, 216, 0.12), transparent 60%),
+    radial-gradient(ellipse 35% 60% at 10% 100%, rgba(125, 249, 255, 0.06), transparent 70%),
+    var(--bg);
+}
+
+.site--games .page-header {
+  background:
+    radial-gradient(ellipse 55% 85% at 85% 0%, rgba(168, 255, 96, 0.09), transparent 60%),
+    radial-gradient(ellipse 40% 60% at 6% 100%, rgba(255, 209, 102, 0.05), transparent 70%),
+    var(--bg);
+}
+
+.site--lab .page-header {
+  background:
+    radial-gradient(ellipse 55% 85% at 86% 0%, rgba(79, 255, 208, 0.09), transparent 60%),
+    var(--bg);
+}
+
+.site--notes .page-header {
+  background:
+    radial-gradient(ellipse 55% 85% at 86% 0%, rgba(255, 184, 107, 0.08), transparent 60%),
+    var(--bg);
+}
+
+.site--about .page-header {
+  background:
+    radial-gradient(ellipse 55% 85% at 86% 0%, rgba(130, 169, 214, 0.1), transparent 60%),
+    radial-gradient(ellipse 40% 60% at 0% 100%, rgba(201, 169, 110, 0.05), transparent 70%),
+    var(--bg);
+}
+
+.site--career .page-header {
+  background:
+    radial-gradient(ellipse 55% 85% at 86% 0%, rgba(127, 178, 255, 0.08), transparent 60%),
+    var(--bg);
+}
+
+.site--music .page-title,
+.site--games .page-title,
+.site--lab .page-title {
+  text-shadow:
+    1px 0 rgba(255, 79, 216, 0.2),
+    -1px 0 rgba(125, 249, 255, 0.16);
+}
+
+.site--games .page-title {
+  text-shadow:
+    1px 0 rgba(168, 255, 96, 0.2),
+    -1px 0 rgba(255, 209, 102, 0.16);
+}
+
+.site--lab .page-title {
+  text-shadow:
+    1px 0 rgba(79, 255, 208, 0.2),
+    -1px 0 rgba(125, 249, 255, 0.14);
+}
+
+@media (max-width: 700px) {
+  .page-glyph { right: 0.8rem; top: 5rem; font-size: 7rem; opacity: 0.04; }
+  .page-topline { align-items: flex-start; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-header::before,
+  .page-header::after { opacity: 0.35; }
+}
+
+/* ─── Card HUD accents ──────────────────────────────────────── */
+.site--music .crate-card,
+.site--music .spotify-card,
+.site--games .game-card {
+  position: relative;
+}
+
+.site--music .crate-card::after,
+.site--music .spotify-card::after,
+.site--games .game-card::after {
+  content: '';
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  width: 12px;
+  height: 12px;
+  border-right: 1px solid var(--accent);
+  border-bottom: 1px solid var(--accent);
+  opacity: 0.35;
+  pointer-events: none;
+  transition: opacity 0.2s, width 0.2s, height 0.2s;
+}
+
+.site--music .crate-card:hover::after,
+.site--music .spotify-card:hover::after,
+.site--games .game-card:hover::after {
+  opacity: 0.9;
+  width: 18px;
+  height: 18px;
+}
+
+.site--music .deck {
+  box-shadow: 0 0 50px rgba(255, 79, 216, 0.12);
+  border-color: var(--wave2);
+}
+
+.site--games .game-card:hover {
+  box-shadow: inset 0 0 30px rgba(168, 255, 96, 0.045);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site--music .crate-card::after,
+  .site--music .spotify-card::after,
+  .site--games .game-card::after { transition: none; }
+}
+
+/* Keep anchor targets clear of the fixed nav. */
+section[id],
+main[id] {
+  scroll-margin-top: 6rem;
 }

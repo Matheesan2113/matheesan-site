@@ -3,14 +3,20 @@ interface Props {
   crumb: string;
   title: string;
   deck?: string;
+  channel?: string;
+  glyph?: string;
 }
 
-const { crumb, title, deck } = Astro.props;
+const { crumb, title, deck, channel, glyph } = Astro.props;
 ---
 
 <header class="page-header">
   <div class="container">
-    <p class="section-label page-crumb"><a href="/">matheesan.ca</a> / {crumb}</p>
+    <div class="page-topline">
+      <p class="section-label page-crumb"><a href="/">matheesan.ca</a> / {crumb}</p>
+      {channel && <span class="page-channel mono">{channel}</span>}
+    </div>
+    {glyph && <span class="page-glyph" aria-hidden="true" lang="ja">{glyph}</span>}
     <h1 class="page-title">{title}</h1>
     {deck && <p class="page-deck">{deck}</p>}
     <slot />
@@ -21,10 +27,9 @@ const { crumb, title, deck } = Astro.props;
   .page-header {
     padding: 8rem 0 2.5rem;
     border-bottom: 1px solid var(--line);
-    background: var(--bg);
   }
 
-  .page-crumb { margin-bottom: 1.4rem; }
+  .page-crumb { margin-bottom: 0; }
   .page-crumb a { color: inherit; text-decoration: none; }
   .page-crumb a:hover { color: var(--accent2); }
 

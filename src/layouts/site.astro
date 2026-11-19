@@ -8,6 +8,7 @@ import Dragon from '../components/Dragon.astro';
 
 interface Props {
   title: string;
+  theme?: 'neutral' | 'music' | 'games' | 'lab' | 'notes' | 'about' | 'career';
   description: string;
   noindex?: boolean;
   image?: string;
@@ -19,7 +20,7 @@ interface Props {
   extraJsonLd?: Record<string, unknown> | Record<string, unknown>[];
 }
 
-const { title, description, noindex, image, type, article, extraJsonLd } = Astro.props;
+const { title, description, noindex, image, type, article, extraJsonLd, theme = 'neutral' } = Astro.props;
 ---
 
 <Layout
@@ -31,14 +32,16 @@ const { title, description, noindex, image, type, article, extraJsonLd } = Astro
   article={article}
   extraJsonLd={extraJsonLd}
 >
-  <Cursor />
-  <Dragon />
-  <Nav />
-  <CommandPalette />
-  <main id="main">
-    <slot />
-  </main>
-  <Footer />
+  <div class={`site site--${theme}`}>
+    <Cursor />
+    <Dragon />
+    <Nav />
+    <CommandPalette />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+  </div>
 </Layout>
 
 <script>

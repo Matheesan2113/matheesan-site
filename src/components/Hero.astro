@@ -24,6 +24,13 @@ import Constellation from './Constellation.astro';
     <div class="moon"></div>
   </div>
 
+  <div class="hero-glyphs" aria-hidden="true">
+    <span lang="ta">மதி</span>
+    <span lang="ja">月</span>
+    <span lang="ja">龍</span>
+    <span lang="ja">波</span>
+  </div>
+
   <div class="container hero-inner">
     <div class="hero-main">
       <p class="hero-path">
@@ -41,22 +48,20 @@ import Constellation from './Constellation.astro';
       <div class="hero-tags" aria-label="Things I’m into">
         <span class="tag">Tamil-Canadian</span>
         <span class="tag">DJ</span>
-        <span class="tag">Elden Ring</span>
-        <span class="tag">Wukong</span>
-        <span class="tag">Mario Kart</span>
-        <span class="tag">Valorant</span>
-        <span class="tag">Overwatch</span>
+        <span class="tag">Gamer</span>
+        <span class="tag">Engineer</span>
+        <span class="tag">AI systems</span>
       </div>
 
       <div class="hero-cta">
-        <a href="/music/" class="btn-primary">hear the mix <span aria-hidden="true">→</span></a>
-        <a href="/games/" class="btn-ghost">see the rotation <span aria-hidden="true">→</span></a>
+        <a href="#channels" class="btn-primary">enter the channels <span aria-hidden="true">↓</span></a>
+        <button type="button" class="btn-ghost" data-random-channel>random access</button>
       </div>
     </div>
 
     <aside class="hero-panel" aria-label="At a glance">
       <div class="panel-head">
-        <span>matheesan://life</span>
+        <span>matheesan://hub</span>
         <span class="panel-live"><i aria-hidden="true"></i>online</span>
       </div>
 
@@ -65,7 +70,7 @@ import Constellation from './Constellation.astro';
         <div><dt>focus</dt><dd>systems · sound · games</dd></div>
         <div><dt>base</dt><dd>markham, on</dd></div>
         <div><dt>local</dt><dd id="local-time">--:--</dd></div>
-        <div><dt>state</dt><dd class="panel-ok">currently: evals · a new mix · wukong</dd></div>
+        <div><dt>state</dt><dd class="panel-ok">06 channels · 01 life</dd></div>
       </dl>
 
       <div class="panel-meter" aria-hidden="true">
@@ -122,6 +127,61 @@ import Constellation from './Constellation.astro';
     color: var(--moon);
     opacity: 0.05;
     pointer-events: none;
+  }
+
+  #hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background-image:
+      linear-gradient(rgba(88, 174, 201, 0.055) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(88, 174, 201, 0.055) 1px, transparent 1px);
+    background-size: 64px 64px;
+    -webkit-mask-image: radial-gradient(ellipse at 50% 45%, #000 0%, transparent 78%);
+    mask-image: radial-gradient(ellipse at 50% 45%, #000 0%, transparent 78%);
+    pointer-events: none;
+  }
+
+  #hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: repeating-linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.022) 0,
+      rgba(255, 255, 255, 0.022) 1px,
+      transparent 1px,
+      transparent 3px
+    );
+    pointer-events: none;
+    opacity: 0.6;
+  }
+
+  .hero-glyphs {
+    position: absolute;
+    right: 1.3rem;
+    top: 50%;
+    z-index: 2;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.1rem;
+    color: var(--text3);
+    opacity: 0.55;
+    border-left: 1px solid var(--line);
+    padding-left: 0.6rem;
+    font-family: var(--jp);
+    font-size: 0.95rem;
+    line-height: 1;
+  }
+
+  .hero-glyphs span[lang='ta'] {
+    font-family: var(--tamil);
+    font-size: 0.72rem;
+    color: var(--gold);
   }
 
   .moon-container {
@@ -242,6 +302,9 @@ import Constellation from './Constellation.astro';
   }
 
   .hero-name {
+    text-shadow:
+      1px 0 rgba(255, 79, 216, 0.16),
+      -1px 0 rgba(79, 255, 208, 0.12);
     font-family: var(--serif);
     font-size: clamp(4.2rem, 8.5vw, 7.2rem);
     font-weight: 300;
@@ -294,6 +357,11 @@ import Constellation from './Constellation.astro';
   }
 
   .tag:hover { border-color: var(--wave2); color: var(--moon); }
+
+  .hero-cta button {
+    font: inherit;
+    cursor: pointer;
+  }
 
   .hero-cta {
     display: flex;
@@ -457,6 +525,10 @@ import Constellation from './Constellation.astro';
   @keyframes scrollPulse {
     0%, 100% { opacity: 0.25; transform: scaleX(0.7); transform-origin: left; }
     50%      { opacity: 0.9; transform: scaleX(1); transform-origin: left; }
+  }
+
+  @media (max-width: 1200px) {
+    .hero-glyphs { display: none; }
   }
 
   @media (max-width: 960px) {

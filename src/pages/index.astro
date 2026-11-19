@@ -3,25 +3,18 @@ import SiteLayout from '../layouts/site.astro';
 import Boot from '../components/Boot.astro';
 import Hero from '../components/Hero.astro';
 import SignalBand from '../components/SignalBand.astro';
-import MusicTeaser from '../components/MusicTeaser.astro';
-import GamesTeaser from '../components/GamesTeaser.astro';
-import LabTeaser from '../components/LabTeaser.astro';
+import ChannelMap from '../components/ChannelMap.astro';
 import NotesSection from '../components/NotesSection.astro';
-import AboutTeaser from '../components/AboutTeaser.astro';
-import CareerTeaser from '../components/CareerTeaser.astro';
 ---
 
 <SiteLayout
   title="Matheesan — Engineer, DJ, Gamer"
   description="Matheesan Manokaran — Tamil-Canadian engineer, DJ and gamer in Markham. AI systems, music, Elden Ring, Wukong, Mario Kart, Valorant and Overwatch."
+  theme="neutral"
 >
   <Boot />
   <Hero />
   <SignalBand />
-  <MusicTeaser />
-  <GamesTeaser />
-  <LabTeaser />
+  <ChannelMap />
   <NotesSection />
-  <AboutTeaser />
-  <CareerTeaser />
 </SiteLayout>

@@ -1,7 +1,8 @@
 # matheesan.ca
 
 Personal site for Matheesan Manokaran — engineer, DJ, gamer, and the homelab where the models meet
-the metal. The site is Matheesan first; career is a separate section.
+the metal. A neutral cyberpunk channel hub leads to six separately themed pages; career is one of
+them, not the frame around everything.
 
 **Live:** [https://matheesan.ca](https://matheesan.ca)
 
@@ -9,9 +10,9 @@ the metal. The site is Matheesan first; career is a separate section.
 
 | Route | Purpose |
 |---|---|
-| `/` | Landing page: Matheesan, now, music, games, lab, notes, about and a small career link |
-| `/music/` | DJ identity: the crate, booth notes, deck visual and Spotify search |
-| `/games/` | The game rotation: Elden Ring, Wukong, Mario Kart, Valorant, Overwatch |
+| `/` | Neutral channel hub: hero, now strip, orbital channel selector, latest transmissions |
+| `/music/` | Magenta club theme: DJ identity, crate, booth notes, deck visual and the real public Spotify library |
+| `/games/` | Acid-green HUD theme: the game rotation — Elden Ring, Wukong, Mario Kart, Valorant, Overwatch |
 | `/career/` | Experience timeline and case study index (linked, not primary) |
 | `/career/<slug>/` | Individual case study (voice-agent, migration, silent-green, cloud-run) |
 | `/tooling/` | Full 2021–2026 tooling timeline and workflow principles |
@@ -47,8 +48,8 @@ npm run preview   # preview the build
 
 ## Editing content
 
-- **Profile, now, music, games, jobs, case files, tooling timeline** — `src/data/profile.ts`. This is
-  the single source of truth for the home teasers, `/music/`, `/games/`, `/career/` and `/tooling/`.
+- **Profile, now, channels, music, games, jobs, case files, tooling timeline** — `src/data/profile.ts`.
+  This is the single source of truth for the channel hub, `/music/`, `/games/`, `/career/` and `/tooling/`.
 - **Notes** — add a markdown file to `src/content/notes/` with `title`, `description`, `date`,
   `tags`, and `reading` frontmatter. The index, RSS feed and sitemap pick it up automatically.
 - **Site chrome / SEO defaults** — `src/layouts/layout.astro`.
@@ -73,10 +74,15 @@ they were cleared for public use. If you add a claim, add the source or don't ad
   career, tooling and résumé sit one level away; the home page is a scannable index, not the
   whole resume.
 - Music is part of the visual system: an animated nav equalizer, the deck visual, the crate and
-  booth notes. Nothing autoplays. Set `music.spotify.url` in `src/data/profile.ts` to swap the
-  current name-search button for the public profile link.
+  booth notes. Nothing autoplays. The real public profile is `music.spotify.url`; the four linked
+  playlists are `Lock In 2025`, `Games`, `Mixxx` and `LumiereNew1`.
 - The games section is a rotation, not a ranking: Elden Ring, Black Myth: Wukong, Mario Kart,
   Valorant and Overwatch.
+- The landing is deliberately neutral: a monochrome chrome hub with an orbital channel selector.
+  Each destination carries its own accent: music magenta, games acid green, lab teal, notes amber,
+  about indigo/gold, career steel blue. Themes are set with `theme=` on `SiteLayout`.
+- Page headers carry a channel chip (for example `ch.01 / sound`) and a large translucent Japanese
+  glyph. The hero also carries a vertical Tamil/Japanese glyph rail.
 - The tooling timeline is a curated narrative, not a market ranking: three tools per year, chosen
   because each one changed a different part of the loop.
 - The command palette opens with **Ctrl/Cmd+K** or `/`.

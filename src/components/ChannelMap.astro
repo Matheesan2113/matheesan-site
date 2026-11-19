@@ -1,0 +1,387 @@
+---
+import { channels } from '../data/profile';
+
+const angles = [-90, -30, 30, 90, 150, 210];
+---
+
+<section id="channels">
+  <div class="container">
+    <div class="channel-head">
+      <div>
+        <p class="section-label">// channels</p>
+        <h2 class="section-title">Choose a <em>frequency</em>.</h2>
+      </div>
+      <div class="channel-actions">
+        <span class="channel-count mono">06 channels / 01 life</span>
+        <button type="button" class="channel-random mono" data-random-channel>
+          random access
+        </button>
+      </div>
+    </div>
+
+    <p class="section-deck channel-deck">
+      Six doors, one person. Hover or focus a node to preview the channel; enter to open it.
+      No wrong route — just different frequencies.
+    </p>
+
+    <div class="orbit-wrap">
+      <div class="orbit-visual" aria-hidden="true">
+        <span class="orbit-ring ring-a"></span>
+        <span class="orbit-ring ring-b"></span>
+        <span class="orbit-ring ring-c"></span>
+        <span class="orbit-scan"></span>
+      </div>
+
+      <div class="orbit-core" id="channel-core" aria-hidden="true">
+        <span class="core-kicker mono" id="core-kicker">ch.00 / hub</span>
+        <span class="core-glyph" id="core-glyph" lang="ja">月</span>
+        <span class="core-title" id="core-title">06 channels</span>
+        <span class="core-desc" id="core-desc">hover or focus a node</span>
+      </div>
+
+      {channels.map((channel, index) => (
+        <a
+          class="orbit-node"
+          href={channel.href}
+          style={`--angle:${angles[index]}deg; --ch:${channel.accent}`}
+          data-channel-node
+          data-num={channel.num}
+          data-title={channel.title}
+          data-desc={channel.tagline}
+          data-glyph={channel.ta ?? channel.jp}
+          data-lang={channel.ta ? 'ta' : 'ja'}
+          data-accent={channel.accent}
+          aria-label={`Open ${channel.title} — ${channel.tagline}`}
+        >
+          <span class="node-top">
+            <span class="node-num mono">{channel.num}</span>
+            <span class="node-jp" lang={channel.ta ? 'ta' : 'ja'}>{channel.ta ?? channel.jp}</span>
+          </span>
+          <span class="node-title">{channel.title}</span>
+          <span class="node-tag mono">{channel.tagline}</span>
+          <span class="node-meta mono">{channel.meta}</span>
+        </a>
+      ))}
+    </div>
+
+    <p class="channel-hint mono">tab to scan · enter to open · ctrl K for everything</p>
+  </div>
+</section>
+
+<style>
+  #channels {
+    background: var(--bg2);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding: 5.5rem 0 4rem;
+  }
+
+  .channel-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .channel-head .section-title { margin-bottom: 0; }
+
+  .channel-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.7rem;
+  }
+
+  .channel-count {
+    font-size: 0.5rem;
+    letter-spacing: 0.1em;
+    color: var(--text3);
+    text-transform: uppercase;
+  }
+
+  .channel-random {
+    background: none;
+    border: 1px solid var(--line);
+    color: var(--text2);
+    padding: 0.4rem 0.65rem;
+    font-size: 0.55rem;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
+  }
+
+  .channel-random:hover,
+  .channel-random:focus-visible {
+    border-color: var(--accent);
+    color: var(--accent2);
+    background: rgba(88, 174, 201, 0.06);
+  }
+
+  .channel-deck { max-width: 64ch; }
+
+  .orbit-wrap {
+    position: relative;
+    width: min(680px, 100%);
+    aspect-ratio: 1;
+    margin: 2.2rem auto 0;
+  }
+
+  .orbit-visual { position: absolute; inset: 0; pointer-events: none; }
+
+  .orbit-ring {
+    position: absolute;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+  }
+
+  .ring-a { inset: 2%; border-style: dashed; opacity: 0.8; }
+  .ring-b { inset: 14%; opacity: 0.65; }
+  .ring-c { inset: 26%; border-color: var(--wave2); opacity: 0.7; }
+
+  .orbit-scan {
+    position: absolute;
+    inset: 2%;
+    border-radius: 50%;
+    background: conic-gradient(
+      from 0deg,
+      transparent 0 78%,
+      rgba(88, 174, 201, 0.16) 92%,
+      transparent 100%
+    );
+    animation: orbit-scan 9s linear infinite;
+    -webkit-mask-image: radial-gradient(circle, transparent 0 30%, #000 31% 100%);
+    mask-image: radial-gradient(circle, transparent 0 30%, #000 31% 100%);
+  }
+
+  .orbit-core {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 34%;
+    aspect-ratio: 1;
+    border: 1px solid var(--ch, var(--wave2));
+    border-radius: 50%;
+    background:
+      radial-gradient(circle at 40% 34%, rgba(211, 224, 244, 0.08), transparent 45%),
+      var(--bg);
+    box-shadow:
+      0 0 0 1px rgba(88, 174, 201, 0.05),
+      0 0 44px var(--ch, var(--glow));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 1rem;
+    transition: border-color 0.25s, box-shadow 0.25s;
+  }
+
+  .core-kicker {
+    font-size: 0.45rem;
+    letter-spacing: 0.1em;
+    color: var(--text3);
+    text-transform: uppercase;
+    margin-bottom: 0.3rem;
+  }
+
+  .core-glyph {
+    font-family: var(--jp);
+    font-size: clamp(1.6rem, 4vw, 2.6rem);
+    line-height: 1;
+    color: var(--ch, var(--accent));
+    margin-bottom: 0.25rem;
+    text-shadow: 0 0 18px var(--ch, var(--accent));
+  }
+
+  .core-glyph[lang='ta'] { font-family: var(--tamil); font-size: clamp(1.2rem, 3vw, 2rem); }
+
+  .core-title {
+    font-family: var(--serif);
+    font-size: clamp(1.3rem, 3vw, 2rem);
+    line-height: 1;
+    color: var(--text1);
+  }
+
+  .core-desc {
+    margin-top: 0.35rem;
+    font-family: var(--mono);
+    font-size: 0.48rem;
+    line-height: 1.5;
+    color: var(--text3);
+    max-width: 21ch;
+  }
+
+  .orbit-node {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 136px;
+    transform:
+      translate(-50%, -50%)
+      rotate(var(--angle))
+      translateX(248px)
+      rotate(calc(var(--angle) * -1));
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 0.65rem 0.7rem;
+    background: rgba(5, 8, 14, 0.88);
+    border: 1px solid var(--line);
+    text-decoration: none;
+    transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+  }
+
+  .orbit-node::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    width: 10px;
+    height: 10px;
+    border-top: 1px solid var(--ch);
+    border-left: 1px solid var(--ch);
+  }
+
+  .orbit-node:hover,
+  .orbit-node:focus-visible {
+    border-color: var(--ch);
+    background: rgba(10, 16, 28, 0.96);
+    box-shadow: 0 0 26px color-mix(in srgb, var(--ch) 22%, transparent);
+  }
+
+  .node-top { display: flex; justify-content: space-between; align-items: baseline; gap: 0.5rem; }
+  .node-num { font-size: 0.48rem; color: var(--ch); letter-spacing: 0.08em; }
+  .node-jp { font-family: var(--jp); font-size: 0.78rem; color: var(--ch); opacity: 0.8; }
+  .node-jp[lang='ta'] { font-family: var(--tamil); font-size: 0.68rem; }
+
+  .node-title {
+    font-family: var(--serif);
+    font-size: 1.25rem;
+    line-height: 1;
+    color: var(--text1);
+    transition: text-shadow 0.2s;
+  }
+
+  .orbit-node:hover .node-title,
+  .orbit-node:focus-visible .node-title {
+    text-shadow: 1px 0 var(--ch), -1px 0 #7df9ff;
+  }
+
+  .node-tag {
+    font-size: 0.42rem;
+    line-height: 1.45;
+    color: var(--text2);
+    letter-spacing: 0;
+    text-transform: uppercase;
+  }
+
+  .node-meta {
+    margin-top: 0.16rem;
+    padding-top: 0.3rem;
+    border-top: 1px solid var(--line);
+    font-size: 0.4rem;
+    color: var(--text3);
+    letter-spacing: 0;
+  }
+
+  .channel-hint {
+    margin-top: 1.1rem;
+    text-align: center;
+    font-size: 0.5rem;
+    letter-spacing: 0.08em;
+    color: var(--text3);
+  }
+
+  @keyframes orbit-scan { to { transform: rotate(360deg); } }
+
+  @media (max-width: 860px) {
+    .channel-head { flex-direction: column; align-items: flex-start; gap: 1rem; }
+    .channel-actions { align-items: flex-start; }
+
+    #channels { padding: 4rem 0 3rem; }
+
+    .orbit-wrap {
+      width: 100%;
+      aspect-ratio: auto;
+      margin-top: 2rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--line);
+      border: 1px solid var(--line);
+    }
+
+    .orbit-visual, .orbit-core { display: none; }
+
+    .orbit-node {
+      position: static;
+      transform: none;
+      width: auto;
+      background: var(--bg2);
+      border: 0;
+      padding: 1rem;
+      min-height: 132px;
+    }
+
+    .orbit-node::before { display: none; }
+    .orbit-node:hover, .orbit-node:focus-visible { background: var(--bg3); box-shadow: none; }
+    .node-jp { font-size: 1rem; }
+  }
+
+  @media (max-width: 520px) {
+    .orbit-wrap { grid-template-columns: 1fr; }
+    .orbit-node { min-height: 0; }
+    .channel-hint { text-align: left; line-height: 1.7; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .orbit-scan { animation: none; opacity: 0.35; }
+  }
+</style>
+
+<script>
+  const nodes = [...document.querySelectorAll<HTMLAnchorElement>('[data-channel-node]')];
+  const core = document.getElementById('channel-core');
+  const kicker = document.getElementById('core-kicker');
+  const glyph = document.getElementById('core-glyph');
+  const title = document.getElementById('core-title');
+  const desc = document.getElementById('core-desc');
+
+  if (core && kicker && glyph && title && desc) {
+    const reset = () => {
+      core.style.removeProperty('--ch');
+      kicker.textContent = 'ch.00 / hub';
+      glyph.textContent = '月';
+      glyph.lang = 'ja';
+      title.textContent = '06 channels';
+      desc.textContent = 'hover or focus a node';
+    };
+
+    nodes.forEach((node) => {
+      const show = () => {
+        core.style.setProperty('--ch', node.dataset.accent ?? '');
+        kicker.textContent = `ch.${node.dataset.num} / ${node.dataset.title}`;
+        glyph.textContent = node.dataset.glyph ?? '月';
+        glyph.lang = node.dataset.lang ?? 'ja';
+        title.textContent = node.dataset.title ?? '';
+        desc.textContent = node.dataset.desc ?? '';
+      };
+
+      node.addEventListener('pointerenter', show);
+      node.addEventListener('focus', show);
+      node.addEventListener('pointerleave', reset);
+      node.addEventListener('blur', reset);
+    });
+  }
+
+  document.querySelectorAll<HTMLButtonElement>('[data-random-channel]').forEach((button) => {
+    button.addEventListener('click', () => {
+      const options = nodes.length ? nodes : [];
+      if (!options.length) return;
+      const target = options[Math.floor(Math.random() * options.length)];
+      window.location.assign(target.href);
+    });
+  });
+</script>
