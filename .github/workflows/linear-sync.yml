@@ -1,0 +1,47 @@
+name: Sync GitHub issues to Linear
+
+# One-way mirror: GitHub is the source of truth, Linear is the planning view.
+# Only issues carrying the "linear" label are synced. The workflow creates the
+# Linear project on first run if it does not exist.
+
+on:
+  issues:
+    types: [opened, edited, reopened, closed, labeled, unlabeled]
+  workflow_dispatch:
+    inputs:
+      sync_all:
+        description: 'Sync every issue labeled "linear" (open and closed)'
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: linear-issue-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 22
+
+      - name: Mirror issue to Linear
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          LINEAR_API_KEY: ${{ secrets.LINEAR_API_KEY }}
+          LINEAR_TEAM_KEY: ${{ vars.LINEAR_TEAM_KEY || 'MMH' }}
+          LINEAR_PROJECT_NAME: ${{ vars.LINEAR_PROJECT_NAME || 'matheesan.ca — 2026 Site Review' }}
+          SYNC_ALL: ${{ github.event_name == 'workflow_dispatch' && inputs.sync_all || 'false' }}
+        run: |
+          if [ -z "$LINEAR_API_KEY" ]; then
+            echo "::notice::LINEAR_API_KEY is not set. Add it with 'gh secret set LINEAR_API_KEY' to enable sync."
+            exit 0
+          fi
+          node scripts/sync-linear.mjs
