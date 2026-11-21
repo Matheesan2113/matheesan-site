@@ -1,8 +1,6 @@
 ---
 import '../styles/global.css';
 import { site as profile } from '../data/profile';
-import contactConfig from '../data/contact.json';
-import dropConfig from '../data/drop.json';
 
 interface Props {
   title: string;
@@ -16,6 +14,11 @@ interface Props {
   };
   mainId?: string;
   extraJsonLd?: Record<string, unknown> | Record<string, unknown>[];
+  csp?: {
+    script?: string[];
+    connect?: string[];
+    frame?: string[];
+  };
 }
 
 const {
@@ -27,42 +30,44 @@ const {
   article,
   mainId = 'main',
   extraJsonLd,
+  csp: cspExtras,
 } = Astro.props;
 
 const site = Astro.site ?? new URL('https://matheesan.ca');
 const canonical = new URL(Astro.url.pathname, site);
 const ogImage = new URL(image, site);
 
-// GitHub Pages cannot set response headers, so CSP and Referrer-Policy ship as meta tags. The
-// allowlist is deliberately narrow: fonts, Turnstile, the two function URLs, the OIDC token
-// endpoint and the S3 upload host. Keep the edge-header copy in SECURITY.md in sync.
-const connectOrigins = new Set<string>([
-  'https://challenges.cloudflare.com',
-  'https://s3.ca-central-1.amazonaws.com',
-  'https://*.s3.ca-central-1.amazonaws.com',
+// GitHub Pages cannot set response headers, so CSP and Referrer-Policy ship as meta tags. The base
+// allowlist is self plus fonts; contact and drop pages pass their exact extra origins so backend
+// URLs are not broadcast on every page. Keep the edge-header copy in SECURITY.md in sync.
+const unique = (values: string[]) => [...new Set(values)];
+const scriptSrc = unique([
+  "'self'",
+  "'unsafe-inline'",
+  ...(cspExtras?.script ?? []),
 ]);
-
-for (const endpoint of [contactConfig.endpoint, dropConfig.endpoint, dropConfig.oidc?.token]) {
-  if (endpoint) connectOrigins.add(new URL(endpoint).origin);
-}
+const connectSrc = unique([
+  "'self'",
+  ...(cspExtras?.connect ?? []),
+]);
+const frameSrc = cspExtras?.frame?.length ? unique(cspExtras.frame) : ["'none'"];
 
 // Vite's HMR socket is same-origin in normal browsing, but allow the dev websocket explicitly.
 if (import.meta.env.DEV) {
-  connectOrigins.add('ws://localhost:*');
-  connectOrigins.add('ws://127.0.0.1:*');
+  connectSrc.push('ws://localhost:*', 'ws://127.0.0.1:*');
 }
 
 const csp = [
   "default-src 'self'",
   "base-uri 'none'",
   "object-src 'none'",
-  "script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com",
+  `script-src ${scriptSrc.join(' ')}`,
   "script-src-attr 'none'",
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
   "font-src 'self' https://fonts.gstatic.com",
   "img-src 'self' data:",
-  `connect-src 'self' ${[...connectOrigins].join(' ')}`,
-  'frame-src https://challenges.cloudflare.com',
+  `connect-src ${connectSrc.join(' ')}`,
+  `frame-src ${frameSrc.join(' ')}`,
   "form-action 'self'",
   'upgrade-insecure-requests',
 ].join('; ');

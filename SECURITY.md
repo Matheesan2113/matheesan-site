@@ -37,6 +37,8 @@ contact form, and testing against Google Fonts, Cloudflare Turnstile, AWS or any
 - **No secrets in the static build.** Runtime configuration contains only public OIDC client IDs,
   Turnstile site keys and function URLs.
 - **Security contact published** at `/.well-known/security.txt`.
+- **Repository controls:** GitHub private vulnerability reporting is enabled, along with Dependabot
+  alerts, automated security updates, secret scanning and push protection.
 
 ## GitHub Pages limitation
 
@@ -65,8 +67,11 @@ Content-Security-Policy: default-src 'self'; base-uri 'none'; object-src 'none';
 ```
 
 Add `includeSubDomains; preload` to HSTS only after every subdomain is HTTPS-only and you have
-verified the preload requirements. The edge CSP should be kept in sync with the `<meta>` CSP in
-`src/layouts/layout.astro`; the header additionally supports `frame-ancestors`.
+verified the preload requirements. The edge CSP above is the union of all routes; if the edge proxy
+supports path rules, scope the contact Lambda/Turnstile origins to `/contact/` and the drop Lambda,
+identity-provider and S3 origins to `/drop/*`. The edge CSP should be kept in sync with the
+per-route `<meta>` CSP built from `src/layouts/layout.astro`; the header additionally supports
+`frame-ancestors`.
 
 ## A note on history
 

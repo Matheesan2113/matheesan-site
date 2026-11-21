@@ -2,12 +2,21 @@
 import Layout from '../layouts/layout.astro';
 import contact from '../data/contact.json';
 const ready = Boolean(contact.endpoint && contact.siteKey);
+const contactOrigin = contact.endpoint ? new URL(contact.endpoint).origin : '';
+const csp = ready
+  ? {
+      script: ['https://challenges.cloudflare.com'],
+      frame: ['https://challenges.cloudflare.com'],
+      connect: [contactOrigin, 'https://challenges.cloudflare.com'].filter(Boolean),
+    }
+  : undefined;
 ---
 
 <Layout
   mainId="contact"
   title="Contact — Matheesan"
   description="Send Matheesan a message."
+  csp={csp}
 >
   <main id="contact" data-endpoint={contact.endpoint}>
     <section>

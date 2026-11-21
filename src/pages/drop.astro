@@ -4,12 +4,19 @@ import '../styles/drop.css';
 import drop from '../data/drop.json';
 
 const config = JSON.stringify({ endpoint: drop.endpoint ?? '', ...(drop.oidc ?? {}) });
+const dropConnect = [
+  drop.endpoint ? new URL(drop.endpoint).origin : '',
+  drop.oidc?.token ? new URL(drop.oidc.token).origin : '',
+  'https://s3.ca-central-1.amazonaws.com',
+  'https://*.s3.ca-central-1.amazonaws.com',
+].filter(Boolean);
 ---
 
 <Layout
   mainId="drop"
   title="Drop — Matheesan"
   description="Private drop box." noindex
+  csp={{ connect: dropConnect }}
 >
   <main id="drop" data-config={config}>
     <section>

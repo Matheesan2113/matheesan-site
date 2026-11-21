@@ -114,8 +114,8 @@ they were cleared for public use. If you add a claim, add the source or don't ad
   versions, hardware, storage sizes and the service map are deliberately omitted. The public diagram
   is an abstract capability summary, not a network map.
 - **CSP and Referrer-Policy are delivered via `<meta>`** because GitHub Pages cannot set response
-  headers. The CSP allowlists only the origins the site actually uses: Google Fonts, Cloudflare
-  Turnstile, the contact/drop Lambda URLs, the OIDC token endpoint and the S3 upload host.
+  headers. The base CSP is self plus fonts; the contact and drop routes add only their own exact
+  function, identity, Turnstile and S3 origins, so backend URLs are not broadcast on every page.
 - **GitHub Pages cannot send HSTS, `X-Frame-Options`/`frame-ancestors`, Permissions-Policy,
   COOP/CORP or `X-Content-Type-Options`.** Those require an edge proxy. See [`SECURITY.md`](SECURITY.md)
   for the recommended edge header set.

@@ -2,12 +2,19 @@
 import Layout from '../../layouts/layout.astro';
 import '../../styles/drop.css';
 import drop from '../../data/drop.json';
+
+const sendConnect = [
+  drop.endpoint ? new URL(drop.endpoint).origin : '',
+  'https://s3.ca-central-1.amazonaws.com',
+  'https://*.s3.ca-central-1.amazonaws.com',
+].filter(Boolean);
 ---
 
 <Layout
   mainId="drop"
   title="Send files — Matheesan"
   description="Send files privately." noindex
+  csp={{ connect: sendConnect }}
 >
   <main id="drop" data-endpoint={drop.endpoint}>
     <section>
