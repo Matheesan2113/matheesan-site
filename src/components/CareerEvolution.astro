@@ -1,0 +1,219 @@
+---
+import { toolingYears } from '../data/profile';
+---
+
+<section id="evolution" class="evolution" aria-labelledby="evolution-title">
+  <div class="evolution-head">
+    <div>
+      <p class="section-label">2021 → 2026 / continuity</p>
+      <h2 id="evolution-title" class="section-title">The stack moved. <em>The work didn’t stop.</em></h2>
+    </div>
+    <p class="evolution-deck">
+      Six years, six shifts in the tooling. Replicant through 2026, then WayTrade — continuous, not a
+      gap. The tools changed; the loop kept getting shorter.
+      <a href="/tooling/">Full tooling timeline <span aria-hidden="true">→</span></a>
+    </p>
+  </div>
+
+  <ol class="evolution-rail">
+    {toolingYears.map((year, index) => (
+      <li class="evolution-year">
+        <div class="evo-top">
+          <span class="evo-year mono">{year.year}</span>
+          <span class="evo-tag mono">0{index + 1}</span>
+        </div>
+        <h3>{year.label}</h3>
+        <p>{year.note}</p>
+        <div class="evo-tools">
+          {year.tools.map((tool) => <span>{tool.name}</span>)}
+        </div>
+      </li>
+    ))}
+  </ol>
+
+  <p class="evolution-foot mono">
+    <span>2018 avaya</span>
+    <span aria-hidden="true">→</span>
+    <span>2019 cgi</span>
+    <span aria-hidden="true">→</span>
+    <span>2021 replicant</span>
+    <span aria-hidden="true">→</span>
+    <span>2026 waytrade</span>
+  </p>
+</section>
+
+<style>
+  .evolution {
+    margin-top: 3.5rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .evolution-head {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(280px, 0.72fr);
+    gap: 2rem;
+    align-items: end;
+    margin-bottom: 2rem;
+  }
+
+  .evolution-head .section-title {
+    max-width: 18ch;
+    margin-bottom: 0;
+    font-size: clamp(2rem, 3.2vw, 2.8rem);
+  }
+
+  .evolution-deck {
+    justify-self: end;
+    max-width: 48ch;
+    font-size: 0.88rem;
+    line-height: 1.7;
+    color: var(--text2);
+  }
+
+  .evolution-deck a {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid var(--wave2);
+    white-space: nowrap;
+  }
+
+  .evolution-deck a:hover { color: var(--accent2); border-bottom-color: var(--accent2); }
+
+  .evolution-rail {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid var(--wave2);
+  }
+
+  .evolution-year {
+    position: relative;
+    min-width: 0;
+    padding: 1.15rem 0.9rem 1.2rem;
+    border-right: 1px solid var(--line);
+  }
+
+  .evolution-year:first-child { padding-left: 0; }
+  .evolution-year:last-child { border-right: 0; padding-right: 0.9rem; }
+
+  .evolution-year::before {
+    content: '';
+    position: absolute;
+    top: -3px;
+    left: 0.9rem;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 8px var(--accent);
+  }
+
+  .evolution-year:first-child::before { left: 0; }
+
+  .evo-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.4rem;
+    margin-bottom: 0.7rem;
+  }
+
+  .evo-year {
+    font-size: 0.58rem;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+  }
+
+  .evo-tag {
+    font-size: 0.4rem;
+    letter-spacing: 0.05em;
+    color: var(--text3);
+    text-transform: uppercase;
+    text-align: right;
+  }
+
+  .evolution-year h3 {
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    font-weight: 400;
+    line-height: 1.15;
+    color: var(--text1);
+    margin-bottom: 0.4rem;
+  }
+
+  .evolution-year p {
+    min-height: 3.1em;
+    font-size: 0.7rem;
+    line-height: 1.6;
+    color: var(--text3);
+    margin-bottom: 0.8rem;
+  }
+
+  .evo-tools { display: flex; flex-wrap: wrap; gap: 0.25rem; }
+
+  .evo-tools span {
+    font-family: var(--mono);
+    font-size: 0.45rem;
+    letter-spacing: 0.02em;
+    color: var(--text2);
+    border: 1px solid var(--line);
+    padding: 0.15rem 0.3rem;
+  }
+
+  .evolution-foot {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+    margin-top: 1.3rem;
+    font-size: 0.5rem;
+    letter-spacing: 0.06em;
+    color: var(--text3);
+    text-transform: uppercase;
+  }
+
+  .evolution-foot span:nth-child(even) { color: var(--wave2); }
+
+  @media (max-width: 1100px) {
+    .evolution-rail { grid-template-columns: repeat(3, 1fr); }
+    .evolution-year:nth-child(3n) { border-right: 0; padding-right: 0; }
+    .evolution-year:nth-child(4) { padding-left: 0; }
+    .evolution-year:nth-child(n + 4) { border-top: 1px solid var(--line); }
+    .evolution-year:nth-child(4)::before { left: 0; }
+  }
+
+  @media (max-width: 900px) {
+    .evolution-head { grid-template-columns: 1fr; gap: 0.8rem; }
+    .evolution-deck { justify-self: start; }
+  }
+
+  @media (max-width: 700px) {
+    .evolution { margin-top: 2.8rem; padding-top: 2rem; }
+    .evolution-rail { grid-template-columns: 1fr 1fr; }
+    .evolution-year:nth-child(3n) { border-right: 1px solid var(--line); padding-right: 0.9rem; }
+    .evolution-year:nth-child(2n) { border-right: 0; padding-right: 0; }
+    .evolution-year:nth-child(3) { padding-left: 0; }
+    .evolution-year:nth-child(3)::before { left: 0; }
+    .evolution-year:nth-child(n + 3) { border-top: 1px solid var(--line); }
+    .evolution-year:nth-child(2)::before { left: 0.9rem; }
+    .evolution-year p { min-height: 0; }
+  }
+
+  @media (max-width: 460px) {
+    .evolution-rail { grid-template-columns: 1fr; }
+    .evolution-year,
+    .evolution-year:nth-child(3n),
+    .evolution-year:nth-child(2n) {
+      border-right: 0;
+      padding: 1rem 0;
+    }
+    .evolution-year:nth-child(n + 2) { border-top: 1px solid var(--line); }
+    .evolution-year::before,
+    .evolution-year:nth-child(2)::before,
+    .evolution-year:nth-child(3)::before,
+    .evolution-year:nth-child(4)::before { left: 0; }
+    .evolution-year p { min-height: 0; }
+  }
+</style>

@@ -275,6 +275,8 @@ export type Job = {
   summary: string;
   highlights: string[];
   stack: string[];
+  tenure?: string;
+  phases?: { period: string; label: string }[];
   award?: string;
 };
 
@@ -299,8 +301,14 @@ export const jobs: Job[] = [
     role: 'Senior Software Engineer',
     period: 'Oct 2021 — Oct 2026',
     place: 'Remote · Toronto',
+    tenure: '5 years · continuous',
     summary:
       'Forward-deployed AI engineer: enterprise LLM voice agents, model routing, knowledge/RAG layers, evals and agentic tooling — from API review through launch and hypercare.',
+    phases: [
+      { period: '2021–22', label: 'voice agents · auth · integrations' },
+      { period: '2023–24', label: 'platform · RAG · evals' },
+      { period: '2025–26', label: 'agentic workbench · AI tooling' },
+    ],
     highlights: [
       'Designed and built the org-wide agentic workbench solo: one engine connecting multiple data silos and workstreams through plugins and MCPs, with DeepSeek/Claude-powered overnight planning, scoping, building and JIRA organization behind gates.',
       'Took enterprise LLM voice agents from an empty repo to production: state machines, tool calls, auth, fallbacks and hypercare.',
@@ -334,7 +342,7 @@ export const jobs: Job[] = [
   {
     company: 'Ryerson University → TMU',
     role: 'BEng, Computer Engineering',
-    period: '2015 — 2019',
+    period: '2014 — 2019',
     place: 'Toronto',
     summary:
       'Computer engineering with a final-year ML project: Twitter data into interaction graphs into community structure.',

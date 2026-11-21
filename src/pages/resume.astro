@@ -20,7 +20,11 @@ import { site } from '../data/profile';
     <div class="container">
       <div class="resume-toolbar no-print">
         <a href="/" class="mono">← matheesan.ca</a>
-        <button type="button" id="print-resume" class="btn-ghost btn-small">print / save PDF</button>
+        <div class="resume-toolbar-actions">
+          <a href="/career/" class="mono">long-form career <span aria-hidden="true">→</span></a>
+          <a href={site.socials.linkedin} class="btn-ghost btn-small" target="_blank" rel="noopener noreferrer">LinkedIn <span aria-hidden="true">↗</span></a>
+          <button type="button" id="print-resume" class="btn-ghost btn-small">print / save PDF</button>
+        </div>
       </div>
 
       <article class="resume">
@@ -33,8 +37,8 @@ import { site } from '../data/profile';
           <div class="resume-contact mono">
             <span>{site.location}</span>
             <a href="/contact/">matheesan.ca/contact</a>
-            <a href={site.socials.github}>github.com/Matheesan2113</a>
-            <a href={site.socials.linkedin}>linkedin.com/in/matheesanm</a>
+            <a href={site.socials.github} target="_blank" rel="noopener noreferrer">github.com/Matheesan2113</a>
+            <a href={site.socials.linkedin} target="_blank" rel="noopener noreferrer">linkedin.com/in/matheesanm</a>
           </div>
         </header>
 
@@ -87,6 +91,11 @@ import { site } from '../data/profile';
               <p class="resume-job-date mono">Oct 2021 — Oct 2026<br />Remote · Toronto</p>
             </div>
             <ul>
+              <li>
+                <strong>Five years across the LLM stack:</strong> voice agents and integrations
+                (2021–22), platform, RAG and evals (2023–24), then agentic workbench and AI tooling
+                (2025–26).
+              </li>
               <li>
                 <strong>Built the org-wide agentic workbench solo</strong>: one engine connecting
                 multiple data silos and workstreams through plugins and MCPs, with DeepSeek/Claude
@@ -222,7 +231,7 @@ import { site } from '../data/profile';
           <div class="resume-edu">
             <div>
               <h3>BEng, Computer Engineering</h3>
-              <p>Ryerson University (now Toronto Metropolitan University) · 2015 — 2019</p>
+              <p>Ryerson University (now Toronto Metropolitan University) · 2014 — 2019</p>
               <p class="resume-note">
                 Final-year ML project: Twitter data → interaction graphs → community structure.
               </p>
@@ -267,6 +276,20 @@ import { site } from '../data/profile';
   }
 
   .resume-toolbar a:hover { color: var(--accent); }
+
+  .resume-toolbar-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.7rem;
+  }
+
+  .resume-toolbar .btn-ghost {
+    color: var(--text2);
+    font-size: 0.6rem;
+  }
+
+  .resume-toolbar .btn-ghost:hover { color: var(--text1); }
 
   .resume {
     border: 1px solid var(--line);
@@ -444,6 +467,7 @@ import { site } from '../data/profile';
   }
 
   @media (max-width: 760px) {
+    .resume-toolbar { flex-direction: column; align-items: flex-start; gap: 0.7rem; }
     .resume { padding: 1.6rem 1.3rem; }
     .resume-head { grid-template-columns: 1fr; gap: 1rem; }
     .resume-contact { align-items: flex-start; text-align: left; }

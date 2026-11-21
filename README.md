@@ -13,14 +13,14 @@ themed pages; career is one of them, not the frame around everything.
 | `/` | Neutral channel hub: hero, now strip and the orbital channel selector |
 | `/music/` | Magenta club theme: DJ identity, crate, booth notes, deck visual and the real public Spotify library |
 | `/games/` | Acid-green HUD theme: the game rotation — Elden Ring, Wukong, Mario Kart, Valorant, Overwatch |
-| `/career/` | Experience timeline and case study index (linked, not primary) |
+| `/career/` | Long-form career portfolio: timeline, tech evolution and case study index |
 | `/career/<slug>/` | Individual case study (agentic-workbench, voice-agent, migration, silent-green, cloud-run) |
 | `/tooling/` | Full 2021–2026 tooling timeline and workflow principles |
 | `/lab/` | Emerging tech / ML lab, homelab and invite-only access |
 | `/about/` | The longer version: bio, principles, terminal, music, games and life |
 | `/notes/` | Field notes index |
 | `/notes/<slug>/` | Long-form notes (markdown content collection) |
-| `/resume/` | Public-safe résumé with print / save-as-PDF styling |
+| `/resume/` | Print-friendly / ATS-oriented résumé, cross-linked with the career portfolio |
 | `/contact/` | Turnstile-protected contact form (Lambda + SES) |
 | `/drop/` | Private OIDC-authenticated drop box with presigned uploads |
 | `/rss.xml` | Notes feed |
@@ -89,6 +89,10 @@ they were cleared for public use. If you add a claim, add the source or don't ad
   the orbital channel selector. Each destination carries its own accent: music magenta, games acid
   green, lab teal, notes amber, about indigo/gold, career steel blue. Themes are set with `theme=`
   on `SiteLayout`.
+- `/career/` and `/resume/` are deliberately separate. Career is the long-form portfolio — job
+  phases, the 2021–2026 tooling evolution, case files and selected work. Résumé is the
+  print-friendly/ATS-oriented CV. They cross-link, both link to LinkedIn, and their experience
+  narrative is kept aligned; merging them would bury the CV in a long portfolio page.
 - The hero has one deliberate professional path: **view résumé** links to `/resume/`; the channel
   selector remains the exploration path.
 - Page headers carry a channel chip (for example `ch.01 / sound`) and a large translucent Japanese
