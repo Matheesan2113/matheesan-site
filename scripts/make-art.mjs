@@ -280,7 +280,7 @@ const covers = {
   }),
   'cover-mixxx.svg': cover({
     title: 'Mixxx',
-    sub: '22 TRACKS / GLOBAL BASS / DANCEHALL',
+    sub: '22 TRACKS / BASSHALL / DANCEHALL',
     accent: '#ff4fd8',
     accent2: '#ffd166',
     art: `

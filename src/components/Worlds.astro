@@ -1,0 +1,450 @@
+---
+const embers = Array.from({ length: 7 }, (_, index) => ({
+  left: (index * 47 + 11) % 100,
+  delay: -((index * 43) % 110) / 10,
+  duration: 10 + ((index * 5) % 6),
+  size: 1 + ((index * 3) % 2),
+  drift: (index % 2 === 0 ? 1 : -1) * (4 + ((index * 9) % 12)),
+}));
+---
+
+<section id="worlds" aria-labelledby="worlds-title">
+  <div class="container">
+    <div class="worlds-head">
+      <div>
+        <p class="section-label">// two frequencies</p>
+        <h2 id="worlds-title" class="section-title">The booth and the <em>battlefield</em>.</h2>
+      </div>
+      <p class="worlds-deck">
+        Two places the rest of the brain goes. One runs on bass and a room; the other runs on boss
+        fights and one more attempt.
+      </p>
+    </div>
+
+    <div class="worlds-grid">
+      <a href="/music/" class="world world-music" data-motion-scene>
+        <img
+          class="world-photo"
+          src="/images/turntable-1600.webp"
+          srcset="/images/turntable-900.webp 900w, /images/turntable-1600.webp 1600w"
+          sizes="(max-width: 860px) 100vw, 50vw"
+          alt="A close-up of a turntable needle resting in the grooves of a spinning record, washed in red light."
+          width="1600"
+          height="1064"
+          loading="lazy"
+          decoding="async"
+        />
+        <span class="world-shade" aria-hidden="true"></span>
+
+        <div class="world-top mono">
+          <span>ch.01 / music</span>
+          <span>33⅓ rpm</span>
+        </div>
+
+        <div class="world-vinyl" aria-hidden="true">
+          <span class="vinyl">
+            <span class="vinyl-label">M<span>.</span></span>
+          </span>
+          <span class="vinyl-arm"><i></i></span>
+        </div>
+
+        <div class="world-content">
+          <p class="world-kicker mono">on the decks</p>
+          <h3>Basshall / dancehall.<br />South Indian. R&amp;B.</h3>
+          <p class="world-body">
+            The crate is three lanes deep and the room decides the order. No autoplay — just the
+            records I keep reaching for.
+          </p>
+          <span class="world-link mono">step into the booth <span aria-hidden="true">→</span></span>
+        </div>
+      </a>
+
+      <a href="/games/" class="world world-games" data-motion-scene>
+        <img
+          class="world-wukong"
+          src="/images/wukong-gold-1200.png"
+          srcset="/images/wukong-gold-800.png 800w, /images/wukong-gold-1200.png 1200w"
+          sizes="(max-width: 860px) 70vw, 34vw"
+          alt="A 19th-century Chinese line illustration of Sun Wukong, the Monkey King, carrying his staff across the clouds."
+          width="1200"
+          height="1706"
+          loading="lazy"
+          decoding="async"
+        />
+        <span class="world-ember-field" aria-hidden="true">
+          {embers.map((ember) => (
+            <span
+              style={`--x:${ember.left}%; --delay:${ember.delay}s; --dur:${ember.duration}s; --size:${ember.size}px; --drift:${ember.drift}px`}
+            ></span>
+          ))}
+        </span>
+        <span class="world-shade world-shade-games" aria-hidden="true"></span>
+
+        <div class="world-top mono">
+          <span>ch.02 / games</span>
+          <span>in progress</span>
+        </div>
+
+        <div class="world-content">
+          <p class="world-kicker mono">current wall</p>
+          <h3>Still climbing the <em>mountain</em>.</h3>
+          <p class="world-body">
+            Elden Ring is the benchmark. Wukong is the current wall. Mario Kart is the comfort game.
+            Not ranked — just the rotation.
+          </p>
+          <span class="world-link mono">see the rotation <span aria-hidden="true">→</span></span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  #worlds {
+    background: var(--bg);
+    padding: 5.5rem 0;
+  }
+
+  .worlds-head {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(280px, 0.62fr);
+    gap: 2rem;
+    align-items: end;
+    margin-bottom: 2rem;
+  }
+
+  .worlds-head .section-title { margin-bottom: 0; max-width: 16ch; }
+
+  .worlds-deck {
+    max-width: 46ch;
+    font-size: 0.88rem;
+    line-height: 1.7;
+    color: var(--text2);
+    justify-self: end;
+  }
+
+  .worlds-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+  }
+
+  .world {
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    min-height: 540px;
+    padding: 1.35rem 1.4rem 1.35rem;
+    overflow: hidden;
+    background: var(--bg2);
+    text-decoration: none;
+  }
+
+  .world-photo {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 58%;
+    filter: saturate(1.1) contrast(1.04);
+    transform: scale(1.01);
+    transition: transform 1.1s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s;
+  }
+
+  .world:hover .world-photo,
+  .world:focus-visible .world-photo { transform: scale(1.05); filter: saturate(1.16) contrast(1.06); }
+
+  .world-shade {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background:
+      linear-gradient(180deg, rgba(5, 8, 14, 0.12) 0%, rgba(5, 8, 14, 0.5) 45%, rgba(5, 8, 14, 0.96) 100%),
+      radial-gradient(ellipse 62% 52% at 16% 20%, rgba(255, 79, 216, 0.16), transparent 68%),
+      radial-gradient(ellipse 50% 45% at 90% 75%, rgba(79, 255, 208, 0.06), transparent 70%);
+    pointer-events: none;
+  }
+
+  .world-games {
+    background:
+      radial-gradient(ellipse 75% 80% at 80% 35%, rgba(255, 92, 42, 0.12), transparent 65%),
+      var(--bg2);
+  }
+
+  .world-wukong {
+    position: absolute;
+    z-index: 1;
+    top: 5%;
+    right: -4%;
+    height: 88%;
+    width: auto;
+    max-width: 72%;
+    object-fit: contain;
+    transform: translateY(0);
+    transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+    animation: worldFloat 12s ease-in-out infinite;
+  }
+
+  .world:hover .world-wukong,
+  .world:focus-visible .world-wukong { transform: translateY(-6px) scale(1.015); }
+
+  .world-shade-games {
+    z-index: 2;
+    background:
+      linear-gradient(180deg, rgba(5, 8, 14, 0.08) 0%, rgba(5, 8, 14, 0.42) 42%, rgba(5, 8, 14, 0.97) 100%),
+      linear-gradient(90deg, rgba(5, 8, 14, 0.52) 0%, transparent 62%),
+      radial-gradient(ellipse 55% 55% at 78% 30%, rgba(255, 92, 42, 0.16), transparent 70%);
+  }
+
+  .world-top {
+    position: absolute;
+    z-index: 4;
+    top: 1.1rem;
+    left: 1.25rem;
+    right: 1.25rem;
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    font-size: 0.48rem;
+    letter-spacing: 0.1em;
+    color: rgba(238, 244, 255, 0.72);
+    text-transform: uppercase;
+  }
+
+  .world-top span:first-child { color: var(--accent); }
+
+  .world-content {
+    position: relative;
+    z-index: 4;
+    max-width: 34ch;
+  }
+
+  .world-kicker {
+    font-size: 0.5rem;
+    letter-spacing: 0.13em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 0.55rem;
+  }
+
+  .world h3 {
+    font-family: var(--serif);
+    font-size: clamp(1.8rem, 3.2vw, 2.55rem);
+    font-weight: 300;
+    line-height: 1.08;
+    color: var(--text1);
+    margin-bottom: 0.7rem;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7), 0 0 20px rgba(0, 0, 0, 0.55);
+  }
+
+  .world h3 em { color: var(--accent2); font-style: italic; }
+
+  .world-body {
+    font-size: 0.84rem;
+    line-height: 1.7;
+    color: var(--text2);
+    max-width: 40ch;
+    margin-bottom: 1.2rem;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.72), 0 0 14px rgba(0, 0, 0, 0.5);
+  }
+
+  .world-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    width: fit-content;
+    font-size: 0.58rem;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    border-bottom: 1px solid var(--wave2);
+    padding-bottom: 0.15rem;
+  }
+
+  .world-link span { transition: transform 0.2s; }
+  .world:hover .world-link span,
+  .world:focus-visible .world-link span { transform: translateX(4px); }
+
+  .world-vinyl {
+    position: absolute;
+    z-index: 3;
+    top: 3.9rem;
+    right: 1.2rem;
+    width: 132px;
+    height: 132px;
+    opacity: 0.9;
+    pointer-events: none;
+  }
+
+  .vinyl {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background:
+      repeating-radial-gradient(circle at 50% 50%, #101722 0 2px, #090f17 2px 4px),
+      #090f17;
+    box-shadow:
+      0 0 0 1px rgba(230, 238, 250, 0.12),
+      0 16px 38px rgba(0, 0, 0, 0.55);
+    display: grid;
+    place-items: center;
+    animation: spin 10s linear infinite;
+  }
+
+  .vinyl::before {
+    content: '';
+    position: absolute;
+    inset: 4%;
+    border-radius: 50%;
+    background: conic-gradient(
+      from 20deg,
+      transparent 0 33%,
+      rgba(225, 238, 255, 0.12) 44%,
+      transparent 56% 100%
+    );
+  }
+
+  .vinyl-label {
+    position: relative;
+    width: 35%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: radial-gradient(circle at 40% 35%, #ff8ae7, #a51573 58%, #4d0937);
+    color: #170410;
+    font-family: var(--serif);
+    font-size: 0.95rem;
+    line-height: 1;
+  }
+
+  .vinyl-label span { color: var(--gold); }
+
+  .vinyl-arm {
+    position: absolute;
+    top: -4px;
+    right: -8px;
+    width: 2px;
+    height: 56%;
+    background: linear-gradient(to bottom, #ffc2f1, rgba(255, 79, 216, 0.2));
+    transform-origin: top center;
+    transform: rotate(28deg);
+    box-shadow: 0 0 10px rgba(255, 79, 216, 0.22);
+  }
+
+  .vinyl-arm::before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    left: 50%;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--bg3);
+    border: 1px solid var(--accent);
+    transform: translateX(-50%);
+  }
+
+  .vinyl-arm i {
+    position: absolute;
+    bottom: -4px;
+    left: 50%;
+    width: 7px;
+    height: 16px;
+    background: var(--gold);
+    transform: translateX(-50%);
+    border-radius: 1px;
+  }
+
+  .world-ember-field {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .world-ember-field span {
+    position: absolute;
+    bottom: -6%;
+    left: var(--x);
+    width: var(--size);
+    height: var(--size);
+    border-radius: 50%;
+    background: #ffb35f;
+    box-shadow: 0 0 4px rgba(255, 126, 46, 0.55);
+    opacity: 0;
+    animation: emberRise var(--dur) linear infinite;
+    animation-delay: var(--delay);
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  @keyframes worldFloat {
+    0%, 100% { translate: 0 0; }
+    50% { translate: 0 -6px; }
+  }
+
+  @keyframes emberRise {
+    0% { opacity: 0; transform: translate3d(0, 0, 0) scale(0.7); }
+    14% { opacity: 0.5; }
+    70% { opacity: 0.3; }
+    100% { opacity: 0; transform: translate3d(var(--drift), -280px, 0) scale(0.3); }
+  }
+
+  @media (max-width: 1100px) {
+    .world-wukong { top: 5%; right: -4%; height: 52%; opacity: 0.95; }
+    .world-shade-games {
+      background:
+        linear-gradient(180deg, rgba(5, 8, 14, 0.04) 0%, rgba(5, 8, 14, 0.38) 38%, rgba(5, 8, 14, 0.86) 62%, rgba(5, 8, 14, 0.99) 100%),
+        linear-gradient(90deg, rgba(5, 8, 14, 0.55) 0%, transparent 62%),
+        radial-gradient(ellipse 55% 55% at 78% 30%, rgba(255, 92, 42, 0.16), transparent 70%);
+    }
+  }
+
+  @media (max-width: 900px) {
+    .worlds-head { grid-template-columns: 1fr; gap: 0.8rem; }
+    .worlds-deck { justify-self: start; }
+  }
+
+  @media (max-width: 860px) {
+    #worlds { padding: 4rem 0; }
+    .worlds-grid { grid-template-columns: 1fr; }
+    .world { min-height: 460px; }
+    .world-vinyl { width: 108px; height: 108px; top: 3.4rem; }
+    .world-wukong { top: 7%; right: 2%; height: 46%; max-width: 62%; }
+    .world-shade-games {
+      background:
+        linear-gradient(180deg, rgba(5, 8, 14, 0.04) 0%, rgba(5, 8, 14, 0.36) 38%, rgba(5, 8, 14, 0.92) 64%, rgba(5, 8, 14, 0.99) 82%),
+        linear-gradient(90deg, rgba(5, 8, 14, 0.55) 0%, transparent 62%),
+        radial-gradient(ellipse 55% 55% at 78% 30%, rgba(255, 92, 42, 0.16), transparent 70%);
+    }
+  }
+
+  @media (max-width: 520px) {
+    .world { min-height: 430px; padding: 1.1rem 1.1rem 1.2rem; }
+    .world h3 { font-size: 1.85rem; }
+    .world-body { font-size: 0.8rem; }
+    .world-vinyl { width: 88px; height: 88px; top: 3.1rem; right: 1rem; }
+    .world-wukong { top: 6%; right: -4%; height: 42%; max-width: 72%; opacity: 0.95; }
+    .world-top { left: 1rem; right: 1rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .vinyl,
+    .world-wukong,
+    .world-ember-field span { animation: none; }
+    .world-ember-field { display: none; }
+    .world-photo,
+    .world:hover .world-photo,
+    .world:focus-visible .world-photo,
+    .world-wukong,
+    .world:hover .world-wukong,
+    .world:focus-visible .world-wukong { transition: none; transform: none; }
+  }
+</style>

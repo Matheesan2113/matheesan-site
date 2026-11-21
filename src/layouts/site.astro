@@ -64,4 +64,20 @@ const { title, description, noindex, image, type, article, extraJsonLd, theme = 
 
     document.querySelectorAll('.fade-up').forEach((el) => observer.observe(el));
   }
+
+  // Ambient loops should not burn cycles (or attention) offscreen.
+  if (!reduced && 'IntersectionObserver' in window) {
+    const motionObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          entry.target.classList.toggle('motion-paused', !entry.isIntersecting);
+        });
+      },
+      { rootMargin: '200px 0px', threshold: 0 },
+    );
+
+    document.querySelectorAll<HTMLElement>('[data-motion-scene]').forEach((scene) => {
+      motionObserver.observe(scene);
+    });
+  }
 </script>

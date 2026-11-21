@@ -4,7 +4,7 @@ import { channels } from '../data/profile';
 const angles = [-90, -30, 30, 90, 150, 210];
 ---
 
-<section id="channels">
+<section id="channels" data-motion-scene>
   <div class="container">
     <div class="channel-head">
       <div>
@@ -13,9 +13,6 @@ const angles = [-90, -30, 30, 90, 150, 210];
       </div>
       <div class="channel-actions">
         <span class="channel-count mono">06 channels / 01 life</span>
-        <button type="button" class="channel-random mono" data-random-channel>
-          random access
-        </button>
       </div>
     </div>
 
@@ -100,24 +97,6 @@ const angles = [-90, -30, 30, 90, 150, 210];
     letter-spacing: 0.1em;
     color: var(--text3);
     text-transform: uppercase;
-  }
-
-  .channel-random {
-    background: none;
-    border: 1px solid var(--line);
-    color: var(--text2);
-    padding: 0.4rem 0.65rem;
-    font-size: 0.55rem;
-    letter-spacing: 0.08em;
-    cursor: pointer;
-    transition: border-color 0.2s, color 0.2s, background 0.2s;
-  }
-
-  .channel-random:hover,
-  .channel-random:focus-visible {
-    border-color: var(--accent);
-    color: var(--accent2);
-    background: rgba(88, 174, 201, 0.06);
   }
 
   .channel-deck { max-width: 64ch; }
@@ -404,12 +383,4 @@ const angles = [-90, -30, 30, 90, 150, 210];
     });
   }
 
-  document.querySelectorAll<HTMLButtonElement>('[data-random-channel]').forEach((button) => {
-    button.addEventListener('click', () => {
-      const options = nodes.length ? nodes : [];
-      if (!options.length) return;
-      const target = options[Math.floor(Math.random() * options.length)];
-      window.location.assign(target.href);
-    });
-  });
 </script>

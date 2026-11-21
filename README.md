@@ -75,13 +75,22 @@ they were cleared for public use. If you add a claim, add the source or don't ad
   career, tooling and résumé sit one level away; the home page is a scannable index, not the
   whole resume.
 - Music is part of the visual system: an animated nav equalizer, the deck visual, the crate and
-  booth notes. Nothing autoplays. The real public profile is `music.spotify.url`; the four linked
-  playlists are `Lock In 2025`, `Games`, `Mixxx` and `LumiereNew1`.
+  booth notes. The crate is **basshall / dancehall, South Indian and R&B**, plus gaming OSTs,
+  after-hours and a wildcard lane. Nothing autoplays. The real public profile is `music.spotify.url`;
+  the four linked playlists are `Lock In 2025`, `Games`, `Mixxx` and `LumiereNew1`.
+- The home page has an image-led `Worlds` section: a turntable/DJ photo with a spinning record for
+  music, and a public-domain 19th-century Sun Wukong illustration with embers for games. The games
+  page uses the same art in a larger spotlight. Image sources and licences are in
+  [`CREDITS.md`](CREDITS.md).
 - The games section is a rotation, not a ranking: Elden Ring, Black Myth: Wukong, Mario Kart,
-  Valorant and Overwatch.
-- The landing is deliberately neutral: a monochrome chrome hub with an orbital channel selector.
-  Each destination carries its own accent: music magenta, games acid green, lab teal, notes amber,
-  about indigo/gold, career steel blue. Themes are set with `theme=` on `SiteLayout`.
+  Valorant and Overwatch. The Wukong art is public-domain *Journey to the West* illustration, not
+  publisher key art.
+- The landing chrome stays neutral; the image-led `Worlds` section carries the first colour before
+  the orbital channel selector. Each destination carries its own accent: music magenta, games acid
+  green, lab teal, notes amber, about indigo/gold, career steel blue. Themes are set with `theme=`
+  on `SiteLayout`.
+- The hero has one deliberate professional path: **view résumé** links to `/resume/`; the channel
+  selector remains the exploration path.
 - Page headers carry a channel chip (for example `ch.01 / sound`) and a large translucent Japanese
   glyph. The hero also carries a vertical Tamil/Japanese glyph rail.
 - WayTrade is the current role: a small team building an AI-powered marketplace for biofuels,
@@ -98,6 +107,15 @@ they were cleared for public use. If you add a claim, add the source or don't ad
 - The terminal in About is intentionally read-only theatre; it never touches a real shell.
 - Reduced-motion users get static waves, no cursor follower, and no scroll animation.
 - The résumé page prints cleanly: `print / save PDF` in the toolbar, or open `/resume/?print=1`.
+
+## Motion
+
+- Ambient loops are slow, low-contrast and reserved for large visuals: the hero canvas, the channel
+  orbit, the turntable and the Wukong scene. Hover motion is a small zoom or lift, not a bounce.
+- Each animated scene is marked `data-motion-scene`. An `IntersectionObserver` adds
+  `.motion-paused` when the scene is offscreen, so loops do not keep painting or burning battery.
+- `prefers-reduced-motion: reduce` removes floats, embers, spins, EQ, parallax and the boot
+  sequence. No content depends on motion, and nothing autoplays audio.
 
 ## Deployment
 

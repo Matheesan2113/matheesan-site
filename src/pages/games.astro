@@ -1,6 +1,7 @@
 ---
 import SiteLayout from '../layouts/site.astro';
 import PageHeader from '../components/PageHeader.astro';
+import WukongSpotlight from '../components/WukongSpotlight.astro';
 import { games, site } from '../data/profile';
 ---
 
@@ -24,6 +25,8 @@ import { games, site } from '../data/profile';
     <span>input keyboard / controller</span>
     <span class="game-hud-ok">status one more run</span>
   </div>
+
+  <WukongSpotlight />
 
   <section id="games">
     <div class="container">

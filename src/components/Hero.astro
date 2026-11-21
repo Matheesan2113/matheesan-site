@@ -3,7 +3,7 @@ import { site } from '../data/profile';
 import Constellation from './Constellation.astro';
 ---
 
-<section id="hero">
+<section id="hero" data-motion-scene>
   <Constellation />
 
   <canvas id="wave-canvas" aria-hidden="true"></canvas>
@@ -48,14 +48,17 @@ import Constellation from './Constellation.astro';
       <div class="hero-tags" aria-label="Things I’m into">
         <span class="tag">Tamil-Canadian</span>
         <span class="tag">DJ</span>
+        <span class="tag">basshall / dancehall</span>
+        <span class="tag">South Indian</span>
+        <span class="tag">R&amp;B</span>
         <span class="tag">Gamer</span>
         <span class="tag">Engineer</span>
         <span class="tag">AI systems</span>
       </div>
 
       <div class="hero-cta">
-        <a href="#channels" class="btn-primary">enter the channels <span aria-hidden="true">↓</span></a>
-        <button type="button" class="btn-ghost" data-random-channel>random access</button>
+        <a href="/resume/" class="btn-primary">view résumé <span aria-hidden="true">→</span></a>
+        <a href="#channels" class="btn-ghost">enter the channels <span aria-hidden="true">↓</span></a>
       </div>
     </div>
 
@@ -357,11 +360,6 @@ import Constellation from './Constellation.astro';
   }
 
   .tag:hover { border-color: var(--wave2); color: var(--moon); }
-
-  .hero-cta button {
-    font: inherit;
-    cursor: pointer;
-  }
 
   .hero-cta {
     display: flex;

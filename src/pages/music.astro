@@ -7,7 +7,7 @@ import { music } from '../data/profile';
 
 <SiteLayout
   title="Music — Matheesan"
-  description="Matheesan is a DJ in Markham, Ontario. Global bass, Latin club, Tamil, Malayalam and gaming OSTs — the crate, the booth notes, and the public Spotify library."
+  description="Matheesan is a DJ in Markham, Ontario. Basshall, dancehall, South Indian and R&B — the crate, the booth notes, and the public Spotify library."
   theme="music"
 >
   <PageHeader
@@ -21,6 +21,7 @@ import { music } from '../data/profile';
   <div class="music-hud mono" aria-label="Sound status">
     <span><i aria-hidden="true"></i>channel 01 / sound</span>
     <span>{music.spotify.publicPlaylists} public playlists</span>
+    <span class="music-hud-genres">basshall · dancehall · South Indian · R&amp;B</span>
     <span>no autoplay</span>
     <span>markham, on</span>
   </div>
@@ -49,7 +50,7 @@ import { music } from '../data/profile';
 
         <div class="music-visual fade-up">
           <DeckVisual />
-          <p class="music-caption mono">side a · after hours · markham, on</p>
+          <p class="music-caption mono">side a · after hours · photo: unsplash</p>
         </div>
       </div>
     </div>
@@ -95,8 +96,8 @@ import { music } from '../data/profile';
       </div>
 
       <p class="section-deck spotify-deck">
-        The crate lives in public. Start with the focus rotation, the boss-fight folder, the global-bass
-        mix or the long library — or open the profile and dig through all {music.spotify.publicPlaylists}.
+        The crate lives in public. Start with the focus rotation, the boss-fight folder, the
+        basshall / dancehall mix or the long library — or open the profile and dig through all {music.spotify.publicPlaylists}.
       </p>
 
       <div class="spotify-covers">
@@ -181,6 +182,7 @@ import { music } from '../data/profile';
   }
 
   .music-hud span { display: inline-flex; align-items: center; gap: 0.4rem; }
+  .music-hud .music-hud-genres { color: var(--accent); }
   .music-hud i { width: 5px; height: 5px; border-radius: 50%; background: var(--spotify); box-shadow: 0 0 8px var(--spotify); }
 
   #music { padding-top: 2.5rem; padding-bottom: 4rem; background: var(--bg); }

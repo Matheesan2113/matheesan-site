@@ -25,7 +25,7 @@ export const site = {
 };
 
 export const now = [
-  { value: 'bass', label: 'listening', note: 'global · Tamil · gaming OSTs' },
+  { value: 'basshall', label: 'listening', note: 'dancehall · South Indian · R&B' },
   { value: 'Wukong', label: 'playing', note: 'Elden Ring on deck' },
   { value: 'decks', label: 'mixing', note: 'a set I’ll never finish' },
   { value: 'Markham', label: 'based', note: '43.8561° N · 79.3370° W' },
@@ -40,19 +40,25 @@ export type CrateItem = {
 
 export const music = {
   intro:
-    'I DJ — global bass, Latin club, Tamil and Malayalam, gaming OSTs, whatever the room needs. The same part of my brain that likes a clean API likes a clean transition: read the room, set up the next move, don’t over-explain the drop.',
+    'I DJ — basshall and dancehall, South Indian, R&B, and whatever the room needs. The same part of my brain that likes a clean API likes a clean transition: read the room, set up the next move, don’t over-explain the drop.',
   crate: [
     {
-      key: 'global bass',
-      title: 'Global bass',
-      body: 'Dancehall, afrobeats and Latin club. Kybba, Sean Paul, Bad Bunny, El Alfa — the low end does the talking.',
-      tags: ['dancehall', 'afrobeats', 'Latin club'],
+      key: 'basshall / dancehall',
+      title: 'Basshall / Dancehall',
+      body: 'The main room. Basshall’s low-end pressure and dancehall’s swing — Kybba, Sean Paul, and whatever else makes the sub do the talking.',
+      tags: ['basshall', 'dancehall', 'low end'],
     },
     {
-      key: 'Tamil / Malayalam',
-      title: 'Tamil / Malayalam',
-      body: 'Film, indie and unplugged. Aksomaniac, Sai Abhyankkar, A. R. Rahman, Ilaiyaraaja — the first library I ever had.',
-      tags: ['Tamil film', 'Malayalam', 'unplugged'],
+      key: 'South Indian',
+      title: 'South Indian',
+      body: 'Tamil, Malayalam, Telugu and Kannada — film, indie and unplugged. A. R. Rahman, Ilaiyaraaja, Sai Abhyankkar, Aksomaniac: the first library I ever had.',
+      tags: ['Tamil film', 'Malayalam', 'Telugu', 'unplugged'],
+    },
+    {
+      key: 'R&B',
+      title: 'R&B',
+      body: 'Slow-burn, 2000s and alt-R&B. The lane for the drive home and the last hour of the night — vocals up, tempo down.',
+      tags: ['90s / 00s', 'alt-R&B', 'slow jams'],
     },
     {
       key: 'gaming',
@@ -61,16 +67,10 @@ export const music = {
       tags: ['OSTs', 'boss fights', 'racing'],
     },
     {
-      key: 'lock-in',
-      title: 'Lock-in',
-      body: 'The focus rotation: Sean Paul, Akon, Billie Eilish, Daddy Yankee. Familiar enough to disappear into, loud enough to keep the cursor moving.',
-      tags: ['focus', 'hip-hop', 'pop'],
-    },
-    {
       key: 'after hours',
       title: 'After hours',
-      body: 'Ambient, dub techno and late-night Tamil. For the drive home and the thoughts that arrive with it.',
-      tags: ['ambient', 'dub techno', 'late night'],
+      body: 'Late-night R&B, Tamil unplugged and slow dancehall. For the drive home and the thoughts that arrive with it.',
+      tags: ['late-night R&B', 'Tamil unplugged', 'slow dancehall'],
     },
     {
       key: 'wildcard',
@@ -100,7 +100,7 @@ export const music = {
     playlists: [
       { title: 'Lock In 2025', note: '8 tracks · focus mode', url: 'https://open.spotify.com/playlist/12V6JHuA6suAygcmkzSVKB', art: '/art/cover-lock-in.svg' },
       { title: 'Games', note: '48 tracks · boss fights & racing', url: 'https://open.spotify.com/playlist/2spbr821bl0V8wV5k42gx6', art: '/art/cover-games.svg' },
-      { title: 'Mixxx', note: '22 tracks · global bass / dancehall', url: 'https://open.spotify.com/playlist/7jXQ0WwqIc7cj6ErLcYFUX', art: '/art/cover-mixxx.svg' },
+      { title: 'Mixxx', note: '22 tracks · basshall / dancehall', url: 'https://open.spotify.com/playlist/7jXQ0WwqIc7cj6ErLcYFUX', art: '/art/cover-mixxx.svg' },
       { title: 'LumiereNew1', note: '101 tracks · the long library', url: 'https://open.spotify.com/playlist/6x9MRizxBcPUCQjgI3GA2g', art: '/art/cover-lumiere.svg' },
     ],
   },
@@ -125,7 +125,7 @@ export const channels: Channel[] = [
     num: '01',
     title: 'music',
     jp: '音',
-    tagline: 'global bass · Tamil · gaming OSTs',
+    tagline: 'basshall / dancehall · South Indian · R&B',
     href: '/music/',
     accent: '#ff4fd8',
     preview: '/art/cover-lock-in.svg',

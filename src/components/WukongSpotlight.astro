@@ -1,0 +1,374 @@
+---
+const embers = Array.from({ length: 10 }, (_, index) => ({
+  left: (index * 47 + 7) % 100,
+  delay: -((index * 47) % 130) / 10,
+  duration: 10 + ((index * 5) % 7),
+  size: 1 + ((index * 3) % 2),
+  drift: (index % 2 === 0 ? 1 : -1) * (4 + ((index * 7) % 16)),
+}));
+---
+
+<section id="wukong" class="wukong" aria-labelledby="wukong-title" data-wukong-scene data-motion-scene>
+  <div class="container">
+    <div class="wukong-grid">
+      <div class="wukong-copy">
+        <p class="section-label">current wall / chapter 01</p>
+        <h2 id="wukong-title" class="section-title">Still climbing the <em>mountain</em>.</h2>
+        <p class="section-deck wukong-deck">
+          A boss rush with the art direction turned up to eleven. I am here for the transformations,
+          the mythology and the next wall that makes the clear feel earned. Elden Ring taught me to
+          lose; Wukong is teaching me to keep swinging.
+        </p>
+
+        <div class="wukong-meta mono" aria-label="Game details">
+          <span><b>title</b> Black Myth: Wukong</span>
+          <span><b>kind</b> action RPG</span>
+          <span><b>status</b> in progress</span>
+        </div>
+
+        <a href="#black-myth-wukong" class="section-link mono">the save file <span aria-hidden="true">→</span></a>
+      </div>
+
+      <figure class="wukong-visual">
+        <div class="wukong-stage">
+          <div class="wukong-glow" aria-hidden="true"></div>
+
+          <svg class="wukong-clouds" viewBox="0 0 600 760" fill="none" aria-hidden="true">
+            <path d="M-30 190C55 150 90 210 150 180C210 150 250 205 320 175C390 145 430 205 510 170C560 148 600 164 640 150" />
+            <path d="M-40 560C40 520 100 584 175 548C250 512 292 572 368 538C444 504 500 566 580 530C612 514 640 520 650 516" />
+            <path d="M-20 640C70 606 125 660 205 628C285 596 340 650 420 620C500 590 550 642 630 612" />
+          </svg>
+
+          <div class="wukong-ember-field" aria-hidden="true">
+            {embers.map((ember) => (
+              <span
+                style={`--x:${ember.left}%; --delay:${ember.delay}s; --dur:${ember.duration}s; --size:${ember.size}px; --drift:${ember.drift}px`}
+              ></span>
+            ))}
+          </div>
+
+          <img
+            class="wukong-art"
+            src="/images/wukong-gold-1200.png"
+            srcset="/images/wukong-gold-800.png 800w, /images/wukong-gold-1200.png 1200w"
+            sizes="(max-width: 900px) 78vw, 440px"
+            alt="A 19th-century Chinese line illustration of Sun Wukong, the Monkey King, carrying his staff as he strides across clouds."
+            width="1200"
+            height="1706"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+
+        <figcaption class="wukong-hud">
+          <span class="wukong-caption mono">Sun Wukong · 19th-c. illustration · public domain</span>
+          <span class="wukong-boss mono" aria-hidden="true">
+            <span class="bossbar-label">current wall</span>
+            <span class="bossbar-track"><i></i></span>
+            <span class="bossbar-status">still swinging</span>
+          </span>
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<style>
+  #wukong {
+    position: relative;
+    overflow: hidden;
+    background:
+      radial-gradient(ellipse 70% 70% at 78% 40%, rgba(255, 92, 42, 0.13), transparent 65%),
+      radial-gradient(ellipse 50% 60% at 15% 85%, rgba(168, 255, 96, 0.05), transparent 70%),
+      var(--bg2);
+    border-bottom: 1px solid var(--line);
+    padding: 4.5rem 0 4rem;
+  }
+
+  #wukong::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255, 92, 42, 0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 92, 42, 0.045) 1px, transparent 1px);
+    background-size: 56px 56px;
+    -webkit-mask-image: radial-gradient(ellipse at 70% 45%, #000 0%, transparent 75%);
+    mask-image: radial-gradient(ellipse at 70% 45%, #000 0%, transparent 75%);
+    pointer-events: none;
+  }
+
+  .wukong-grid {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+    gap: 3rem;
+    align-items: center;
+  }
+
+  .wukong-copy .section-title { max-width: 12ch; }
+
+  .wukong-deck {
+    max-width: 56ch;
+    margin-bottom: 1.6rem;
+  }
+
+  .wukong-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem 0.55rem;
+    margin-bottom: 1.6rem;
+  }
+
+  .wukong-meta span {
+    display: inline-flex;
+    gap: 0.4rem;
+    font-size: 0.5rem;
+    letter-spacing: 0.05em;
+    color: var(--text2);
+    border: 1px solid var(--line);
+    padding: 0.32rem 0.5rem;
+    text-transform: uppercase;
+  }
+
+  .wukong-meta b {
+    color: var(--accent);
+    font-weight: 400;
+    letter-spacing: 0.08em;
+  }
+
+  .section-link {
+    display: inline-block;
+    font-size: 0.6rem;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid var(--wave2);
+    padding-bottom: 0.15rem;
+  }
+
+  .section-link:hover { color: var(--accent2); border-bottom-color: var(--accent2); }
+
+  .wukong-visual {
+    --wx: 0;
+    --wy: 0;
+    margin: 0;
+    width: 100%;
+    isolation: isolate;
+  }
+
+  .wukong-stage {
+    position: relative;
+    min-height: 560px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .wukong-glow {
+    position: absolute;
+    left: 50%;
+    top: 47%;
+    width: min(480px, 90%);
+    aspect-ratio: 1;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background:
+      radial-gradient(circle, rgba(255, 148, 58, 0.2) 0%, rgba(194, 48, 22, 0.12) 35%, transparent 68%);
+    filter: blur(8px);
+    pointer-events: none;
+  }
+
+  .wukong-clouds {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.45;
+    pointer-events: none;
+    z-index: 0;
+    filter: drop-shadow(0 0 2px rgba(255, 148, 58, 0.15));
+  }
+
+  .wukong-clouds path {
+    stroke: rgba(240, 184, 98, 0.28);
+    stroke-width: 1.1;
+    stroke-linecap: round;
+    stroke-dasharray: 2 5;
+    animation: cloudDrift 32s ease-in-out infinite alternate;
+  }
+
+  .wukong-clouds path:nth-child(2) { animation-duration: 40s; animation-direction: alternate-reverse; opacity: 0.8; }
+  .wukong-clouds path:nth-child(3) { animation-duration: 48s; opacity: 0.55; }
+
+  .wukong-art {
+    position: relative;
+    z-index: 2;
+    display: block;
+    width: min(430px, 86%);
+    height: auto;
+    max-height: 610px;
+    object-fit: contain;
+    transform: translate(calc(var(--wx) * 6px), calc(var(--wy) * 6px));
+    transition: transform 0.35s ease-out;
+    animation: wukongFloat 12s ease-in-out infinite;
+  }
+
+  .wukong-ember-field {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .wukong-ember-field span {
+    position: absolute;
+    bottom: -8%;
+    left: var(--x);
+    width: var(--size);
+    height: var(--size);
+    border-radius: 50%;
+    background: #ffb35f;
+    box-shadow: 0 0 4px rgba(255, 126, 46, 0.55);
+    opacity: 0;
+    animation: emberRise var(--dur) linear infinite;
+    animation-delay: var(--delay);
+  }
+
+  .wukong-hud {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 0.75rem;
+    padding-top: 0.7rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .wukong-caption {
+    font-size: 0.44rem;
+    letter-spacing: 0.06em;
+    color: var(--text3);
+    text-transform: uppercase;
+  }
+
+  .wukong-boss {
+    flex: 0 1 270px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.44rem;
+    letter-spacing: 0.1em;
+    color: var(--text3);
+    text-transform: uppercase;
+  }
+
+  .bossbar-label,
+  .bossbar-status {
+    font-size: 0.44rem;
+    letter-spacing: 0.1em;
+    color: var(--text3);
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .bossbar-track {
+    display: block;
+    flex: 1;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.09);
+    overflow: hidden;
+  }
+
+  .bossbar-track i {
+    display: block;
+    height: 100%;
+    width: 68%;
+    background: linear-gradient(to right, #b63a1c, #ffb35f);
+    box-shadow: 0 0 10px rgba(255, 148, 58, 0.55);
+    animation: bossPulse 5s ease-in-out infinite;
+  }
+
+  .bossbar-status { color: var(--accent); }
+
+  @keyframes wukongFloat {
+    0%, 100% { translate: 0 0; }
+    50% { translate: 0 -6px; }
+  }
+
+  @keyframes cloudDrift {
+    from { transform: translateX(-6px); }
+    to { transform: translateX(10px); }
+  }
+
+  @keyframes emberRise {
+    0% { opacity: 0; transform: translate3d(0, 0, 0) scale(0.7); }
+    14% { opacity: 0.55; }
+    70% { opacity: 0.35; }
+    100% { opacity: 0; transform: translate3d(var(--drift), -320px, 0) scale(0.3); }
+  }
+
+  @keyframes bossPulse {
+    0%, 100% { opacity: 0.85; }
+    50% { opacity: 1; }
+  }
+
+  @media (max-width: 900px) {
+    #wukong { padding: 3.5rem 0 3rem; }
+    .wukong-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+    .wukong-copy .section-title { max-width: none; }
+    .wukong-stage { min-height: 480px; }
+    .wukong-art { width: min(360px, 82%); max-height: 500px; }
+  }
+
+  @media (max-width: 560px) {
+    .wukong-stage { min-height: 420px; }
+    .wukong-art { width: 88%; }
+    .wukong-hud { flex-direction: column; align-items: flex-start; gap: 0.55rem; }
+    .wukong-boss { flex: 0 0 auto; width: 100%; max-width: 280px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .wukong-art,
+    .wukong-clouds path,
+    .wukong-ember-field span,
+    .bossbar-track i { animation: none; }
+    .wukong-art { transition: none; transform: none; }
+    .wukong-ember-field { display: none; }
+  }
+</style>
+
+<script>
+  const scene = document.querySelector<HTMLElement>('[data-wukong-scene]');
+  const visual = scene?.querySelector<HTMLElement>('.wukong-visual');
+  const finePointer = window.matchMedia('(pointer: fine)').matches;
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (scene && visual && finePointer && !reduced) {
+    let frame = 0;
+    let px = 0;
+    let py = 0;
+
+    const apply = () => {
+      visual.style.setProperty('--wx', px.toFixed(3));
+      visual.style.setProperty('--wy', py.toFixed(3));
+      frame = 0;
+    };
+
+    scene.addEventListener('pointermove', (event) => {
+      const rect = scene.getBoundingClientRect();
+      px = (event.clientX - rect.left) / rect.width - 0.5;
+      py = (event.clientY - rect.top) / rect.height - 0.5;
+      if (!frame) frame = requestAnimationFrame(apply);
+    });
+
+    scene.addEventListener('pointerleave', () => {
+      px = 0;
+      py = 0;
+      if (!frame) frame = requestAnimationFrame(apply);
+    });
+  }
+</script>

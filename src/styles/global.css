@@ -270,6 +270,12 @@ code {
 .fade-up:nth-child(3) { transition-delay: 0.16s; }
 .fade-up:nth-child(4) { transition-delay: 0.24s; }
 
+/* ─── Ambient motion pauses when its scene leaves the viewport ── */
+.motion-paused,
+.motion-paused * {
+  animation-play-state: paused !important;
+}
+
 /* ─── Prose (notes, resume) ──────────────────────────────────── */
 .prose {
   max-width: 720px;

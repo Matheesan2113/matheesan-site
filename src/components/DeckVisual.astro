@@ -2,160 +2,314 @@
 const bars = [28, 52, 38, 74, 46, 88, 34, 62, 44, 80, 58, 36, 70, 48, 84, 40, 64, 30];
 ---
 
-<div class="deck" aria-hidden="true">
-  <div class="deck-top">
-    <span class="mono">side a · after hours</span>
-    <span class="mono">33 rpm</span>
-  </div>
+<div class="deck" data-motion-scene>
+  <figure class="deck-photo">
+    <img
+      src="/images/dj-booth-1600.webp"
+      srcset="/images/dj-booth-900.webp 900w, /images/dj-booth-1600.webp 1600w"
+      sizes="(max-width: 900px) 100vw, 520px"
+      alt="Hands working a DJ mixer under magenta light, with a CDJ deck glowing beside them."
+      width="1600"
+      height="1067"
+      loading="eager"
+      decoding="async"
+      fetchpriority="high"
+    />
+    <span class="deck-wash" aria-hidden="true"></span>
+    <span class="deck-scan" aria-hidden="true"></span>
+    <span class="deck-live mono"><i aria-hidden="true"></i>on the decks</span>
+    <span class="deck-rpm mono">33⅓ rpm</span>
+  </figure>
 
-  <div class="platter">
-    <div class="record">
-      <div class="record-label">M<span>.</span></div>
+  <div class="deck-console">
+    <div class="mini-platter" aria-hidden="true">
+      <span class="mini-strobe"></span>
+      <div class="mini-record">
+        <span class="mini-label">M<span>.</span></span>
+      </div>
+      <div class="mini-arm"><i></i></div>
     </div>
-    <div class="tonearm"><i></i></div>
-  </div>
 
-  <div class="eq">
-    {bars.map((height, index) => (
-      <span style={`--h:${height}%; --d:${(index % 7) * 0.12}s`}></span>
-    ))}
+    <div class="deck-now">
+      <span class="deck-kicker mono">now spinning</span>
+      <strong>Basshall / Dancehall</strong>
+      <span class="deck-genres mono">South Indian · R&amp;B</span>
+
+      <div class="eq" aria-hidden="true">
+        {bars.map((height, index) => (
+          <span style={`--h:${height}%; --d:${(index % 7) * 0.12}s`}></span>
+        ))}
+      </div>
+    </div>
   </div>
 
   <div class="deck-foot mono">
-    <span>global bass · Tamil · gaming</span>
-    <span>cue 02</span>
+    <span>side a · after hours</span>
+    <span>cue 02 / markham</span>
   </div>
 </div>
 
 <style>
   .deck {
     position: relative;
-    width: min(440px, 100%);
+    width: min(520px, 100%);
     border: 1px solid var(--line);
     background:
-      radial-gradient(ellipse 80% 70% at 30% 0%, rgba(88, 174, 201, 0.08), transparent 65%),
+      radial-gradient(ellipse 80% 70% at 25% 0%, rgba(255, 79, 216, 0.06), transparent 65%),
       var(--bg2);
-    padding: 0.85rem;
+    padding: 0.8rem;
   }
 
-  .deck-top,
-  .deck-foot {
-    display: flex;
-    justify-content: space-between;
-    gap: 1rem;
-    font-size: 0.52rem;
-    letter-spacing: 0.08em;
-    color: var(--text3);
+  .deck-photo {
+    position: relative;
+    margin: 0;
+    aspect-ratio: 3 / 2;
+    overflow: hidden;
+    background: #05090f;
+    border: 1px solid rgba(255, 79, 216, 0.16);
+  }
+
+  .deck-photo img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    object-position: 50% 58%;
+    filter: saturate(1.12) contrast(1.04);
+    transform: scale(1.01);
+    transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .deck:hover .deck-photo img { transform: scale(1.045); }
+
+  .deck-wash {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg, rgba(5, 8, 14, 0.06) 0%, rgba(5, 8, 14, 0.14) 55%, rgba(5, 8, 14, 0.72) 100%),
+      radial-gradient(ellipse 80% 70% at 20% 10%, rgba(255, 79, 216, 0.16), transparent 65%),
+      radial-gradient(ellipse 60% 60% at 95% 85%, rgba(79, 255, 208, 0.08), transparent 70%);
+    pointer-events: none;
+  }
+
+  .deck-scan {
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.035) 0,
+      rgba(255, 255, 255, 0.035) 1px,
+      transparent 1px,
+      transparent 4px
+    );
+    opacity: 0.45;
+    pointer-events: none;
+  }
+
+  .deck-live,
+  .deck-rpm {
+    position: absolute;
+    top: 0.65rem;
+    z-index: 2;
+    font-size: 0.48rem;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
   }
 
-  .deck-top { margin-bottom: 0.8rem; }
-  .deck-foot { margin-top: 0.8rem; padding-top: 0.7rem; border-top: 1px solid var(--line); }
+  .deck-live {
+    left: 0.7rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: #ffd3f4;
+    background: rgba(5, 8, 14, 0.62);
+    border: 1px solid rgba(255, 79, 216, 0.28);
+    padding: 0.3rem 0.5rem;
+  }
 
-  .platter {
+  .deck-live i {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 8px var(--accent);
+    animation: livePulse 2.8s ease-out infinite;
+  }
+
+  .deck-rpm {
+    right: 0.7rem;
+    color: rgba(255, 230, 250, 0.7);
+    background: rgba(5, 8, 14, 0.5);
+    padding: 0.3rem 0.45rem;
+  }
+
+  .deck-console {
+    display: grid;
+    grid-template-columns: 122px minmax(0, 1fr);
+    gap: 1rem;
+    align-items: center;
+    padding: 1rem 0.35rem 0.9rem;
+  }
+
+  .mini-platter {
     position: relative;
-    aspect-ratio: 1;
+    width: 122px;
+    height: 122px;
+    border-radius: 50%;
+    background:
+      radial-gradient(circle at 44% 38%, rgba(255, 255, 255, 0.08), transparent 45%),
+      #060a10;
+    border: 1px solid rgba(255, 79, 216, 0.2);
+    box-shadow: inset 0 0 24px rgba(0, 0, 0, 0.65);
     display: grid;
     place-items: center;
-    border: 1px solid var(--line);
-    background:
-      radial-gradient(circle at 50% 50%, rgba(88, 174, 201, 0.06), transparent 55%),
-      #05090f;
-    overflow: hidden;
   }
 
-  .record {
-    width: 78%;
-    aspect-ratio: 1;
+  .mini-strobe {
+    position: absolute;
+    inset: 7px;
     border-radius: 50%;
-    position: relative;
-    background:
-      repeating-radial-gradient(circle at 50% 50%, #101721 0 2px, #0b1119 2px 4px),
-      #0b1119;
-    box-shadow:
-      0 0 0 1px rgba(200, 216, 240, 0.08),
-      0 22px 50px rgba(0, 0, 0, 0.45);
-    animation: spin 18s linear infinite;
+    border: 1px dashed rgba(255, 79, 216, 0.28);
+    animation: spin 14s linear infinite;
   }
 
-  .record::before {
+  .mini-record {
+    position: relative;
+    width: 84%;
+    height: 84%;
+    border-radius: 50%;
+    background:
+      repeating-radial-gradient(circle at 50% 50%, #111924 0 2px, #0a1018 2px 4px),
+      #0a1018;
+    box-shadow:
+      0 0 0 1px rgba(220, 230, 245, 0.1),
+      0 14px 32px rgba(0, 0, 0, 0.55);
+    display: grid;
+    place-items: center;
+    animation: spin 9s linear infinite;
+  }
+
+  .mini-record::before {
     content: '';
     position: absolute;
-    inset: 4%;
+    inset: 3%;
     border-radius: 50%;
-    background:
-      conic-gradient(from 20deg, transparent 0 30%, rgba(200, 216, 240, 0.06) 42%, transparent 55% 100%);
+    background: conic-gradient(
+      from 20deg,
+      transparent 0 34%,
+      rgba(220, 235, 255, 0.1) 44%,
+      transparent 56% 100%
+    );
   }
 
-  .record-label {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 31%;
+  .mini-label {
+    position: relative;
+    width: 34%;
     aspect-ratio: 1;
-    transform: translate(-50%, -50%);
     border-radius: 50%;
     display: grid;
     place-items: center;
-    background: radial-gradient(circle at 40% 35%, var(--moon2), #3f6f9a 55%, #1b3c5c);
+    background: radial-gradient(circle at 40% 35%, #ff8ae7, #a51573 58%, #4d0937);
+    color: #16040f;
     font-family: var(--serif);
-    font-size: 1.5rem;
-    color: #071018;
+    font-size: 0.85rem;
+    line-height: 1;
   }
 
-  .record-label span { color: var(--gold); }
+  .mini-label span { color: var(--gold); }
 
-  .tonearm {
+  .mini-arm {
     position: absolute;
-    top: 7%;
-    right: 9%;
+    top: 5px;
+    right: 9px;
     width: 2px;
-    height: 44%;
-    background: linear-gradient(to bottom, var(--accent), rgba(88, 174, 201, 0.2));
+    height: 55%;
+    background: linear-gradient(to bottom, #ffb3ee, rgba(255, 79, 216, 0.25));
     transform-origin: top center;
-    transform: rotate(24deg);
-    box-shadow: 0 0 10px rgba(88, 174, 201, 0.2);
+    transform: rotate(26deg);
+    box-shadow: 0 0 8px rgba(255, 79, 216, 0.25);
   }
 
-  .tonearm::before {
+  .mini-arm::before {
     content: '';
     position: absolute;
     top: -5px;
     left: 50%;
-    width: 12px;
-    height: 12px;
+    width: 11px;
+    height: 11px;
     border-radius: 50%;
     background: var(--bg3);
     border: 1px solid var(--accent);
     transform: translateX(-50%);
   }
 
-  .tonearm i {
+  .mini-arm i {
     position: absolute;
-    bottom: -3px;
+    bottom: -4px;
     left: 50%;
-    width: 8px;
-    height: 18px;
+    width: 6px;
+    height: 14px;
     background: var(--gold);
     transform: translateX(-50%);
     border-radius: 1px;
   }
 
+  .deck-now {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .deck-kicker {
+    font-size: 0.48rem;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 0.3rem;
+  }
+
+  .deck-now strong {
+    font-family: var(--serif);
+    font-size: clamp(1.35rem, 2.6vw, 1.7rem);
+    font-weight: 300;
+    line-height: 1.05;
+    color: var(--text1);
+  }
+
+  .deck-genres {
+    margin-top: 0.3rem;
+    font-size: 0.5rem;
+    letter-spacing: 0.07em;
+    color: var(--text2);
+  }
+
   .eq {
     display: flex;
     align-items: flex-end;
-    gap: 3px;
-    height: 46px;
-    margin-top: 0.85rem;
+    gap: 2px;
+    height: 28px;
+    margin-top: 0.75rem;
   }
 
   .eq span {
     flex: 1;
     height: var(--h);
-    background: linear-gradient(to top, rgba(88, 174, 201, 0.12), rgba(88, 174, 201, 0.65));
+    background: linear-gradient(to top, rgba(255, 79, 216, 0.12), rgba(255, 79, 216, 0.7));
     transform-origin: bottom;
-    animation: eq 1.2s ease-in-out infinite alternate;
+    animation: eq 1.5s ease-in-out infinite alternate;
     animation-delay: var(--d);
+  }
+
+  .deck-foot {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-top: 0.65rem;
+    border-top: 1px solid var(--line);
+    font-size: 0.48rem;
+    letter-spacing: 0.07em;
+    color: var(--text3);
+    text-transform: uppercase;
   }
 
   @keyframes spin { to { transform: rotate(360deg); } }
@@ -165,16 +319,26 @@ const bars = [28, 52, 38, 74, 46, 88, 34, 62, 44, 80, 58, 36, 70, 48, 84, 40, 64
     to { transform: scaleY(1); opacity: 1; }
   }
 
-  @media (hover: hover) {
-    .deck:hover .record { animation-play-state: paused; }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .record, .eq span { animation: none; }
+  @keyframes livePulse {
+    0% { box-shadow: 0 0 0 0 rgba(255, 79, 216, 0.5); }
+    70% { box-shadow: 0 0 0 7px rgba(255, 79, 216, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(255, 79, 216, 0); }
   }
 
   @media (max-width: 520px) {
-    .deck { padding: 0.65rem; }
-    .eq { height: 34px; }
+    .deck { padding: 0.6rem; }
+    .deck-console { grid-template-columns: 92px minmax(0, 1fr); gap: 0.8rem; }
+    .mini-platter { width: 92px; height: 92px; }
+    .eq { height: 22px; }
+    .deck-foot { font-size: 0.44rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mini-record,
+    .mini-strobe,
+    .eq span,
+    .deck-live i { animation: none; }
+    .deck-photo img,
+    .deck:hover .deck-photo img { transform: none; transition: none; }
   }
 </style>
