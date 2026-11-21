@@ -23,7 +23,7 @@ interface Props {
 
 const {
   title,
-  description = 'Matheesan Manokaran is a Tamil-Canadian engineer, DJ and gamer in Markham, Ontario. Senior software engineer at WayTrade, building a marketplace for biofuels, feedstocks and critical materials.',
+  description = 'Matheesan Manokaran is a Tamil-Canadian engineer, DJ and gamer in Pickering, Ontario. Senior software engineer at WayTrade, building a marketplace for biofuels, feedstocks and critical materials.',
   noindex = false,
   image = '/og.png',
   type = 'website',
@@ -73,7 +73,7 @@ const csp = [
 ].join('; ');
 
 const siteDescription =
-  'Tamil-Canadian engineer, DJ and gamer in Markham, Ontario. Senior software engineer at WayTrade, building a marketplace for biofuels, feedstocks and critical materials.';
+  'Tamil-Canadian engineer, DJ and gamer in Pickering, Ontario. Senior software engineer at WayTrade, building a marketplace for biofuels, feedstocks and critical materials.';
 
 const person = {
   '@type': 'Person',
@@ -83,11 +83,17 @@ const person = {
   url: site.origin,
   jobTitle: 'Senior Software Engineer',
   description:
-    'Tamil-Canadian engineer, DJ and gamer in Markham, Ontario. Builds marketplace platforms at WayTrade, mixes music, and keeps a rotation of Elden Ring, Wukong, Mario Kart, Valorant and Overwatch.',
+    'Tamil-Canadian engineer, DJ and gamer in Pickering, Ontario. Builds marketplace platforms at WayTrade, mixes music, and keeps a rotation of Elden Ring, Wukong, Mario Kart, Valorant and Overwatch.',
   worksFor: {
     '@type': 'Organization',
     name: 'WayTrade',
     url: 'https://www.way.trade/',
+  },
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Pickering',
+    addressRegion: 'ON',
+    addressCountry: 'CA',
   },
   knowsAbout: [
     'Marketplace platforms',

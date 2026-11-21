@@ -1,4 +1,6 @@
 ---
+import { site } from '../data/profile';
+
 const bars = [28, 52, 38, 74, 46, 88, 34, 62, 44, 80, 58, 36, 70, 48, 84, 40, 64, 30];
 ---
 
@@ -45,7 +47,7 @@ const bars = [28, 52, 38, 74, 46, 88, 34, 62, 44, 80, 58, 36, 70, 48, 84, 40, 64
 
   <div class="deck-foot mono">
     <span>side a · after hours</span>
-    <span>cue 02 / markham</span>
+    <span>cue 02 / {site.location.split(',')[0].toLowerCase()}</span>
   </div>
 </div>
 

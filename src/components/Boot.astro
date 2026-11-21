@@ -1,3 +1,7 @@
+---
+import { site } from '../data/profile';
+---
+
 <div id="boot" class="boot" aria-hidden="true" hidden>
   <div class="boot-moon" aria-hidden="true"></div>
   <div class="boot-glow" aria-hidden="true"></div>
@@ -16,7 +20,7 @@
     </div>
     <div class="boot-foot mono">
       <span>click or press esc to skip</span>
-      <span>43.8561° N / 79.3370° W</span>
+      <span>{site.coords.replace(' · ', ' / ')}</span>
     </div>
   </div>
 </div>

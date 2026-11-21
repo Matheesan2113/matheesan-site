@@ -1,5 +1,5 @@
 ---
-import { principles } from '../data/profile';
+import { principles, site } from '../data/profile';
 import Terminal from './Terminal.astro';
 
 interface Props {
@@ -17,7 +17,7 @@ const { headless = false } = Astro.props;
 
         <div class="about-identities">
           <div class="identity"><span class="identity-dot"></span>Tamil-Canadian</div>
-          <div class="identity"><span class="identity-dot"></span>Born Toronto, raised Markham</div>
+          <div class="identity"><span class="identity-dot"></span>Scarborough → Markham → Pickering</div>
           <div class="identity"><span class="identity-dot"></span>Tamil · English · French</div>
           <div class="identity"><span class="identity-dot"></span>Anime &amp; Japanese culture</div>
           <div class="identity"><span class="identity-dot"></span>DJ · after hours</div>
@@ -41,7 +41,7 @@ const { headless = false } = Astro.props;
           </div>
         </div>
 
-        <p class="about-coord mono">43.8561° N · 79.3370° W<br />markham, ontario</p>
+        <p class="about-coord mono">{site.coords}<br />{site.location.toLowerCase()}</p>
       </aside>
 
       <div class="about-right">
@@ -54,10 +54,11 @@ const { headless = false } = Astro.props;
 
         <div class="about-bio">
           <p>
-            I grew up in <strong>Markham</strong> — one of Canada’s most multicultural cities — the son of
-            Tamil parents from Sri Lanka. My first language was Tamil. I picked up English, then French
-            through school. I grew up surrounded by Japanese anime, Chinese New Year, and every cuisine
-            you can imagine. That breadth shaped how I think.
+            I was born in Toronto, grew up in <strong>Scarborough</strong>, was raised in
+            <strong>Markham</strong> — one of Canada’s most multicultural cities — and now live in
+            <strong>Pickering</strong>. The son of Tamil parents from Sri Lanka. My first language was
+            Tamil. I picked up English, then French through school. I grew up surrounded by Japanese
+            anime, Chinese New Year, and every cuisine you can imagine. That breadth shaped how I think.
           </p>
           <p>
             My name, <em>Matheesan</em>, means moon in Tamil — <em>mathee</em> (<span class="tamil" lang="ta">மதி</span>). I’ve always felt a pull

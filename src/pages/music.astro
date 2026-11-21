@@ -2,12 +2,12 @@
 import SiteLayout from '../layouts/site.astro';
 import PageHeader from '../components/PageHeader.astro';
 import DeckVisual from '../components/DeckVisual.astro';
-import { music } from '../data/profile';
+import { music, site } from '../data/profile';
 ---
 
 <SiteLayout
   title="Music — Matheesan"
-  description="Matheesan is a DJ in Markham, Ontario. Basshall, dancehall, South Indian and R&B — the crate, the booth notes, and the public Spotify library."
+  description={`Matheesan is a DJ in ${site.location}. Basshall, dancehall, South Indian and R&B — the crate, the booth notes, and the public Spotify library.`}
   theme="music"
 >
   <PageHeader
@@ -23,7 +23,7 @@ import { music } from '../data/profile';
     <span>{music.spotify.publicPlaylists} public playlists</span>
     <span class="music-hud-genres">basshall · dancehall · South Indian · R&amp;B</span>
     <span>no autoplay</span>
-    <span>markham, on</span>
+    <span>{site.location.split(',')[0].toLowerCase()}, on</span>
   </div>
 
   <section id="music">

@@ -6,11 +6,11 @@ export const site = {
   domain: 'https://matheesan.ca',
   role: 'Senior Software Engineer',
   personalRole: 'Engineer · DJ · Gamer',
-  location: 'Markham, Ontario',
-  coords: '43.8561° N · 79.3370° W',
+  location: 'Pickering, Ontario',
+  coords: '43.8354° N · 79.0890° W',
   positioning: 'Engineer by day. DJ by night. Gamer in between.',
   intro:
-    'Tamil-Canadian, born in Toronto, raised in Markham. I build marketplace platforms at WayTrade, mix music after hours, and spend the rest of my time in Elden Ring, Wukong, Mario Kart, Valorant and Overwatch. This is the whole map.',
+    'Tamil-Canadian. Grew up in Scarborough, raised in Markham, now in Pickering. I build marketplace platforms at WayTrade, mix music after hours, and spend the rest of my time in Elden Ring, Wukong, Mario Kart, Valorant and Overwatch. This is the whole map.',
   status: 'Senior Software Engineer at WayTrade',
   personalStatus: 'currently: marketplace · a new mix · Wukong',
   socials: {
@@ -28,7 +28,7 @@ export const now = [
   { value: 'basshall', label: 'listening', note: 'dancehall · South Indian · R&B' },
   { value: 'Wukong', label: 'playing', note: 'Elden Ring on deck' },
   { value: 'decks', label: 'mixing', note: 'a set I’ll never finish' },
-  { value: 'Markham', label: 'based', note: '43.8561° N · 79.3370° W' },
+  { value: 'Pickering', label: 'based', note: '43.8354° N · 79.0890° W' },
 ];
 
 export type CrateItem = {

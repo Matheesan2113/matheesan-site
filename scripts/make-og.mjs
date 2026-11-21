@@ -72,7 +72,7 @@ const svg = `<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http:/
   </g>
 
   <text x="72" y="594" font-family="Space Mono" font-size="10" letter-spacing="1.8" fill="#5d7395"><tspan fill="#7ee0b8">TAMIL-CANADIAN</tspan> · DJ · GAMER</text>
-  <text x="1128" y="594" font-family="Space Mono" font-size="10" letter-spacing="1.6" fill="#5d7395" text-anchor="end">43.8561° N · 79.3370° W</text>
+  <text x="1128" y="594" font-family="Space Mono" font-size="10" letter-spacing="1.6" fill="#5d7395" text-anchor="end">43.8354° N · 79.0890° W</text>
 </svg>`;
 
 await sharp(Buffer.from(svg)).png({ compressionLevel: 9 }).toFile('public/og.png');
