@@ -8,7 +8,7 @@ import Access from '../components/Access.astro';
 
 <SiteLayout
   title="Lab — Matheesan"
-  description="The lab behind the work: production LLM agent loops, evals, local inference on an RTX A2000, a nine-camera Frigate setup, Immich, Proxmox and the homelab underneath."
+  description="The lab behind the work: production LLM agent loops, evals, private local inference, computer vision and the homelab underneath — published as capabilities, not coordinates."
   theme="lab"
 >
   <PageHeader
@@ -16,21 +16,21 @@ import Access from '../components/Access.astro';
     title="The lab."
     channel="ch.03 / lab"
     glyph="実"
-    deck="Where the models meet the metal. Production agent loops and eval tooling up top; local inference, computer vision, storage and a slightly overbuilt network underneath."
+    deck="Where the models meet the metal. Production agent loops and eval tooling up top; private local inference, computer vision, storage and a segmented network underneath — at the level of capability, not coordinates."
   />
 
   <div class="lab-hud mono" aria-label="Lab status">
-    <span><i aria-hidden="true"></i>node moon-01</span>
-    <span>gpu rtx a2000</span>
-    <span>cameras 09</span>
-    <span>storage 22tb</span>
-    <span class="lab-hud-ok">status nominal</span>
+    <span><i aria-hidden="true"></i>lab / public view</span>
+    <span>local inference</span>
+    <span>computer vision</span>
+    <span>private storage</span>
+    <span class="lab-hud-ok">specifics withheld</span>
   </div>
 
   <div class="container">
     <figure class="lab-figure">
-      <img src="/art/lab-topology.svg" alt="Homelab topology: a Proxmox host with an RTX A2000 running Ollama, Immich ML, Frigate for nine cameras and Whisper; a 10G switch, 22 TB ZFS storage, and services including Immich, Jellyfin, Authentik and observability." width="1200" height="700" loading="lazy" decoding="async" />
-      <figcaption class="mono">moon-01 / topology · not to scale</figcaption>
+      <img src="/art/lab-topology.svg" alt="An abstract public summary of the lab: local compute, private services, a segmented network and tested backups, with hosts, addresses, versions and the service map redacted." width="1200" height="700" loading="lazy" decoding="async" />
+      <figcaption class="mono">public view / not a network map</figcaption>
     </figure>
   </div>
 

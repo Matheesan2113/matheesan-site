@@ -1,0 +1,6 @@
+Contact: https://github.com/Matheesan2113/matheesan-site/security/advisories/new
+Contact: https://matheesan.ca/contact/
+Expires: 2027-11-30T23:59:59.000Z
+Preferred-Languages: en
+Canonical: https://matheesan.ca/.well-known/security.txt
+Policy: https://github.com/Matheesan2113/matheesan-site/blob/main/SECURITY.md

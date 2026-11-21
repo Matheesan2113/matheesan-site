@@ -20,7 +20,7 @@ const config = JSON.stringify({ endpoint: drop.endpoint ?? '', ...(drop.oidc ?? 
         <div id="signin" class="drop-panel">
           <div class="drop-label">private</div>
           <p class="drop-lead">Sign in with your homelab account to open the inbox.</p>
-          <button id="signin-btn" type="button" class="drop-btn">Sign in with Authentik</button>
+          <button id="signin-btn" type="button" class="drop-btn">Sign in</button>
           <p id="signin-msg" class="drop-msg" role="status"></p>
         </div>
 
@@ -48,7 +48,7 @@ const config = JSON.stringify({ endpoint: drop.endpoint ?? '', ...(drop.oidc ?? 
 
           <div class="drop-panel">
             <div class="drop-row drop-row-between">
-              <div class="drop-label">inbox · kept 30 days · copied to Nextcloud</div>
+              <div class="drop-label">inbox · kept 30 days · copied to the private archive</div>
               <div class="drop-row">
                 <button id="refresh" type="button" class="drop-link">refresh</button>
                 <button id="signout" type="button" class="drop-link">sign out</button>
@@ -131,7 +131,7 @@ const config = JSON.stringify({ endpoint: drop.endpoint ?? '', ...(drop.oidc ?? 
 
   let accessToken = '';
 
-  // sessionStorage only: the token dies with the tab. Authentik's own session makes signing in again one click.
+  // sessionStorage only: the token dies with the tab. The identity provider's own session makes signing in again one click.
   // Storage can throw (private windows, blocked site data); the page then just signs in every time.
   const session = {
     get<T>(key: string): T | null { try { return JSON.parse(sessionStorage.getItem(key) ?? 'null'); } catch { return null; } },
@@ -236,7 +236,7 @@ const config = JSON.stringify({ endpoint: drop.endpoint ?? '', ...(drop.oidc ?? 
 
   function signOut() {
     showSignIn('Signed out.');
-    // Also end the Authentik session, so a shared or work computer is fully logged out.
+    // Also end the identity-provider session, so a shared or work computer is fully logged out.
     if (cfg.endSession) location.assign(cfg.endSession);
   }
 
@@ -312,7 +312,7 @@ const config = JSON.stringify({ endpoint: drop.endpoint ?? '', ...(drop.oidc ?? 
 
     actions.append(
       button('delete', async () => {
-        if (!confirm(`Delete ${isNote ? 'this note' : item.name}? A copy already pulled into Nextcloud stays there.`)) return;
+        if (!confirm(`Delete ${isNote ? 'this note' : item.name}? A copy already pulled into the private archive stays there.`)) return;
         try {
           await api('/delete', { key: item.key });
           li.remove();

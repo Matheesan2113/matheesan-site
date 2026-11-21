@@ -1,73 +1,74 @@
 ---
 const cards = [
   {
-    code: '[gpu]',
+    code: '[compute]',
     title: 'Local inference',
-    body: 'RTX A2000 12GB passed through to the GPU VM. Ollama serves qwen3.5:9b, qwen3:8b-16k and nomic-embed-text; Whisper runs speech-to-text on CUDA; Open WebUI is the front door.',
-    tags: ['RTX A2000', 'Ollama', 'Whisper', 'CUDA', 'Open WebUI'],
+    body: 'Private GPU compute for local models, embeddings and speech-to-text. Prompts, audio and vectors stay on hardware I control.',
+    tags: ['local models', 'private compute', 'no cloud'],
   },
   {
-    code: '[cv]',
+    code: '[vision]',
     title: 'Computer vision',
-    body: 'Frigate NVR with YOLOv9m on nine cameras, license-plate recognition on the driveway, and face recognition — all on the isolated camera VLAN.',
-    tags: ['Frigate', 'YOLOv9m', 'LPR', 'Reolink', 'Tapo'],
+    body: 'A small local camera system for object detection. Feeds, footage and alerts stay on a segmented private network; none of it is published.',
+    tags: ['local inference', 'private network', 'retention'],
   },
   {
-    code: '[ml]',
+    code: '[media]',
     title: 'Photo intelligence',
-    body: 'Immich with CUDA-accelerated face and object recognition. Thumbnails on SSD, cache on a dedicated disk, originals on the NAS over NFS.',
-    tags: ['Immich', 'CUDA', 'Postgres', 'Valkey'],
+    body: 'A self-hosted photo library with local indexing. Originals stay on private storage; the index exists only to make the archive searchable.',
+    tags: ['self-hosted', 'local indexing', 'private storage'],
   },
   {
-    code: '[px]',
-    title: 'Proxmox hypervisor',
-    body: 'AMD Ryzen 5 2600X, 62GB RAM. Multiple VMs with VLAN isolation and PCIe passthrough. Dual network: 1Gbps plus a 2.5Gbps direct link to the NAS.',
-    tags: ['Proxmox', 'KVM', 'ZFS', 'VLAN', 'PCIe'],
+    code: '[compute]',
+    title: 'Virtualization',
+    body: 'One hypervisor host runs isolated workloads with hardware passthrough. There is no public admin surface.',
+    tags: ['isolation', 'passthrough', 'no public admin'],
   },
   {
-    code: '[nas]',
-    title: '22TB storage',
-    body: 'TerraMaster + OpenMediaVault. Separate volumes for media, personal files, VM backups and ISOs, exported over NFS with jumbo frames on the 2.5Gbps link.',
-    tags: ['OMV', 'NFS', '22TB', '2.5Gbps'],
+    code: '[storage]',
+    title: 'Backups',
+    body: 'Separate volumes for media, personal files and VM backups. Restores are tested, not assumed.',
+    tags: ['separate volumes', 'tested restores', 'private'],
   },
   {
-    code: '[net]',
+    code: '[network]',
     title: 'Network & identity',
-    body: 'Five VLANs, GL.iNet Flint 3, managed switches, Tailscale subnet routing and split DNS. Authentik SSO, Vaultwarden, AdGuard and CrowdSec keep the front door boring.',
-    tags: ['VLAN', 'Tailscale', 'Authentik', 'AdGuard', 'CrowdSec'],
+    body: 'Segmented network, single sign-on for internal services and a private remote-access path. The public attack surface is intentionally small.',
+    tags: ['segmentation', 'SSO', 'private access', 'least privilege'],
   },
 ];
 
 const specs = [
-  { key: 'domain', value: '*.matheesan.ca — wildcard SSL via Let’s Encrypt + Route 53' },
-  { key: 'remote', value: 'Tailscale VPN with subnet routing + split DNS' },
-  { key: 'models', value: 'Ollama — qwen3.5:9b · qwen3:8b-16k · nomic-embed-text' },
-  { key: 'speech', value: 'Whisper STT on CUDA · Frigate LPR + face recognition' },
-  { key: 'monitoring', value: 'Prometheus · Grafana · Alertmanager · Uptime Kuma · Scrutiny' },
-  { key: 'secrets', value: 'Vaultwarden self-hosted + Bitwarden CLI automation' },
+  { key: 'domain', value: 'public site only · private services are not advertised in DNS' },
+  { key: 'remote', value: 'private access path · no public admin ports' },
+  { key: 'models', value: 'local model + embedding stack · specifics private' },
+  { key: 'vision', value: 'on-premises inference · no cloud upload' },
+  { key: 'monitoring', value: 'local monitoring and alerting' },
+  { key: 'secrets', value: 'self-hosted secret management' },
+  { key: 'policy', value: 'least privilege · tested restores · minimal public surface' },
 ];
 ---
 
 <section id="homelab">
   <div class="container">
     <p class="section-label">homelab</p>
-    <h2 class="section-title">A production lab, <em>under the moon</em>.</h2>
+    <h2 class="section-title">A production lab, <em>deliberately private</em>.</h2>
     <p class="section-deck">
-      The homelab is where I test the ML I can’t put in production: local inference on a 12GB GPU,
-      computer vision on nine cameras, and enough VLANs to make a network engineer smile. It is part
-      curiosity, part skill-building, part just loving that it works.
+      The homelab is where I test the ML I can’t put in production: local inference, computer vision,
+      storage and a segmented private network. It is part curiosity, part skill-building — and
+      deliberately light on the specifics that would make it a target map.
     </p>
 
-    <div class="gpu-panel">
-      <div class="gpu-head mono">
-        <span>nvidia-smi</span>
-        <span class="gpu-live"><i aria-hidden="true"></i>passthrough ok</span>
+    <div class="scope-panel">
+      <div class="scope-head mono">
+        <span>scope.txt</span>
+        <span class="scope-status"><i aria-hidden="true"></i>public-safe</span>
       </div>
-      <div class="gpu-grid">
-        <div><span class="gpu-key mono">GPU</span><strong>NVIDIA RTX A2000</strong></div>
-        <div><span class="gpu-key mono">VRAM</span><strong>12 GB</strong></div>
-        <div><span class="gpu-key mono">LLM</span><strong>qwen3.5:9b · qwen3:8b-16k</strong></div>
-        <div><span class="gpu-key mono">VISION</span><strong>YOLOv9m · LPR · face</strong></div>
+      <div class="scope-grid">
+        <div><span class="scope-key mono">shared</span><strong>capabilities, lessons, outcomes</strong></div>
+        <div><span class="scope-key mono">withheld</span><strong>hosts, addresses, ports</strong></div>
+        <div><span class="scope-key mono">withheld</span><strong>versions, service map</strong></div>
+        <div><span class="scope-key mono">posture</span><strong>least privilege, tested restores</strong></div>
       </div>
     </div>
 
@@ -94,7 +95,7 @@ const specs = [
     </div>
 
     <p class="hl-note mono">
-      the lab is invite-only · authentik sso · <a href="#access">access →</a>
+      the lab is invite-only · accounts are created personally · <a href="#access">access →</a>
     </p>
   </div>
 </section>
@@ -102,13 +103,13 @@ const specs = [
 <style>
   #homelab { background: var(--bg2); }
 
-  .gpu-panel {
+  .scope-panel {
     border: 1px solid var(--line);
     background: #060b13;
     margin-bottom: 2rem;
   }
 
-  .gpu-head {
+  .scope-head {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -120,26 +121,26 @@ const specs = [
     color: var(--text3);
   }
 
-  .gpu-live {
+  .scope-status {
     display: inline-flex;
     align-items: center;
     gap: 0.35rem;
     color: var(--ok);
   }
 
-  .gpu-live i {
+  .scope-status i {
     width: 4px;
     height: 4px;
     border-radius: 50%;
     background: currentColor;
   }
 
-  .gpu-grid {
+  .scope-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
   }
 
-  .gpu-grid > div {
+  .scope-grid > div {
     padding: 0.85rem 0.9rem;
     border-right: 1px solid var(--line);
     display: flex;
@@ -147,15 +148,15 @@ const specs = [
     gap: 0.3rem;
   }
 
-  .gpu-grid > div:last-child { border-right: 0; }
+  .scope-grid > div:last-child { border-right: 0; }
 
-  .gpu-key {
+  .scope-key {
     font-size: 0.48rem;
     letter-spacing: 0.1em;
     color: var(--text3);
   }
 
-  .gpu-grid strong {
+  .scope-grid strong {
     font-family: var(--mono);
     font-size: 0.64rem;
     font-weight: 400;
@@ -258,16 +259,16 @@ const specs = [
 
   @media (max-width: 960px) {
     .hl-grid { grid-template-columns: 1fr 1fr; }
-    .gpu-grid { grid-template-columns: 1fr 1fr; }
-    .gpu-grid > div:nth-child(2) { border-right: 0; }
-    .gpu-grid > div:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+    .scope-grid { grid-template-columns: 1fr 1fr; }
+    .scope-grid > div:nth-child(2) { border-right: 0; }
+    .scope-grid > div:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
   }
 
   @media (max-width: 620px) {
     .hl-grid { grid-template-columns: 1fr; }
-    .gpu-grid { grid-template-columns: 1fr; }
-    .gpu-grid > div { border-right: 0; border-bottom: 1px solid var(--line); }
-    .gpu-grid > div:last-child { border-bottom: 0; }
+    .scope-grid { grid-template-columns: 1fr; }
+    .scope-grid > div { border-right: 0; border-bottom: 1px solid var(--line); }
+    .scope-grid > div:last-child { border-bottom: 0; }
     .spec-row { grid-template-columns: 1fr; }
     .spec-key { border-right: 0; border-bottom: 1px solid var(--line); }
   }

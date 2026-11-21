@@ -522,7 +522,7 @@ export const toolingYears: ToolingYear[] = [
         name: 'Ollama',
         stage: 'operate',
         changed: 'Local models on hardware I control.',
-        used: 'Private experiments on the RTX A2000; no data left the lab.',
+        used: 'Private experiments on local hardware; no data left the lab.',
       },
       {
         name: 'AutoGPT',

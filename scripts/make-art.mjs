@@ -158,58 +158,54 @@ function workbench() {
   </svg>`;
 }
 
-/* ── Homelab topology ──────────────────────────────────────── */
+/* ── Homelab public summary ────────────────────────────────── */
 function homelab() {
   const w = 1200;
   const h = 700;
   const a = '#4fffd0';
   const gold = '#c9a96e';
   const blue = '#7df9ff';
+  const caps = [
+    [56, 190, 'LOCAL COMPUTE', 'private inference · no cloud', a],
+    [420, 190, 'PRIVATE SERVICES', 'single sign-on · accounts by hand', a],
+    [56, 306, 'SEGMENTED NETWORK', 'least privilege · minimal surface', blue],
+    [420, 306, 'TESTED BACKUPS', 'restore, not assume', gold],
+  ];
+  const withheld = ['hosts', 'addresses', 'versions', 'service map', 'everything else'];
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">
   ${defs(a, '#58aec9', gold)}
-  ${frame(w, h, a, 'HOMELAB / MOON-01 / TOPOLOGY', 'NOT TO SCALE')}
-  <text x="54" y="100" font-family="${SERIF}" font-size="44" fill="#dce6f5">A production lab under the moon.</text>
-  <text x="56" y="124" font-family="${MONO}" font-size="10" letter-spacing="2" fill="#6b82a5">LOCAL INFERENCE / COMPUTER VISION / STORAGE / IDENTITY</text>
+  ${frame(w, h, a, 'HOMELAB / PUBLIC VIEW', 'DETAILS WITHHELD')}
+  <circle cx="600" cy="340" r="300" fill="url(#halo)"/>
+  <text x="54" y="100" font-family="${SERIF}" font-size="44" fill="#dce6f5">A production lab, deliberately private.</text>
+  <text x="56" y="124" font-family="${MONO}" font-size="10" letter-spacing="2" fill="#6b82a5">CAPABILITIES SHOWN / HOSTS, ADDRESSES, VERSIONS AND THE SERVICE MAP WITHHELD</text>
 
-  <rect x="56" y="160" width="336" height="330" fill="rgba(8,17,31,.88)" stroke="${a}" stroke-opacity=".5"/>
-  <text x="76" y="190" font-family="${MONO}" font-size="12" letter-spacing="1.6" fill="${a}">PROXMOX</text>
-  <text x="76" y="208" font-family="${MONO}" font-size="9" fill="#6b82a5">AMD RYZEN 9 5900X / 128 GB</text>
-  ${box(76, 228, 296, 80, 'RTX A2000 12 GB', 'CUDA / Ollama / Whisper / ComfyUI', gold)}
-  ${box(76, 324, 136, 64, 'OLLAMA', 'local inference', a)}
-  ${box(236, 324, 136, 64, 'IMMICH ML', 'face + object', a)}
-  ${box(76, 404, 136, 58, 'FRIGATE', '9 cameras', a)}
-  ${box(236, 404, 136, 58, 'WHISPER', 'transcription', a)}
+  <text x="56" y="170" font-family="${MONO}" font-size="9" letter-spacing="1.6" fill="${a}">CAPABILITIES</text>
+  <line x1="56" y1="178" x2="760" y2="178" stroke="${a}" stroke-opacity=".2"/>
+  ${caps.map(([x, y, label, sub, color]) => box(x, y, 340, 96, label, sub, color)).join('')}
 
-  ${box(456, 292, 172, 108, '10G SWITCH', 'VLAN 10 / 20 / 30 / 40', blue)}
-  ${path('M392 320 C420 320 430 340 450 340', a)}
-  ${path('M392 350 C420 350 430 350 450 350', a)}
-  ${path('M392 430 C420 430 430 380 450 372', a)}
+  <g>
+    <rect x="820" y="160" width="324" height="300" fill="rgba(8,17,31,.88)" stroke="${gold}" stroke-opacity=".5"/>
+    <path d="M820 170V160H832M1132 160H1144V170M820 450V460H832M1132 460H1144V450" fill="none" stroke="${gold}" stroke-opacity=".9"/>
+    <text x="840" y="190" font-family="${MONO}" font-size="11" letter-spacing="1.6" fill="${gold}">WITHHELD BY DESIGN</text>
+    <text x="840" y="208" font-family="${MONO}" font-size="8.5" letter-spacing=".6" fill="#6b82a5">not published · not enumerable</text>
+    ${withheld.map((label, i) => {
+      const y = 250 + i * 38;
+      return `<text x="840" y="${y}" font-family="${MONO}" font-size="9" letter-spacing="1" fill="#8ba0bf">${label}</text>
+      <rect x="960" y="${y - 9}" width="124" height="8" fill="#16283a"/>
+      <rect x="960" y="${y - 9}" width="${40 + ((i * 27) % 78)}" height="8" fill="#2b4a5e"/>`;
+    }).join('')}
+    <text x="840" y="440" font-family="${MONO}" font-size="8.5" letter-spacing=".6" fill="#6b82a5">a personal lab is not a target map.</text>
+  </g>
 
-  ${box(456, 460, 172, 96, '22 TB ZFS', 'TORNADO + SNAPSHOTS', gold)}
-  ${path('M456 480 C420 480 410 440 392 400', gold, '4 5')}
-
-  ${box(760, 120, 380, 88, 'FRIGATE NVR', '9 cameras / object recognition / alerts', a)}
-  ${box(760, 228, 180, 88, 'IMMICH', 'photos / face / timeline', a)}
-  ${box(960, 228, 180, 88, 'JELLYFIN', 'media / invite-only', a)}
-  ${box(760, 336, 380, 88, 'AUTHENTIK', 'SSO / OIDC / access policy', gold)}
-  ${box(760, 444, 380, 82, 'OBSERVABILITY', 'Grafana / Prometheus / Uptime Kuma', blue)}
-  ${path('M628 320 C680 320 700 164 754 164', a)}
-  ${path('M628 330 C680 330 700 272 754 272', a)}
-  ${path('M628 350 C680 350 700 380 754 380', gold)}
-  ${path('M628 370 C680 370 700 480 754 480', blue)}
-  ${path('M940 272H954', a, '3 5', false)}
-  ${dot(628, 350, 4, a)}
-
-  ${text(56, 548, 'NETWORK', 9, a)}
-  ${text(56, 570, '10G core / 2.5G uplink / WireGuard / Tailscale', 9, '#8ba0bf')}
-  ${text(56, 600, 'STORAGE', 9, gold)}
-  ${text(56, 622, '22 TB ZFS / snapshots / offsite backup', 9, '#8ba0bf')}
-  ${text(744, 548, 'ACCESS', 9, gold)}
-  ${text(744, 570, 'Authentik SSO / invite-only / least privilege', 9, '#8ba0bf')}
-  ${text(744, 600, 'STATUS', 9, a)}
-  ${text(744, 622, 'nominal / monitored / backed up', 9, '#8ba0bf')}
-  <line x1="54" y1="520" x2="1146" y2="520" stroke="${a}" stroke-opacity=".2"/>
-  <text x="1146" y="646" text-anchor="end" font-family="${MONO}" font-size="9" letter-spacing="1.5" fill="${a}">MOON-01 / ALWAYS ON</text>
+  <line x1="54" y1="500" x2="1146" y2="500" stroke="${a}" stroke-opacity=".2"/>
+  ${text(56, 532, 'POSTURE', 9, a)}
+  ${text(56, 560, 'capability without coordinates', 12, '#8ba0bf')}
+  ${text(56, 588, 'accounts created by hand · no public signup', 10, '#8ba0bf')}
+  ${text(56, 616, 'private services stay off the public DNS', 10, '#8ba0bf')}
+  ${text(744, 532, 'PUBLIC SURFACE', 9, gold)}
+  ${text(744, 560, 'minimal · monitored · no admin ports', 10, '#8ba0bf')}
+  ${text(744, 588, 'least privilege · tested restores', 10, '#8ba0bf')}
+  <text x="1146" y="646" text-anchor="end" font-family="${MONO}" font-size="9" letter-spacing="1.5" fill="${a}">SECURITY &gt; SPECIFICITY</text>
   </svg>`;
 }
 

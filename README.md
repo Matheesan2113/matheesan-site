@@ -22,7 +22,7 @@ themed pages; career is one of them, not the frame around everything.
 | `/notes/<slug>/` | Long-form notes (markdown content collection) |
 | `/resume/` | Public-safe résumé with print / save-as-PDF styling |
 | `/contact/` | Turnstile-protected contact form (Lambda + SES) |
-| `/drop/` | Private drop box (Authentik OIDC + S3 presigned uploads) |
+| `/drop/` | Private OIDC-authenticated drop box with presigned uploads |
 | `/rss.xml` | Notes feed |
 | `/sitemap.xml`, `/robots.txt` | Crawler basics |
 
@@ -107,6 +107,22 @@ they were cleared for public use. If you add a claim, add the source or don't ad
 - The terminal in About is intentionally read-only theatre; it never touches a real shell.
 - Reduced-motion users get static waves, no cursor follower, and no scroll animation.
 - The résumé page prints cleanly: `print / save PDF` in the toolbar, or open `/resume/?print=1`.
+
+## Security
+
+- **The lab page publishes capabilities, not coordinates.** Hosts, addresses, ports, software
+  versions, hardware, storage sizes and the service map are deliberately omitted. The public diagram
+  is an abstract capability summary, not a network map.
+- **CSP and Referrer-Policy are delivered via `<meta>`** because GitHub Pages cannot set response
+  headers. The CSP allowlists only the origins the site actually uses: Google Fonts, Cloudflare
+  Turnstile, the contact/drop Lambda URLs, the OIDC token endpoint and the S3 upload host.
+- **GitHub Pages cannot send HSTS, `X-Frame-Options`/`frame-ancestors`, Permissions-Policy,
+  COOP/CORP or `X-Content-Type-Options`.** Those require an edge proxy. See [`SECURITY.md`](SECURITY.md)
+  for the recommended edge header set.
+- **Reporting:** `/.well-known/security.txt` and [`SECURITY.md`](SECURITY.md) define the private
+  reporting path. Drop routes are `noindex` and disallowed in `robots.txt`.
+- Lab and drop routes do not advertise themselves as targets; the private backend code is documented
+  separately and does not ship in the static build.
 
 ## Motion
 
