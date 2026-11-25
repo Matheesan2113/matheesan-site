@@ -1,8 +1,8 @@
 # matheesan.ca
 
 Personal site for Matheesan Manokaran — senior software engineer at WayTrade, DJ, gamer, and the
-homelab where the models meet the metal. A neutral cyberpunk channel hub leads to six separately
-themed pages; career is one of them, not the frame around everything.
+homelab where the models meet the metal. The home page tells the story in the original moon / dragon /
+wave theme, with optional depth behind each chapter; six separately themed channels go further.
 
 **Live:** [https://matheesan.ca](https://matheesan.ca)
 
@@ -10,14 +10,14 @@ themed pages; career is one of them, not the frame around everything.
 
 | Route | Purpose |
 |---|---|
-| `/` | Neutral channel hub: hero, now strip and the orbital channel selector |
+| `/` | The story: moon-and-stars hero, now strip, three story chapters, the booth/battlefield, a quote band and the orbital channel selector |
 | `/music/` | Magenta club theme: DJ identity, crate, booth notes, deck visual and the real public Spotify library |
 | `/games/` | Acid-green HUD theme: the game rotation — Elden Ring, Wukong, Mario Kart, Valorant, Overwatch |
 | `/career/` | Long-form career portfolio: timeline, tech evolution and case study index |
 | `/career/<slug>/` | Individual case study (agentic-workbench, voice-agent, migration, silent-green, cloud-run) |
 | `/tooling/` | Full 2021–2026 tooling timeline and workflow principles |
 | `/lab/` | Emerging tech / ML lab, homelab and invite-only access |
-| `/about/` | The longer version: bio, principles, terminal, music, games and life |
+| `/about/` | The longer version: roots, how I think, margin notes (13 sourced quotes), influences, life, the terminal and visual studies |
 | `/notes/` | Field notes index |
 | `/notes/<slug>/` | Long-form notes (markdown content collection) |
 | `/resume/` | Print-friendly / ATS-oriented résumé, cross-linked with the career portfolio |
@@ -50,6 +50,9 @@ npm run preview   # preview the build
 
 - **Profile, now, channels, music, games, jobs, case files, tooling timeline** — `src/data/profile.ts`.
   This is the single source of truth for the channel hub, `/music/`, `/games/`, `/career/` and `/tooling/`.
+- **Home story, beliefs, quotes and influences** — `src/data/story.ts`. The homepage chapters, the
+  About essay and the 13 margin notes all read from here. Every quote carries its work and year; where
+  the wording is a paraphrase or the attribution is uncertain, the card says so.
 - **Notes** — add a markdown file to `src/content/notes/` with `title`, `description`, `date`,
   `tags`, and `reading` frontmatter. The index, RSS feed and sitemap pick it up automatically.
 - **Site chrome / SEO defaults** — `src/layouts/layout.astro`.
@@ -72,8 +75,8 @@ they were cleared for public use. If you add a claim, add the source or don't ad
   Varuna (storms and waves). The symbols are rendered with a CJK serif fallback and the Tamil text
   with Noto Sans Tamil.
 - The site is deliberately grouped: music, games, lab, notes and about are the primary pages;
-  career, tooling and résumé sit one level away; the home page is a scannable index, not the
-  whole resume.
+  career, tooling and résumé sit one level away; the home page is a short story with optional depth,
+  not the whole resume.
 - Music is part of the visual system: an animated nav equalizer, the deck visual, the crate and
   booth notes. The crate is **basshall / dancehall, South Indian and R&B**, plus gaming OSTs,
   after-hours and a wildcard lane. Nothing autoplays. The real public profile is `music.spotify.url`;
@@ -82,6 +85,9 @@ they were cleared for public use. If you add a claim, add the source or don't ad
   music, and a public-domain 19th-century Sun Wukong illustration with embers for games. The games
   page uses the same art in a larger spotlight. Image sources and licences are in
   [`CREDITS.md`](CREDITS.md).
+- The quote band is the one overtly philosophical note on the homepage; the full set lives in
+  `/about/#notes`. The long-form “how I think” essay is in `/about/#thinking`, deliberately off the
+  landing page.
 - The games section is a rotation, not a ranking: Elden Ring, Black Myth: Wukong, Mario Kart,
   Valorant and Overwatch. The Wukong art is public-domain *Journey to the West* illustration, not
   publisher key art.
@@ -93,8 +99,8 @@ they were cleared for public use. If you add a claim, add the source or don't ad
   phases, the 2021–2026 tooling evolution, case files and selected work. Résumé is the
   print-friendly/ATS-oriented CV. They cross-link, both link to LinkedIn, and their experience
   narrative is kept aligned; merging them would bury the CV in a long portfolio page.
-- The hero has one deliberate professional path: **view résumé** links to `/resume/`; the channel
-  selector remains the exploration path.
+- The hero has two deliberate paths: **read the story** goes to the chaptered homepage section, and
+  **see the work** goes to `/career/`. The résumé stays one click away in the header.
 - Page headers carry a channel chip (for example `ch.01 / sound`) and a large translucent Japanese
   glyph. The hero also carries a vertical Tamil/Japanese glyph rail.
 - WayTrade is the current role: a small team building an AI-powered marketplace for biofuels,
@@ -103,13 +109,17 @@ they were cleared for public use. If you add a claim, add the source or don't ad
 - The tooling timeline is a curated narrative, not a market ranking: three tools per year, chosen
   because each one changed a different part of the loop.
 - The command palette opens with **Ctrl/Cmd+K** or `/`.
-- First visit per session gets a short signal/boot sequence. `?boot=0` skips it, `?boot=1` forces it.
-- The hero constellation reacts to the pointer; the moon, panel and dragon parallax subtly.
+- First visit per session gets a short signal/boot sequence (about 1.8s, click or `esc` to skip).
+  `?boot=0` skips it, `?boot=1` forces it.
+- The hero constellation reacts to the pointer; the moon, panel and dragon parallax subtly. The
+  original neutral cyan/moon/gold theme is the frame; the story section borrows its corner brackets,
+  mono labels and chapter glyphs without adding another palette.
 - Dragon mode: type `dragon` in the About terminal or enter the Konami code (↑↑↓↓←→←→BA).
 - `/tooling/` has a clickable workflow-stage filter; click a stage again to clear it.
 - Cross-document view transitions are enabled where supported, with a no-motion fallback.
 - The terminal in About is intentionally read-only theatre; it never touches a real shell.
-- Reduced-motion users get static waves, no cursor follower, and no scroll animation.
+- Reduced-motion users get static waves, no cursor follower, and no scroll animation. A `<noscript>`
+  rule reveals `.fade-up` content when JavaScript is off.
 - The résumé page prints cleanly: `print / save PDF` in the toolbar, or open `/resume/?print=1`.
 
 ## Security

@@ -1,0 +1,102 @@
+---
+import { influences } from '../../data/story';
+---
+
+<section id="influences" class="influences" aria-labelledby="influences-title">
+  <div class="container">
+    <header class="influences-head">
+      <div>
+        <p class="section-label">// influences</p>
+        <h2 id="influences-title" class="section-title">What shaped <em>this.</em></h2>
+      </div>
+      <p class="influences-deck">
+        People and work I return to. In no particular order, and never finished.
+      </p>
+    </header>
+
+    <ul class="influences-list">
+      {influences.map((influence, index) => (
+        <li>
+          <span class="influence-index mono">{String(index + 1).padStart(2, '0')}</span>
+          <span class="influence-body">
+            <span class="influence-name">{influence.name}</span>
+            <span class="influence-line">{influence.line}</span>
+          </span>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .influences {
+    padding: 4.5rem 0;
+    background: var(--bg2);
+    border-bottom: 1px solid var(--line);
+    scroll-margin-top: 6rem;
+  }
+
+  .influences-head {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(240px, 0.55fr);
+    gap: 2rem;
+    align-items: end;
+    margin-bottom: 2.2rem;
+  }
+
+  .influences-head .section-title { font-size: clamp(2.2rem, 4.4vw, 3.4rem); margin-bottom: 0; }
+
+  .influences-deck {
+    font-family: var(--serif);
+    font-size: 1.08rem;
+    line-height: 1.7;
+    color: var(--text2);
+    max-width: 34ch;
+  }
+
+  .influences-list {
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .influences-list li {
+    display: grid;
+    grid-template-columns: 1.6rem 1fr;
+    gap: 0.8rem;
+    padding: 1.1rem 1.6rem 1.1rem 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .influences-list li:nth-child(odd) { padding-right: 2rem; }
+  .influences-list li:nth-child(even) { padding-left: 1.8rem; border-left: 1px solid var(--line); }
+
+  .influence-index { font-size: 0.52rem; color: var(--accent); padding-top: 0.3rem; }
+
+  .influence-body { display: flex; flex-direction: column; gap: 0.3rem; }
+
+  .influence-name {
+    font-family: var(--serif);
+    font-size: 1.2rem;
+    line-height: 1.15;
+    color: var(--text1);
+  }
+
+  .influence-line {
+    font-size: 0.82rem;
+    line-height: 1.65;
+    color: var(--text2);
+  }
+
+  @media (max-width: 900px) {
+    .influences { padding: 3.4rem 0; }
+    .influences-head { grid-template-columns: 1fr; gap: 0.8rem; align-items: start; }
+    .influences-list { grid-template-columns: 1fr; }
+    .influences-list li:nth-child(odd) { padding-right: 0; }
+    .influences-list li:nth-child(even) { padding-left: 0; border-left: 0; }
+  }
+</style>

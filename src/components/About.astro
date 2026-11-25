@@ -1,21 +1,15 @@
 ---
-import { principles, site } from '../data/profile';
-import Terminal from './Terminal.astro';
+import { site } from '../data/profile';
 
-interface Props {
-  headless?: boolean;
-}
-
-const { headless = false } = Astro.props;
 ---
 
-<section id="about" class:list={{ 'about-embedded': headless }}>
+<section id="roots" class="roots" aria-labelledby="roots-title">
   <div class="container">
-    <div class="about-grid">
-      <aside class="about-left fade-up" aria-label="Identity">
-        <div class="about-symbol" aria-hidden="true">M<span>.</span></div>
+    <div class="roots-grid">
+      <aside class="roots-left" aria-label="Identity">
+        <div class="roots-symbol" aria-hidden="true">M<span>.</span></div>
 
-        <div class="about-identities">
+        <div class="roots-identities">
           <div class="identity"><span class="identity-dot"></span>Tamil-Canadian</div>
           <div class="identity"><span class="identity-dot"></span>Scarborough → Markham → Pickering</div>
           <div class="identity"><span class="identity-dot"></span>Tamil · English · French</div>
@@ -41,18 +35,14 @@ const { headless = false } = Astro.props;
           </div>
         </div>
 
-        <p class="about-coord mono">{site.coords}<br />{site.location.toLowerCase()}</p>
+        <p class="roots-coord mono">{site.coords}<br />{site.location.toLowerCase()}</p>
       </aside>
 
-      <div class="about-right">
-        {!headless && (
-          <>
-            <p class="section-label">about</p>
-            <h2 class="section-title">Behind the <em>prompt</em></h2>
-          </>
-        )}
+      <div class="roots-right">
+        <p class="section-label">// roots</p>
+        <h2 id="roots-title" class="section-title">One person, <em>several places.</em></h2>
 
-        <div class="about-bio">
+        <div class="roots-bio">
           <p>
             I was born in Toronto, grew up in <strong>Scarborough</strong>, was raised in
             <strong>Markham</strong> — one of Canada’s most multicultural cities — and now live in
@@ -91,50 +81,29 @@ const { headless = false } = Astro.props;
             judgment; it’s making judgment legible, testable, and safe enough to automate.
           </p>
         </div>
-
-        <h2 class="sr-only">Operating principles</h2>
-
-        <div class="principles fade-up" aria-label="Operating principles">
-          {principles.map((principle, index) => (
-            <div class="principle">
-              <span class="principle-num mono">0{index + 1}</span>
-              <div>
-                <h3 class="principle-key">{principle.key}</h3>
-                <p class="principle-body">{principle.body}</p>
-              </div>
-            </div>
-          ))}
-        </div>
       </div>
-    </div>
-
-    <div class="terminal-wrap fade-up">
-      <div class="terminal-head">
-        <span class="mono">~/matheesan — interactive shell</span>
-        <span class="mono terminal-head-note">read-only · no production access · yes, it is real</span>
-      </div>
-      <Terminal />
     </div>
   </div>
 </section>
 
 <style>
-  #about { background: var(--bg2); }
-  .about-embedded { padding-top: 2.5rem; }
+  .roots {
+    padding: 4.5rem 0 5rem;
+    background: var(--bg2);
+    border-bottom: 1px solid var(--line);
+    scroll-margin-top: 6rem;
+  }
 
-  .about-grid {
+  .roots-grid {
     display: grid;
     grid-template-columns: 0.78fr 1.5fr;
     gap: 5rem;
     align-items: start;
   }
 
-  .about-left {
-    position: sticky;
-    top: 6rem;
-  }
+  .roots-left { position: sticky; top: 7rem; }
 
-  .about-symbol {
+  .roots-symbol {
     font-family: var(--serif);
     font-size: 8rem;
     line-height: 0.8;
@@ -143,9 +112,9 @@ const { headless = false } = Astro.props;
     font-style: italic;
   }
 
-  .about-symbol span { color: var(--gold); }
+  .roots-symbol span { color: var(--gold); }
 
-  .about-identities {
+  .roots-identities {
     display: flex;
     flex-direction: column;
     gap: 0.6rem;
@@ -195,7 +164,7 @@ const { headless = false } = Astro.props;
     color: var(--text3);
   }
 
-  .about-coord {
+  .roots-coord {
     margin-top: 2rem;
     font-size: 0.55rem;
     line-height: 1.8;
@@ -203,7 +172,10 @@ const { headless = false } = Astro.props;
     color: var(--text3);
   }
 
-  .about-bio p {
+  .roots-right .section-label { margin-bottom: 0.7rem; }
+  .roots-right .section-title { font-size: clamp(2.2rem, 4.4vw, 3.4rem); margin-bottom: 1.8rem; }
+
+  .roots-bio p {
     font-family: var(--serif);
     font-size: 1.18rem;
     font-weight: 300;
@@ -212,78 +184,24 @@ const { headless = false } = Astro.props;
     margin-bottom: 1.3rem;
   }
 
-  .about-bio p:first-child { color: var(--text1); }
+  .roots-bio p:first-child { color: var(--text1); }
 
-  .about-bio strong { font-weight: 500; color: var(--moon); }
-  .about-bio em { font-style: italic; color: var(--moon2); }
-  .about-bio .tamil { font-family: var(--tamil); font-style: normal; font-size: 0.92em; color: var(--moon2); }
-
-  .principles {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1px;
-    background: var(--line);
-    border: 1px solid var(--line);
-    margin-top: 2.4rem;
-  }
-
-  .principle {
-    display: flex;
-    gap: 0.9rem;
-    background: var(--bg2);
-    padding: 1.2rem 1.1rem;
-    transition: background 0.25s;
-  }
-
-  .principle:hover { background: var(--bg3); }
-
-  .principle-num {
-    font-size: 0.55rem;
-    color: var(--accent);
-    padding-top: 0.2rem;
-    flex-shrink: 0;
-  }
-
-  .principle-key {
-    font-family: var(--mono);
-    font-size: 0.68rem;
-    font-weight: 400;
-    letter-spacing: 0.04em;
-    color: var(--text1);
-    margin-bottom: 0.4rem;
-  }
-
-  .principle-body {
-    font-size: 0.78rem;
-    line-height: 1.65;
-    color: var(--text2);
-  }
-
-  .terminal-wrap { margin-top: 5rem; }
-
-  .terminal-head {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    gap: 1rem;
-    margin-bottom: 0.7rem;
-  }
-
-  .terminal-head .mono { font-size: 0.6rem; letter-spacing: 0.12em; color: var(--accent); }
-  .terminal-head-note { color: var(--text3) !important; font-size: 0.52rem !important; }
+  .roots-bio strong { font-weight: 500; color: var(--moon); }
+  .roots-bio em { font-style: italic; color: var(--moon2); }
+  .roots-bio .tamil { font-family: var(--tamil); font-style: normal; font-size: 0.92em; color: var(--moon2); }
 
   @media (max-width: 960px) {
-    .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-    .about-left { position: static; }
-    .about-symbol { font-size: 5.5rem; margin-bottom: 1.4rem; }
-    .about-identities { display: grid; grid-template-columns: 1fr 1fr; }
-    .about-coord { display: none; }
+    .roots { padding: 3.4rem 0 4rem; }
+    .roots-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .roots-left { position: static; }
+    .roots-symbol { font-size: 5.5rem; margin-bottom: 1.4rem; }
+    .roots-identities { display: grid; grid-template-columns: 1fr 1fr; }
+    .roots-coord { display: none; }
   }
 
   @media (max-width: 620px) {
-    .about-identities { grid-template-columns: 1fr; }
-    .principles { grid-template-columns: 1fr; }
-    .terminal-head { flex-direction: column; gap: 0.25rem; }
+    .roots-identities { grid-template-columns: 1fr; }
     .symbol-row { gap: 1.2rem; }
+    .roots-bio p { font-size: 1.08rem; }
   }
 </style>

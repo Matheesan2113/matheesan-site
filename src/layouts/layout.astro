@@ -211,6 +211,12 @@ const jsonLd = { '@context': 'https://schema.org', '@graph': graph };
     />
 
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+    <noscript>
+      <style>
+        .fade-up { opacity: 1 !important; transform: none !important; }
+      </style>
+    </noscript>
   </head>
   <body>
     <a class="skip-link" href={`#${mainId}`}>skip to content</a>

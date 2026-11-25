@@ -215,9 +215,9 @@ import { site } from '../data/profile';
       };
 
       const status = boot.querySelector('.boot-status');
-      window.setTimeout(() => { if (status) status.textContent = 'online'; }, 1200);
+      window.setTimeout(() => { if (status) status.textContent = 'online'; }, 1000);
 
-      const timer = window.setTimeout(close, 2200);
+      const timer = window.setTimeout(close, 1800);
       const skip = () => { window.clearTimeout(timer); close(); };
 
       boot.addEventListener('click', skip);

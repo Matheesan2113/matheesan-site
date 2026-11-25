@@ -2,13 +2,22 @@
 import SiteLayout from '../layouts/site.astro';
 import PageHeader from '../components/PageHeader.astro';
 import About from '../components/About.astro';
+import AboutToc from '../components/about/AboutToc.astro';
+import AboutThinking from '../components/about/AboutThinking.astro';
+import MarginNotes from '../components/about/MarginNotes.astro';
+import Influences from '../components/about/Influences.astro';
+import AboutShell from '../components/about/AboutShell.astro';
 import Life from '../components/Life.astro';
 import VisualStudies from '../components/VisualStudies.astro';
+import QuoteBand from '../components/QuoteBand.astro';
+import { quotes } from '../data/story';
+
+const saintExupery = quotes.find((quote) => quote.key === 'saint-exupery')!;
 ---
 
 <SiteLayout
-  title="About — Matheesan"
-  description="About Matheesan Manokaran: Tamil-Canadian engineer, DJ, gamer, homelab operator and competitor at heart. The person behind the site."
+  title="About Matheesan Manokaran — Engineer, DJ, Gamer"
+  description="About Matheesan Manokaran: Tamil-Canadian engineer, DJ, gamer and homelab operator in Pickering. Roots, how he thinks, the quotes he keeps, the people who shaped him and life off the clock."
   theme="about"
 >
   <PageHeader
@@ -16,15 +25,33 @@ import VisualStudies from '../components/VisualStudies.astro';
     title="The longer version."
     channel="ch.05 / self"
     glyph="月"
-    deck="Engineer, DJ, gamer, Tamil-Canadian. Born in Toronto, grew up in Scarborough, raised in Markham, now in Pickering. This is the part that doesn’t fit in a headline — music, games, family, the lab, and the through-line between them."
+    deck="Engineer, DJ, gamer, Tamil-Canadian. Born in Toronto, raised between Scarborough and Markham, now in Pickering. This is the part that doesn’t fit in a headline — roots, how I think, the quotes I keep, the people who shaped it, and the life around the work."
   />
 
-  <About headless />
+  <AboutToc />
+
+  <About />
+  <AboutThinking />
+  <QuoteBand id="notes" quote={saintExupery} label="margin notes" />
+  <MarginNotes />
+  <Influences />
   <Life />
+  <AboutShell />
   <VisualStudies />
 </SiteLayout>
 
 <style is:global>
-  #about { padding-top: 2.5rem; padding-bottom: 4rem; }
   #life { padding-top: 4rem; }
+  #shell { margin-top: 0; }
+
+  /* The mobile table of contents wraps to two rows; keep anchors clear of it. */
+  @media (max-width: 720px) {
+    #roots,
+    #thinking,
+    #notes,
+    #influences,
+    #life,
+    #shell,
+    #studies { scroll-margin-top: 8.75rem; }
+  }
 </style>

@@ -1,0 +1,59 @@
+---
+import Terminal from '../Terminal.astro';
+---
+
+<section id="shell" class="shell" aria-labelledby="shell-title">
+  <div class="container">
+    <p class="section-label">// the shell</p>
+    <h2 id="shell-title" class="section-title">Ask the <em>terminal.</em></h2>
+    <p class="shell-deck">
+      A read-only shell for the curious. It never touches a real machine, and it will happily tell you
+      about the moon, the dragon and the wave.
+    </p>
+
+    <div class="terminal-wrap">
+      <div class="terminal-head">
+        <span class="mono">~/matheesan — interactive shell</span>
+        <span class="mono terminal-head-note">read-only · no production access · yes, it is real</span>
+      </div>
+      <Terminal />
+    </div>
+  </div>
+</section>
+
+<style>
+  .shell {
+    padding: 4.5rem 0;
+    background: var(--bg);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    scroll-margin-top: 6rem;
+  }
+
+  .shell .section-title { font-size: clamp(2.2rem, 4.4vw, 3.4rem); }
+
+  .shell-deck {
+    font-family: var(--serif);
+    font-size: 1.12rem;
+    line-height: 1.75;
+    color: var(--text2);
+    max-width: 54ch;
+    margin-bottom: 2rem;
+  }
+
+  .terminal-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: 0.7rem;
+  }
+
+  .terminal-head .mono { font-size: 0.6rem; letter-spacing: 0.12em; color: var(--accent); }
+  .terminal-head-note { color: var(--text3) !important; font-size: 0.52rem !important; }
+
+  @media (max-width: 720px) {
+    .shell { padding: 3.4rem 0; }
+    .terminal-head { flex-direction: column; gap: 0.25rem; }
+  }
+</style>

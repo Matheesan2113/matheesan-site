@@ -1,0 +1,112 @@
+---
+import { quotes } from '../../data/story';
+import QuoteNote from '../QuoteNote.astro';
+
+// Saint-Exupéry is the featured quote in the band directly above this section.
+const collection = quotes.filter((quote) => quote.key !== 'saint-exupery');
+---
+
+<section id="notes-grid" class="notes" aria-labelledby="notes-title">
+  <div class="container">
+    <header class="notes-head">
+      <div>
+        <p class="section-label">// the collection</p>
+        <h2 id="notes-title" class="section-title">Lines I <em>keep.</em></h2>
+      </div>
+      <p class="notes-deck">
+        One above, twelve below. Some are about the work, some about the room, a few about being a person.
+        I keep them close because they say in one line what a postmortem takes a page to say.
+      </p>
+    </header>
+
+    <div class="notes-grid">
+      {collection.map((quote, index) => (
+        <article class="note-card">
+          <span class="note-index mono">{String(index + 1).padStart(2, '0')}</span>
+          <QuoteNote quote={quote} />
+        </article>
+      ))}
+    </div>
+
+    <p class="notes-foot">
+      Sources are on each card. Translation and attribution are noted where they vary — and if a line is
+      misattributed, tell me and I’ll fix it in writing.
+    </p>
+  </div>
+</section>
+
+<style>
+  .notes {
+    padding: 5rem 0;
+    background: var(--bg);
+    border-bottom: 1px solid var(--line);
+    scroll-margin-top: 6rem;
+  }
+
+  .notes-head {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(260px, 0.55fr);
+    gap: 2rem;
+    align-items: end;
+    margin-bottom: 2.4rem;
+  }
+
+  .notes-head .section-title { font-size: clamp(2.2rem, 4.4vw, 3.4rem); margin-bottom: 0; }
+
+  .notes-deck {
+    font-family: var(--serif);
+    font-size: 1.08rem;
+    line-height: 1.75;
+    color: var(--text2);
+    max-width: 42ch;
+  }
+
+  .notes-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+  }
+
+  .note-card {
+    display: grid;
+    grid-template-columns: 1.6rem 1fr;
+    gap: 0.8rem;
+    padding: 1.55rem 1.4rem;
+    background: var(--bg2);
+    transition: background 0.2s;
+  }
+
+  .note-card:hover { background: var(--bg3); }
+
+  .note-index {
+    font-size: 0.52rem;
+    color: var(--accent);
+    padding-top: 0.3rem;
+  }
+
+  .note-card :global(.quote-text) { font-size: clamp(1.02rem, 1.7vw, 1.18rem); }
+
+  .note-card :global(.quote-attr) { font-size: 0.54rem; }
+
+  .note-card :global(.quote-note) { font-size: 0.82rem; }
+
+  .notes-foot {
+    margin-top: 1.5rem;
+    font-size: 0.82rem;
+    line-height: 1.7;
+    color: var(--text3);
+    max-width: 70ch;
+  }
+
+  @media (max-width: 900px) {
+    .notes { padding: 3.6rem 0 4rem; }
+    .notes-head { grid-template-columns: 1fr; gap: 0.8rem; align-items: start; }
+    .notes-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 480px) {
+    .note-card { grid-template-columns: 1fr; gap: 0.4rem; padding: 1.2rem 1.1rem; }
+  }
+</style>

@@ -3,18 +3,29 @@ import SiteLayout from '../layouts/site.astro';
 import Boot from '../components/Boot.astro';
 import Hero from '../components/Hero.astro';
 import SignalBand from '../components/SignalBand.astro';
+import HomeStory from '../components/HomeStory.astro';
 import Worlds from '../components/Worlds.astro';
+import QuoteBand from '../components/QuoteBand.astro';
 import ChannelMap from '../components/ChannelMap.astro';
+import { quotes } from '../data/story';
+
+const saintExupery = quotes.find((quote) => quote.key === 'saint-exupery')!;
 ---
 
 <SiteLayout
-  title="Matheesan — Engineer, DJ, Gamer"
-  description="Matheesan Manokaran — Tamil-Canadian engineer, DJ and gamer in Pickering. Senior software engineer at WayTrade, building a marketplace for biofuels and feedstocks."
+  title="Matheesan Manokaran — Engineer, DJ, Gamer"
+  description="Matheesan Manokaran — Tamil-Canadian engineer, DJ and gamer in Pickering, Ontario. Senior software engineer at WayTrade, building a marketplace for biofuels and feedstocks."
   theme="neutral"
 >
   <Boot />
   <Hero />
   <SignalBand />
+  <HomeStory />
   <Worlds />
+  <QuoteBand
+    quote={saintExupery}
+    label="margin notes"
+    link={{ label: 'the notes I keep', href: '/about/#notes' }}
+  />
   <ChannelMap />
 </SiteLayout>

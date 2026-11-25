@@ -8,9 +8,6 @@ export const site = {
   personalRole: 'Engineer · DJ · Gamer',
   location: 'Pickering, Ontario',
   coords: '43.8354° N · 79.0890° W',
-  positioning: 'Engineer by day. DJ by night. Gamer in between.',
-  intro:
-    'Tamil-Canadian. Grew up in Scarborough, raised in Markham, now in Pickering. I build marketplace platforms at WayTrade, mix music after hours, and spend the rest of my time in Elden Ring, Wukong, Mario Kart, Valorant and Overwatch. This is the whole map.',
   status: 'Senior Software Engineer at WayTrade',
   personalStatus: 'currently: marketplace · a new mix · Wukong',
   socials: {

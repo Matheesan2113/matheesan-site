@@ -1,0 +1,161 @@
+---
+import { beliefs, quotes, thinking } from '../../data/story';
+import QuoteNote from '../QuoteNote.astro';
+
+const feynman = quotes.find((quote) => quote.key === 'feynman')!;
+---
+
+<section id="thinking" class="thinking" aria-labelledby="thinking-title">
+  <div class="container">
+    <div class="thinking-grid">
+      <header class="thinking-head">
+        <p class="section-label">// how I think</p>
+        <h2 id="thinking-title" class="section-title">How I <em>think.</em></h2>
+        <p class="thinking-deck">{thinking.deck}</p>
+      </header>
+
+      <div class="thinking-body">
+        {thinking.essay.map((paragraph, index) => (
+          <p class:list={['thinking-para', { 'has-dropcap': index === 0 }]}>{paragraph}</p>
+        ))}
+
+        <ol class="thinking-beliefs">
+          {beliefs.map((belief, index) => (
+            <li>
+              <span class="belief-num mono">0{index + 1}</span>
+              <h3>{belief.key}</h3>
+              <p>{belief.body}</p>
+            </li>
+          ))}
+        </ol>
+
+        <figure class="thinking-quote">
+          <QuoteNote quote={feynman} />
+        </figure>
+
+        <a class="thinking-link mono" href={thinking.link.href}>
+          {thinking.link.label} <span aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .thinking {
+    padding: 5rem 0;
+    background: var(--bg);
+    border-bottom: 1px solid var(--line);
+    scroll-margin-top: 6rem;
+  }
+
+  .thinking-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .thinking-head { position: sticky; top: 7.5rem; }
+
+  .thinking-head .section-title { font-size: clamp(2.2rem, 4.4vw, 3.4rem); margin-bottom: 1rem; }
+
+  .thinking-deck {
+    font-family: var(--serif);
+    font-size: 1.15rem;
+    line-height: 1.75;
+    color: var(--text2);
+    max-width: 34ch;
+  }
+
+  .thinking-para {
+    font-family: var(--serif);
+    font-size: 1.14rem;
+    line-height: 1.85;
+    color: var(--text2);
+    margin-bottom: 1.2rem;
+    max-width: 62ch;
+  }
+
+  .thinking-para.has-dropcap::first-letter {
+    float: left;
+    font-size: 4.1rem;
+    line-height: 0.82;
+    padding: 0.08em 0.12em 0 0;
+    color: var(--gold);
+  }
+
+  .thinking-beliefs {
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    margin: 2rem 0 2.2rem;
+    padding: 0;
+  }
+
+  .thinking-beliefs li {
+    background: var(--bg2);
+    padding: 1.25rem 1.2rem;
+    transition: background 0.25s;
+  }
+
+  .thinking-beliefs li:hover { background: var(--bg3); }
+
+  .belief-num {
+    display: block;
+    font-size: 0.54rem;
+    color: var(--accent);
+    margin-bottom: 0.45rem;
+  }
+
+  .thinking-beliefs h3 {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    font-weight: 400;
+    letter-spacing: 0.03em;
+    color: var(--text1);
+    margin-bottom: 0.35rem;
+  }
+
+  .thinking-beliefs p {
+    font-size: 0.84rem;
+    line-height: 1.7;
+    color: var(--text2);
+  }
+
+  .thinking-quote {
+    margin: 2.2rem 0 1.8rem;
+    padding: 1.6rem 0 0 1.4rem;
+    border-top: 1px solid var(--line);
+    border-left: 1px solid var(--wave2);
+  }
+
+  .thinking-quote :global(.quote-text) { font-size: clamp(1.15rem, 2vw, 1.4rem); }
+
+  .thinking-link {
+    display: inline-flex;
+    gap: 0.4rem;
+    font-size: 0.58rem;
+    letter-spacing: 0.05em;
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid var(--wave2);
+    padding-bottom: 0.14rem;
+  }
+
+  .thinking-link:hover { color: var(--accent2); }
+
+  @media (max-width: 980px) {
+    .thinking { padding: 3.6rem 0 4rem; }
+    .thinking-grid { grid-template-columns: 1fr; gap: 2.2rem; }
+    .thinking-head { position: static; }
+  }
+
+  @media (max-width: 620px) {
+    .thinking-beliefs { grid-template-columns: 1fr; }
+    .thinking-para { font-size: 1.06rem; }
+  }
+</style>

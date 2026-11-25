@@ -1,0 +1,115 @@
+---
+import QuoteNote from './QuoteNote.astro';
+import type { MarginQuote } from '../data/story';
+
+interface Props {
+  quote: MarginQuote;
+  label?: string;
+  link?: { label: string; href: string };
+  id?: string;
+}
+
+const { quote, label = 'margin notes', link, id } = Astro.props;
+---
+
+<section class="quote-band" id={id} aria-label="A quote I keep">
+  <div class="container quote-band-inner">
+    <span class="quote-band-mark" aria-hidden="true">“</span>
+    <div class="quote-band-body">
+      <p class="quote-band-label mono">// {label}</p>
+      <QuoteNote quote={quote} />
+      {link && (
+        <a class="quote-band-link mono" href={link.href}>
+          {link.label} <span aria-hidden="true">→</span>
+        </a>
+      )}
+    </div>
+  </div>
+</section>
+
+<style>
+  .quote-band {
+    padding: 4.5rem 0 4.7rem;
+    background: var(--bg2);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .quote-band::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 52px 52px;
+    -webkit-mask-image: radial-gradient(ellipse 60% 80% at 50% 50%, #000 0%, transparent 80%);
+    mask-image: radial-gradient(ellipse 60% 80% at 50% 50%, #000 0%, transparent 80%);
+    opacity: 0.55;
+    pointer-events: none;
+  }
+
+  .quote-band-inner {
+    position: relative;
+    max-width: 960px;
+  }
+
+  .quote-band-mark {
+    position: absolute;
+    top: -2.6rem;
+    left: -0.1rem;
+    font-family: var(--serif);
+    font-size: 9rem;
+    line-height: 1;
+    color: var(--gold);
+    opacity: 0.28;
+    pointer-events: none;
+  }
+
+  .quote-band-body {
+    position: relative;
+    padding-left: 1.6rem;
+    border-left: 1px solid var(--wave2);
+  }
+
+  .quote-band-label {
+    font-size: 0.58rem;
+    letter-spacing: 0.16em;
+    text-transform: lowercase;
+    color: var(--accent);
+    margin-bottom: 1.2rem;
+  }
+
+  .quote-band :global(.quote-text) {
+    font-size: clamp(1.55rem, 3.4vw, 2.45rem);
+    line-height: 1.38;
+    max-width: 28ch;
+  }
+
+  .quote-band :global(.quote-note) {
+    max-width: 48ch;
+  }
+
+  .quote-band-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: 1.4rem;
+    font-size: 0.58rem;
+    letter-spacing: 0.05em;
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid var(--wave2);
+    padding-bottom: 0.14rem;
+  }
+
+  .quote-band-link:hover { color: var(--accent2); }
+
+  @media (max-width: 700px) {
+    .quote-band { padding: 3.4rem 0 3.6rem; }
+    .quote-band-mark { font-size: 6rem; top: -1.6rem; }
+    .quote-band-body { padding-left: 1.1rem; }
+  }
+</style>

@@ -20,9 +20,11 @@
   --text1:     #dce6f5;
   --text2:     #8ba0bf;
   --text3:     #6b82a5;
-  --serif:     'Cormorant Garamond', Georgia, 'Times New Roman', serif;
-  --mono:      'Space Mono', 'SFMono-Regular', Consolas, monospace;
-  --sans:      'DM Sans', system-ui, -apple-system, sans-serif;
+  /* Noto Sans Tamil sits at the end of each Latin stack so Tamil glyphs fall through
+     to a font that can actually shape them. */
+  --serif:     'Cormorant Garamond', Georgia, 'Times New Roman', 'Noto Sans Tamil', serif;
+  --mono:      'Space Mono', 'SFMono-Regular', Consolas, 'Noto Sans Tamil', monospace;
+  --sans:      'DM Sans', system-ui, -apple-system, 'Noto Sans Tamil', sans-serif;
   --jp:        'Noto Serif JP', 'Yu Mincho', 'Hiragino Mincho ProN', serif;
   --tamil:     'Noto Sans Tamil', 'Latha', sans-serif;
   --max:       1120px;

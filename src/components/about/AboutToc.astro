@@ -1,0 +1,84 @@
+---
+const items = [
+  { num: '01', label: 'roots', href: '#roots' },
+  { num: '02', label: 'how I think', href: '#thinking' },
+  { num: '03', label: 'margin notes', href: '#notes' },
+  { num: '04', label: 'influences', href: '#influences' },
+  { num: '05', label: 'off the clock', href: '#life' },
+  { num: '06', label: 'the shell', href: '#shell' },
+  { num: '07', label: 'studies', href: '#studies' },
+];
+---
+
+<nav class="about-toc" aria-label="On this page">
+  <div class="container about-toc-inner">
+    <span class="toc-label mono">// on this page</span>
+    {items.map((item) => (
+      <a href={item.href} class="toc-link">
+        <span class="toc-num">{item.num}</span>
+        {item.label}
+      </a>
+    ))}
+  </div>
+</nav>
+
+<style>
+  .about-toc {
+    position: sticky;
+    top: 3.55rem;
+    z-index: 40;
+    background: rgba(5, 8, 14, 0.94);
+    border-bottom: 1px solid var(--line);
+    backdrop-filter: blur(10px);
+  }
+
+  .about-toc-inner {
+    display: flex;
+    align-items: center;
+    gap: 1.35rem;
+    padding-top: 0.7rem;
+    padding-bottom: 0.7rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .about-toc-inner::-webkit-scrollbar { display: none; }
+
+  .toc-label {
+    font-size: 0.5rem;
+    letter-spacing: 0.14em;
+    color: var(--text3);
+    padding-right: 1.2rem;
+    border-right: 1px solid var(--line);
+    white-space: nowrap;
+  }
+
+  .toc-link {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.35rem;
+    font-family: var(--mono);
+    font-size: 0.56rem;
+    letter-spacing: 0.04em;
+    color: var(--text2);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: color 0.2s;
+  }
+
+  .toc-link:hover { color: var(--accent2); }
+
+  .toc-num { font-size: 0.48rem; color: var(--accent); }
+
+  @media (max-width: 720px) {
+    .about-toc { top: 3.1rem; }
+    .about-toc-inner {
+      flex-wrap: wrap;
+      gap: 0.5rem 0.9rem;
+      overflow: visible;
+      padding-top: 0.55rem;
+      padding-bottom: 0.55rem;
+    }
+    .toc-label { display: none; }
+  }
+</style>

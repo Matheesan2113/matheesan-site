@@ -1,0 +1,103 @@
+---
+interface Props {
+  label?: string;
+  note?: string;
+  open?: boolean;
+}
+
+const { label = 'Keep reading', note, open = false } = Astro.props;
+---
+
+<details class="depth" open={open}>
+  <summary class="depth-summary">
+    <span class="depth-sign" aria-hidden="true"></span>
+    <span class="depth-label">{label}</span>
+    {note && <span class="depth-note">{note}</span>}
+  </summary>
+  <div class="depth-body">
+    <slot />
+  </div>
+</details>
+
+<style>
+  .depth {
+    margin: 1.4rem 0 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .depth-summary {
+    display: flex;
+    align-items: baseline;
+    gap: 0.65rem;
+    padding: 0.85rem 0.1rem 0.8rem;
+    cursor: pointer;
+    list-style: none;
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.09em;
+    color: var(--accent2);
+    transition: color 0.2s;
+  }
+
+  .depth-summary::-webkit-details-marker { display: none; }
+  .depth-summary:hover { color: var(--moon); }
+
+  .depth-sign {
+    position: relative;
+    width: 9px;
+    height: 9px;
+    flex-shrink: 0;
+    align-self: center;
+    color: var(--accent);
+  }
+
+  .depth-sign::before,
+  .depth-sign::after {
+    content: '';
+    position: absolute;
+    inset: 50% 0 auto;
+    height: 1px;
+    background: currentColor;
+    transition: transform 0.2s;
+  }
+
+  .depth-sign::after { transform: rotate(90deg); }
+  .depth[open] .depth-sign::after { transform: rotate(0deg); }
+
+  .depth-label { text-transform: lowercase; }
+
+  .depth-note {
+    color: var(--text3);
+    font-size: 0.56rem;
+    letter-spacing: 0.04em;
+    margin-left: auto;
+    text-align: right;
+  }
+
+  .depth-body {
+    padding: 0 0 1.5rem;
+    max-width: 66ch;
+    animation: depthIn 0.35s ease both;
+  }
+
+  .depth-body :global(p) {
+    font-family: var(--serif);
+    font-size: 1.06rem;
+    line-height: 1.8;
+    color: var(--text2);
+    margin-bottom: 0.9rem;
+  }
+
+  .depth-body :global(p:last-child) { margin-bottom: 0; }
+  .depth-body :global(strong) { color: var(--moon); font-weight: 500; }
+
+  @keyframes depthIn {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .depth-body { animation: none; }
+    .depth-sign::after { transition: none; }
+  }
+</style>
