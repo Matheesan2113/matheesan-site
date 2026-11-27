@@ -29,7 +29,7 @@ status: draft
 identity:
   public_name: Matheesan Manokaran
   short_name: Matheesan
-  name_meaning: moon (Tamil: மதி, mathee)
+  name_meaning: "moon (Tamil: மதி, mathee)"
   pronouns: TODO
   pronunciation: TODO
   location: Pickering, Ontario, Canada
