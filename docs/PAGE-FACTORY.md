@@ -30,7 +30,8 @@ A page is a small spec rendered to standalone HTML:
   follows the site's design system instead of carrying a second copy of it.
 - **Recipes:** `microsite`, `event`, `note`, `link`, `gallery`.
 - **Visibility:** `public` (indexable), `unlisted` (noindex, no canonical, no sitemap) and `private`
-  (owner-only; not a public URL).
+  (accepted by the validator; the static edge cannot enforce auth, so it is noindex like `unlisted`
+  until a gate exists — see gaps).
 - **TTL:** from one minute to 30 days. The page is routed by a CloudFront KeyValueStore key; expiry
   removes the key and the release.
 - **Live example:** <https://poker-night.pages.matheesan.ca/> (games theme, unlisted, expiring).
@@ -70,7 +71,8 @@ A generated page:
 - is rendered from escaped Markdown — no raw HTML, `http(s)`/`mailto` links only;
 - is `noindex, nofollow` when unlisted, with no canonical and no sitemap entry;
 - cannot shadow a real service: `www`, `mail`, `vault`, `auth`, `drop`, `contact`, `grafana`,
-  `portainer`, `pihole` and the rest of the reserved list are rejected by the spec validator;
+  `portainer`, `prometheus`, `alertmanager` and the rest of the reserved list are rejected by the spec
+  validator;
 - is single-label only. `poker.matheesan.ca` works with the wildcard; `a.b.matheesan.ca` needs its own
   certificate and is deliberately out of scope;
 - is capped in size, TTL and link scheme before it reaches the renderer.
@@ -126,6 +128,8 @@ the control plane and the bot are operator tooling.
 
 **Known gaps:**
 
+- `private` visibility is a label, not an access control: the static edge has no auth and the API
+  publishes the release like any other. Use `unlisted` for share-by-link until a gate exists;
 - the TTL reaper only expires pages in the `live` state, so a rendered-but-never-published page is not
   cleaned up;
 - there is no systemd unit for the API or the bot, so both die with the terminal that started them;
