@@ -26,6 +26,10 @@ wave theme, with optional depth behind each chapter; six separately themed chann
 | `/rss.xml` | Notes feed |
 | `/sitemap.xml`, `/robots.txt` | Crawler basics |
 
+Operator and content docs: [`docs/PAGE-FACTORY.md`](docs/PAGE-FACTORY.md) (the generated-subdomain
+contract), [`docs/CONTENT-MODEL.md`](docs/CONTENT-MODEL.md) (how content is separated from the theme)
+and [`content/SITE-CONTENT.md`](content/SITE-CONTENT.md) (the theme-independent content brief).
+
 ## Stack
 
 - **Astro 6**, static output, no UI framework.
@@ -48,6 +52,10 @@ npm run preview   # preview the build
 
 ## Editing content
 
+- **Content decisions, bios and the longer story** — [`content/SITE-CONTENT.md`](content/SITE-CONTENT.md).
+  This is the theme-independent brief: fill in the `TODO` answers there first, then update the runtime
+  file it maps to. [`docs/CONTENT-MODEL.md`](docs/CONTENT-MODEL.md) has the mapping table and the
+  public-safe rules.
 - **Profile, now, channels, music, games, jobs, case files, tooling timeline** — `src/data/profile.ts`.
   This is the single source of truth for the channel hub, `/music/`, `/games/`, `/career/` and `/tooling/`.
 - **Home story, beliefs, quotes and influences** — `src/data/story.ts`. The homepage chapters, the

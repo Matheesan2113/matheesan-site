@@ -29,6 +29,7 @@
   --tamil:     'Noto Sans Tamil', 'Latha', sans-serif;
   --max:       1120px;
   --nav-h:     4.5rem;
+  color-scheme: dark;
 }
 
 /* ─── Reset ─────────────────────────────────────────────────── */
@@ -109,6 +110,7 @@ button, input, textarea, select { font: inherit; }
   transform: translate(-50%, -50%);
   transition: transform 0.1s, width 0.3s, height 0.3s, opacity 0.3s;
   mix-blend-mode: screen;
+  opacity: 0;
 }
 
 #cursor-ring {
@@ -120,7 +122,8 @@ button, input, textarea, select { font: inherit; }
   pointer-events: none;
   z-index: 9998;
   transform: translate(-50%, -50%);
-  transition: transform 0.15s ease-out, width 0.3s, height 0.3s;
+  transition: transform 0.15s ease-out, width 0.3s, height 0.3s, opacity 0.3s;
+  opacity: 0;
 }
 
 body:has(a:hover) #cursor,
@@ -169,6 +172,7 @@ section {
   color: var(--text1);
   margin-bottom: 2.5rem;
   max-width: 820px;
+  text-wrap: balance;
 }
 
 .section-title em {
@@ -183,6 +187,7 @@ section {
   color: var(--text2);
   max-width: 660px;
   margin: -1.4rem 0 3.5rem;
+  text-wrap: pretty;
 }
 
 .rule {
@@ -257,20 +262,25 @@ code {
 .btn-small { padding: 0.55rem 0.9rem; font-size: 0.64rem; }
 
 /* ─── Fade-in on scroll ──────────────────────────────────────── */
+/* Visible by default. The inline <head> script adds `.js`; only then do we opt
+   into the hidden-until-observed state, so content survives a failed bundle. */
 .fade-up {
-  opacity: 0;
-  transform: translateY(18px);
   transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.fade-up.visible {
+.js .fade-up {
+  opacity: 0;
+  transform: translateY(18px);
+}
+
+.js .fade-up.visible {
   opacity: 1;
   transform: translateY(0);
 }
 
-.fade-up:nth-child(2) { transition-delay: 0.08s; }
-.fade-up:nth-child(3) { transition-delay: 0.16s; }
-.fade-up:nth-child(4) { transition-delay: 0.24s; }
+.js .fade-up:nth-child(2) { transition-delay: 0.08s; }
+.js .fade-up:nth-child(3) { transition-delay: 0.16s; }
+.js .fade-up:nth-child(4) { transition-delay: 0.24s; }
 
 /* ─── Ambient motion pauses when its scene leaves the viewport ── */
 .motion-paused,
@@ -280,11 +290,13 @@ code {
 
 /* ─── Prose (notes, resume) ──────────────────────────────────── */
 .prose {
-  max-width: 720px;
+  max-width: min(720px, 68ch);
   color: var(--text2);
   font-size: 1rem;
   line-height: 1.8;
 }
+
+.prose p { text-wrap: pretty; }
 
 .prose h2 {
   font-family: var(--serif);
@@ -379,7 +391,7 @@ code {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-  .fade-up { opacity: 1; transform: none; }
+  .js .fade-up { opacity: 1; transform: none; }
   #cursor, #cursor-ring { display: none; }
   body[data-custom-cursor='true'] { cursor: auto; }
 }
@@ -549,8 +561,8 @@ code {
 
 .page-channel {
   font-family: var(--mono);
-  font-size: 0.5rem;
-  letter-spacing: 0.1em;
+  font-size: 0.58rem;
+  letter-spacing: 0.08em;
   color: var(--text3);
   text-transform: uppercase;
   border: 1px solid var(--line);
@@ -559,6 +571,8 @@ code {
 }
 
 .page-topline .page-channel { color: var(--accent); border-color: var(--wave2); }
+
+.page-title { text-wrap: balance; }
 
 .page-glyph {
   position: absolute;
@@ -693,4 +707,37 @@ code {
 section[id],
 main[id] {
   scroll-margin-top: 6rem;
+}
+
+/* ─── Print ──────────────────────────────────────────────────── */
+@media print {
+  #cursor,
+  #cursor-ring,
+  #site-nav,
+  #command-palette,
+  #boot,
+  .skip-link,
+  .scroll-progress,
+  .site > footer {
+    display: none !important;
+  }
+
+  body,
+  .site {
+    background: #fff;
+    color: #111;
+  }
+
+  .js .fade-up {
+    opacity: 1;
+    transform: none;
+  }
+
+  section {
+    padding: 2rem 0;
+  }
+
+  a {
+    color: #111;
+  }
 }
