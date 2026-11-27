@@ -134,11 +134,12 @@ the control plane and the bot are operator tooling.
   cleaned up;
 - there is no systemd unit for the API or the bot, so both die with the terminal that started them;
 - the first live publish needs a retry now that credentials and network have been verified;
-- `DOCS` status: the private runbook is authoritative; this page is the contract.
+- the public contract and the private runbook can drift; the private runbook is authoritative for
+  hosts, keys and the current state.
 
 ## Related
 
 - [`docs/CONTENT-MODEL.md`](./CONTENT-MODEL.md) — how content is separated from the theme.
 - [`content/SITE-CONTENT.md`](../content/SITE-CONTENT.md) — the theme-independent content brief.
 - `docs/LINEAR-SYNC.md` — issue tracking for the site.
-- Private homelab repo, `docs/services/PAGE-FACTORY.md` — operator runbook and incident log.
+- Private homelab repo, `docs/services/PAGE-FACTORY.md` — operator runbook and current status.
